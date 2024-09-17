@@ -1,13 +1,14 @@
 
-package com.equipo7.proyecto1.ticketwizzard.objetos;
+package com.equipo7.proyecto1.ticketwizzard.dtos;
 
+import com.equipo7.proyecto1.ticketwizzard.objetos.*;
 import java.sql.Date;
 
 /**
  *
  * @author Equipo 7
  */
-public class Boleto {
+public class BoletoDTO {
     // columna: id_boleto
     private Integer id;
     // columna: numero_serie
@@ -29,12 +30,12 @@ public class Boleto {
     // columna: adquirido_boletera
     private Boolean adquiridoBoletera;
     // columna: id_usuario
-    private Float idUsuario;
+    private Integer idUsuario;
     //private Usuario usuario;
     // columna: id_evento (evento encapsulado)
     private Evento evento;
     
-    public Boleto() {
+    public BoletoDTO() {
         
     }
     
@@ -153,14 +154,14 @@ public class Boleto {
     /**
      * @return the idUsuario
      */
-    public Float getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 
     /**
      * @param idUsuario the idUsuario to set
      */
-    public void setIdUsuario(Float idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 

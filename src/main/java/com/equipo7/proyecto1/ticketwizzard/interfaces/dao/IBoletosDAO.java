@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
+
 package com.equipo7.proyecto1.ticketwizzard.interfaces.dao;
 
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
@@ -41,7 +38,7 @@ public interface IBoletosDAO {
      * @return boleto con el ID dado, null en caso de no encontrarlo
      * @throws DAOException 
      */
-    public Boleto buscarBoleto(Integer id) throws DAOException;
+    public Boleto obtenerBoleto(Integer id) throws DAOException;
     
     /**
      * Agrega un nuevo boleto al sistema

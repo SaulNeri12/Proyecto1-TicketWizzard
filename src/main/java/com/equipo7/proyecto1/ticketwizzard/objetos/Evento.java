@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.equipo7.proyecto1.ticketwizzard.objetos;
 
 import java.sql.Date;
@@ -11,16 +8,12 @@ import java.sql.Date;
  * @author Equipo 7
  */
 public class Evento {
+    // columna: id_evento
+    private Integer id;
     // columna: nombre
     private String nombre;
     // columna: fecha
-    private Date fecha;
-    // columna: venue
-    private String venue;
-    // columna: descripcion
     private String descripcion;
-    // columna: id_ciudad
-    private Ciudad ciudad;
 
     public Evento() {
         
@@ -41,34 +34,6 @@ public class Evento {
     }
 
     /**
-     * @return the fecha
-     */
-    public Date getFecha() {
-        return fecha;
-    }
-
-    /**
-     * @param fecha the fecha to set
-     */
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    /**
-     * @return the venue
-     */
-    public String getVenue() {
-        return venue;
-    }
-
-    /**
-     * @param venue the venue to set
-     */
-    public void setVenue(String venue) {
-        this.venue = venue;
-    }
-
-    /**
      * @return the descripcion
      */
     public String getDescripcion() {
@@ -83,16 +48,16 @@ public class Evento {
     }
 
     /**
-     * @return the ciudad
+     * @return the id
      */
-    public Ciudad getCiudad() {
-        return ciudad;
+    public Integer getId() {
+        return id;
     }
 
     /**
-     * @param ciudad the ciudad to set
+     * @param id the id to set
      */
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

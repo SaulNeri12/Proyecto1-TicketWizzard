@@ -18,6 +18,10 @@ public class Conexion implements IConexion {
     String user = "root";
     String pwd = "19040042";
 
+    public Conexion() {
+        
+    }
+    
     @Override
     public Connection obtenerConexion() {
         Connection c = null;
@@ -25,7 +29,7 @@ public class Conexion implements IConexion {
         try {
             c = DriverManager.getConnection(cadenaConexion, user, pwd);
         } catch (SQLException ex) {
-            System.out.println(ex);
+            
         }
 
         return c;

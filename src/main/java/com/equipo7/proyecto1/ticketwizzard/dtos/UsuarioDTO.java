@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.equipo7.proyecto1.ticketwizzard.objetos;
+package com.equipo7.proyecto1.ticketwizzard.dtos;
 
+import com.equipo7.proyecto1.ticketwizzard.objetos.*;
 import java.sql.Date;
 
 /**
  *
  * @author Equipo 7
  */
-public class Usuario {
+public class UsuarioDTO {
     // columna: id_usuario
     private Integer id;
     // columna: email
@@ -28,7 +29,7 @@ public class Usuario {
     // columna: contrasena
     private String contrasena;
 
-    public Usuario() {
+    public UsuarioDTO() {
         
     }
     

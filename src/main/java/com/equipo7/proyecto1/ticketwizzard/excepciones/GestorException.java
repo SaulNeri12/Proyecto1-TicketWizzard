@@ -8,10 +8,8 @@ package com.equipo7.proyecto1.ticketwizzard.excepciones;
  *
  * @author Equipo 7
  */
-public class DAOException extends Exception {
-    
-    public DAOException(String msg) {
+public class GestorException extends Exception {
+    public GestorException(String msg) {
         super(msg);
     }
-    
 }
