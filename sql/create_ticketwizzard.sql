@@ -27,20 +27,13 @@ CREATE TABLE ciudad (
 -- Tabla de Eventos
 CREATE TABLE evento (
     id_evento INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT NULL
-);
-
--- Tabla de presentacion de eventos
-CREATE TABLE presentacion (
-	id_presentacion INT AUTO_INCREMENT PRIMARY KEY,
-	fecha_hora DATETIME NOT NULL,
-	venue VARCHAR(100) NOT NULL,
-	terminada TINYINT(1) NOT NULL,
-	id_ciudad INT NOT NULL,
-	id_evento INT NOT NULL,
-	FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad),
-	FOREIGN KEY (id_evento) REFERENCES evento(id_evento)
+    nombre VARCHAR(100) UNIQUE NOT NULL,
+    descripcion TEXT NULL,
+    fecha_hora DATETIME NOT NULL,
+    venue VARCHAR(100) NOT NULL,
+    terminado TINYINT(1) NULL,
+    id_ciudad INT NOT NULL,
+    FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad)
 );
 
 -- Tabla de Boletos
@@ -55,10 +48,10 @@ CREATE TABLE boleto (
     fecha_limite_venta DATETIME NULL,
     en_venta BOOLEAN DEFAULT FALSE,
     id_usuario INT NULL,
-    id_presentacion INT NOT NULL,
-		adquirido_boletera TINYINT(1) NULL,
+    id_evento INT NOT NULL,
+    adquirido_boletera TINYINT(1) NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_presentacion) REFERENCES presentacion(id_presentacion)
+    FOREIGN KEY (id_evento) REFERENCES evento(id_evento)
 );
 
 -- Tabla de Transacciones
@@ -68,20 +61,20 @@ CREATE TABLE transaccion (
     id_vendedor INT NULL,
     monto DECIMAL(10, 2) NULL,
     fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    estado ENUM('terminada', 'en proceso') NOT NULL,
     tipo ENUM('compra_boletera', 'compra_reventa') NOT NULL,
     FOREIGN KEY (id_comprador) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_vendedor) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_boleto) REFERENCES boleto(id_boleto)
+    FOREIGN KEY (id_vendedor) REFERENCES usuario(id_usuario)
 );
 
 -- Tabla de boletos involucrados en una transaccion
 CREATE TABLE transaccion_boleto (
-	id_transaccion_boleto INT AUTO_INCREMENT PRIMARY KEY,
-	monto DECIMAL(10,2) NOT NULL,
-	id_boleto INT NULL,
-	id_transaccion INT NOT NULL,
-  FOREIGN KEY (id_boleto) REFERENCES boleto(id_boleto)
-	FOREIGN KEY (id_transaccion) REFERENCES transaccion(id_transaccion)
+    id_transaccion_boleto INT AUTO_INCREMENT PRIMARY KEY,
+    monto DECIMAL(10,2) NOT NULL,
+    id_boleto INT NOT NULL,
+    id_transaccion INT NOT NULL,
+    FOREIGN KEY (id_boleto) REFERENCES boleto(id_boleto),
+    FOREIGN KEY (id_transaccion) REFERENCES transaccion(id_transaccion)
 );
 
 

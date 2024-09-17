@@ -1,5 +1,5 @@
 
-package com.equipo7.proyecto1.ticketwizzard.gestores;
+package com.equipo7.proyecto1.ticketwizzard.interfaces.gestores;
 
 import com.equipo7.proyecto1.ticketwizzard.dtos.BoletoDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;

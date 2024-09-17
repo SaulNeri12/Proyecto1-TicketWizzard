@@ -1,13 +1,14 @@
 
-package com.equipo7.proyecto1.ticketwizzard.objetos;
+package com.equipo7.proyecto1.ticketwizzard.dtos;
 
+import com.equipo7.proyecto1.ticketwizzard.objetos.*;
 import java.sql.Date;
 
 /**
  *
  * @author Equipo 7
  */
-public class Evento {
+public class EventoDTO {
     // columna: id_evento
     private Integer id;
     // columna: nombre
@@ -20,10 +21,8 @@ public class Evento {
     private String venue;
     // columna: terminado
     private Boolean terminado;
-    // columna: id_ciudad
-    private Ciudad ciudad;
 
-    public Evento() {
+    public EventoDTO() {
         
     }
     
@@ -109,19 +108,5 @@ public class Evento {
      */
     public void setTerminado(Boolean terminado) {
         this.terminado = terminado;
-    }
-
-    /**
-     * @return the ciudad
-     */
-    public Ciudad getCiudad() {
-        return ciudad;
-    }
-
-    /**
-     * @param ciudad the ciudad to set
-     */
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
     }
 }

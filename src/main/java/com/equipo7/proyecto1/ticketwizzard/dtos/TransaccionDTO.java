@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.equipo7.proyecto1.ticketwizzard.objetos;
 
+package com.equipo7.proyecto1.ticketwizzard.dtos;
+
+import com.equipo7.proyecto1.ticketwizzard.objetos.*;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -11,7 +9,7 @@ import java.util.List;
  *
  * @author Equipo 7
  */
-public class Transaccion {
+public class TransaccionDTO {
     // columna: id_transaccion
     private Integer id;
     // columna: id_comprador
@@ -27,7 +25,7 @@ public class Transaccion {
     
     private List<Boleto> boletos;
     
-    public Transaccion() {
+    public TransaccionDTO() {
         
     }
 

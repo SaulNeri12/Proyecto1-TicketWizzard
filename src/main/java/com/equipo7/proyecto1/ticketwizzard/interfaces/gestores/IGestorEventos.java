@@ -2,59 +2,59 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.equipo7.proyecto1.ticketwizzard.interfaces.dao;
+package com.equipo7.proyecto1.ticketwizzard.interfaces.gestores;
 
-import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
-import com.equipo7.proyecto1.ticketwizzard.objetos.Evento;
+import com.equipo7.proyecto1.ticketwizzard.dtos.EventoDTO;
+import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import java.util.List;
 
 /**
  *
  * @author Equipo 7
  */
-public interface IEventosDAO {
+public interface IGestorEventos {
     
     /**
      * Obtiene todos los eventos registrados en el sistema
      * @return
-     * @throws DAOException
+     * @throws GestorException
      */
-    public List<Evento> obtenerEventosTodos() throws DAOException;
+    public List<EventoDTO> obtenerEventosTodos() throws GestorException;
     
     /**
      * Obtiene los eventos en la ciudad dada
      * @param nombreCiudad Nombre de la ciudad a buscar
      * @return
-     * @throws DAOException 
+     * @throws GestorException 
      */
-    public List<Evento> obtenerEventosPorCiudad(String nombreCiudad) throws DAOException;
+    public List<EventoDTO> obtenerEventosPorCiudad(String nombreCiudad) throws GestorException;
     
     /**
      * Obtiene el evento con el ID especificado
      * @param id ID del evento a buscar
      * @return
-     * @throws DAOException 
+     * @throws GestorException 
      */
-    public Evento obtenerEvento(Integer id) throws DAOException;
+    public EventoDTO obtenerEvento(Integer id) throws GestorException;
     
     /**
      * Agrega un nuevo evento al sistema
      * @param evento Evento a registrar
-     * @throws DAOException 
+     * @throws GestorException 
      */
-    public void agregarEvento(Evento evento) throws DAOException;
+    public void agregarEvento(EventoDTO evento) throws GestorException;
     
     /**
      * Actualiza la informacion de un evento
      * @param evento Evento a actualizar
-     * @throws DAOException 
+     * @throws GestorException 
      */
-    public void actualizarEvento(Evento evento) throws DAOException;
+    public void actualizarEvento(EventoDTO evento) throws GestorException;
     
     /**
      * Elimina un evento del sistema
      * @param id ID del evento a eliminar
-     * @throws DAOException 
+     * @throws GestorException 
      */
-    public void eliminarEvento(Integer id) throws DAOException;
+    public void eliminarEvento(Integer id) throws GestorException;
 }

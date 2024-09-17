@@ -11,11 +11,19 @@ import java.util.List;
  */
 public interface IBoletosDAO {
     /**
-     * Obtiene los boletos en venta en boletera
+     * Obtiene todos los boletos en venta en boletera
      * @return lista de boletos, null si no hay boletos en el sistema
      * @throws DAOException
      */
-    public List<Boleto> obtenerBoletosEnVentaBoletera() throws DAOException;
+    public List<Boleto> obtenerBoletosEnVentaBoleteraTodos() throws DAOException;
+    
+    /**
+     * Obtiene los boletos para el evento especificado
+     * @param id ID del evento a buscar
+     * @return
+     * @throws DAOException 
+     */
+    public List<Boleto> obtenerBoletosEnVentaEvento(Integer id) throws DAOException;
     
     /**
      * Obtiene los boletos del usuario especificado

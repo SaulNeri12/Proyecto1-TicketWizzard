@@ -32,7 +32,7 @@ public class Boleto {
     private Float idUsuario;
     //private Usuario usuario;
     // columna: id_evento (evento encapsulado)
-    private Evento evento;
+    private Integer idEvento;
     
     public Boleto() {
         
@@ -165,20 +165,6 @@ public class Boleto {
     }
 
     /**
-     * @return the evento
-     */
-    public Evento getEvento() {
-        return evento;
-    }
-
-    /**
-     * @param evento the evento to set
-     */
-    public void setEvento(Evento evento) {
-        this.evento = evento;
-    }
-
-    /**
      * @return the adquiridoBoletera
      */
     public Boolean getAdquiridoBoletera() {
@@ -204,5 +190,19 @@ public class Boleto {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    /**
+     * @return the idEvento
+     */
+    public Integer getIdEvento() {
+        return idEvento;
+    }
+
+    /**
+     * @param idEvento the idEvento to set
+     */
+    public void setIdEvento(Integer idEvento) {
+        this.idEvento = idEvento;
     }
 }
