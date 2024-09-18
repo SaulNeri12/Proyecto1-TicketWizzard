@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -185,7 +186,7 @@ public Usuario obtenerUsuario(Integer id) throws DAOException {
         }
     }
 
-   @Override
+  @Override
 public Usuario iniciarSesion(String email, String contrasena) throws DAOException {
     try (Connection c = conexion.obtenerConexion();
             PreparedStatement select = c.prepareStatement(
@@ -201,17 +202,18 @@ public Usuario iniciarSesion(String email, String contrasena) throws DAOExceptio
             usuario.setId(resultado.getInt("id_usuario"));
             usuario.setEmail(resultado.getString("email"));
             usuario.setNombreCompleto(resultado.getString("nombre_completo"));
-            usuario.setContrasena(resultado.getString("contrasena"));
+            String contraseñaEncriptada = resultado.getString("contrasena");
             usuario.setFechaNacimiento(resultado.getDate("fecha_nacimiento"));
             usuario.setSaldo(resultado.getFloat("saldo"));
             usuario.setDomicilio(resultado.getString("domicilio"));
             usuario.setEdad(resultado.getInt("edad"));
             
-            if (!usuario.getContrasena().equals(contrasena)) {
+            // Verificar la contraseña
+            if (BCrypt.checkpw(contrasena, contraseñaEncriptada)) {
+                return usuario;
+            } else {
                 throw new DAOException("El correo electrónico o la contraseña son incorrectos");
             }
-            
-            return usuario;
         }
         
         throw new DAOException("El correo electrónico o la contraseña son incorrectos");

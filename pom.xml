@@ -16,6 +16,12 @@
             <artifactId>qrinvoice-itext5</artifactId>
             <version>1.19</version>
         </dependency>
+        <dependency>
+    <groupId>org.mindrot</groupId>
+    <artifactId>jbcrypt</artifactId>
+    <version>0.4</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <packaging>jar</packaging>
     <properties>

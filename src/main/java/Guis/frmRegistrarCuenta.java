@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
-
+import org.mindrot.jbcrypt.BCrypt;
 
 
 /**
@@ -233,38 +233,38 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
         return;
     }
 
-    try {
+     try {
         // Crear un nuevo UsuarioDTO con los datos del formulario
         UsuarioDTO nuevoUsuario = new UsuarioDTO();
         nuevoUsuario.setNombreCompleto(txtNombre.getText());
         nuevoUsuario.setEmail(txtCorreo.getText());
         nuevoUsuario.setDomicilio(txtDomicilio.getText());
-        nuevoUsuario.setFechaNacimiento(Date.valueOf(txtFechaNac.getText())); // Asumiendo que el formato es correcto (YYYY-MM-DD)
-        nuevoUsuario.setContrasena(new String(PasswordFieldContra.getPassword()));
+        nuevoUsuario.setFechaNacimiento(Date.valueOf(txtFechaNac.getText()));
+
+        // Encriptar la contraseña
+        String contraseñaPlana = new String(PasswordFieldContra.getPassword());
+        String contraseñaEncriptada = BCrypt.hashpw(contraseñaPlana, BCrypt.gensalt());
+        nuevoUsuario.setContrasena(contraseñaEncriptada);
         
-        // Calcular la edad basada en la fecha de nacimiento
+        // Calcular la edad
         LocalDate fechaNac = nuevoUsuario.getFechaNacimiento().toLocalDate();
         LocalDate ahora = LocalDate.now();
         int edad = Period.between(fechaNac, ahora).getYears();
         nuevoUsuario.setEdad(edad);
 
-        // Establecer un saldo inicial (por ejemplo, 0)
+        // Establecer un saldo inicial
         nuevoUsuario.setSaldo(0.0f);
 
-        // Crear una instancia de UsuariosDAO
-        Conexion conexion = new Conexion(); // Asumiendo que tienes un constructor sin parámetros
+        // Crear una instancia de UsuariosDAO y agregar el usuario
+        Conexion conexion = new Conexion();
         UsuariosDAO usuariosDAO = new UsuariosDAO(conexion);
-
-        // Agregar el usuario a la base de datos
         usuariosDAO.agregarUsuario(nuevoUsuario);
 
         JOptionPane.showMessageDialog(this, "Usuario registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
 
-        // Crear y mostrar el frame de inicio de sesión
+        // Abrir la ventana de inicio de sesión y cerrar la actual
         frmInicioSesion inicioSesion = new frmInicioSesion();
         inicioSesion.setVisible(true);
-        
-        // Cerrar el frame actual
         this.dispose();
 
     } catch (DAOException e) {
