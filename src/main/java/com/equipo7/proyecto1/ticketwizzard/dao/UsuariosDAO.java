@@ -95,38 +95,38 @@ public class UsuariosDAO implements IUsuariosDAO {
         }
     }
 
-    @Override
-    public Usuario obtenerUsuario(Integer id) throws DAOException {
-        try (Connection c = conexion.obtenerConexion();
-                PreparedStatement select = c.prepareStatement(
-                    "SELECT * FROM usuario WHERE id_usuario = ?;", 
-                    Statement.RETURN_GENERATED_KEYS)) {
+  @Override
+public Usuario obtenerUsuario(Integer id) throws DAOException {
+    try (Connection c = conexion.obtenerConexion();
+            PreparedStatement select = c.prepareStatement(
+                "SELECT * FROM usuario WHERE id_usuario = ?;", 
+                Statement.RETURN_GENERATED_KEYS)) {
+        
+        select.setInt(1, id);
+        
+        ResultSet resultado = select.executeQuery();
+        
+        if (resultado.next()) {
+            Usuario usuario = new Usuario();
             
-            select.setInt(1, id);
+            usuario.setId(resultado.getInt("id_usuario"));
+            usuario.setEmail(resultado.getString("email"));
+            usuario.setNombreCompleto(resultado.getString("nombre_completo"));
+            usuario.setContrasena(resultado.getString("contrasena"));
+            usuario.setFechaNacimiento(resultado.getDate("fecha_nacimiento"));
+            usuario.setSaldo(resultado.getFloat("saldo"));
+            usuario.setDomicilio(resultado.getString("domicilio"));
+            usuario.setEdad(resultado.getInt("edad"));
             
-            ResultSet resultado = select.executeQuery();
-            
-            if (resultado.first()) {
-                Usuario usuario = new Usuario();
-                
-                usuario.setId(resultado.getInt("id_usuario"));
-                usuario.setEmail(resultado.getString("email"));
-                usuario.setNombreCompleto(resultado.getString("nombre_completo"));
-                usuario.setContrasena(resultado.getString("contrasena"));
-                usuario.setFechaNacimiento(resultado.getDate("fecha_nacimiento"));
-                usuario.setSaldo(resultado.getFloat("saldo"));
-                usuario.setDomicilio(resultado.getString("domicilio"));
-                usuario.setEdad(resultado.getInt("edad"));
-                
-                return usuario;
-            }
-            
-        } catch (SQLException ex) {
-            throw new DAOException("Ocurrio un error en la consulta del producto, intente mas tarde...");
+            return usuario;
+        } else {
+            throw new DAOException("No se encontró el usuario con ID: " + id);
         }
         
-        return null;
+    } catch (SQLException ex) {
+        throw new DAOException("Error al consultar el usuario: " + ex.getMessage());
     }
+}
 
     @Override
     public void agregarUsuario(Usuario usuario) throws DAOException {
@@ -184,40 +184,59 @@ public class UsuariosDAO implements IUsuariosDAO {
         }
     }
 
-    @Override
-    public Usuario iniciarSesion(String email, String contrasena) throws DAOException {
-        try (Connection c = conexion.obtenerConexion();
-                PreparedStatement select = c.prepareStatement(
-                    "SELECT * FROM usuario WHERE email = ?;", 
-                    Statement.RETURN_GENERATED_KEYS)) {
+   @Override
+public Usuario iniciarSesion(String email, String contrasena) throws DAOException {
+    try (Connection c = conexion.obtenerConexion();
+            PreparedStatement select = c.prepareStatement(
+                "SELECT * FROM usuario WHERE email = ?;")) {
+        
+        select.setString(1, email);
+        
+        ResultSet resultado = select.executeQuery();
+        
+        if (resultado.next()) {
+            Usuario usuario = new Usuario();
             
-            select.setString(1, email);
+            usuario.setId(resultado.getInt("id_usuario"));
+            usuario.setEmail(resultado.getString("email"));
+            usuario.setNombreCompleto(resultado.getString("nombre_completo"));
+            usuario.setContrasena(resultado.getString("contrasena"));
+            usuario.setFechaNacimiento(resultado.getDate("fecha_nacimiento"));
+            usuario.setSaldo(resultado.getFloat("saldo"));
+            usuario.setDomicilio(resultado.getString("domicilio"));
+            usuario.setEdad(resultado.getInt("edad"));
             
-            ResultSet resultado = select.executeQuery();
-            
-            if (resultado.first()) {
-                Usuario usuario = new Usuario();
-                
-                usuario.setId(resultado.getInt("id_usuario"));
-                usuario.setEmail(resultado.getString("email"));
-                usuario.setNombreCompleto(resultado.getString("nombre_completo"));
-                usuario.setContrasena(resultado.getString("contrasena"));
-                usuario.setFechaNacimiento(resultado.getDate("fecha_nacimiento"));
-                usuario.setSaldo(resultado.getFloat("saldo"));
-                usuario.setDomicilio(resultado.getString("domicilio"));
-                usuario.setEdad(resultado.getInt("edad"));
-                
-                if (!usuario.getContrasena().equals(contrasena)) {
-                    throw new DAOException("El correo electronico o la contrasena son incorrectos, intente ingresar las credenciales correctas");
-                }
-                
-                return usuario;
+            if (!usuario.getContrasena().equals(contrasena)) {
+                throw new DAOException("El correo electrónico o la contraseña son incorrectos");
             }
             
-            throw new DAOException("El correo electronico o la contrasena son incorrectos, intente ingresar las credenciales correctas");
+            return usuario;
+        }
+        
+        throw new DAOException("El correo electrónico o la contraseña son incorrectos");
+        
+    } catch (SQLException ex) {
+        throw new DAOException("Error al consultar el usuario: " + ex.getMessage());
+    }
+}
+    
+     @Override
+    public void aumentarSaldo(Integer idUsuario, Float cantidad) throws DAOException {
+        try (Connection c = conexion.obtenerConexion();
+             PreparedStatement update = c.prepareStatement(
+                "UPDATE usuario SET saldo = saldo + ? WHERE id_usuario = ?;")) {
+            
+            update.setFloat(1, cantidad);
+            update.setInt(2, idUsuario);
+            
+            int modificados = update.executeUpdate();
+            
+            if (modificados < 1) {
+                throw new DAOException("No se encontró la cuenta del usuario");
+            }
             
         } catch (SQLException ex) {
-            throw new DAOException("Ocurrio un error en la consulta del producto, intente mas tarde...");
+            throw new DAOException("Ocurrió un error al intentar aumentar el saldo, intente más tarde...");
         }
     }
     

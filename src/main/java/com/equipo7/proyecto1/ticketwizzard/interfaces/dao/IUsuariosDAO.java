@@ -57,6 +57,14 @@ public interface IUsuariosDAO {
      * @throws DAOException 
      */
     public Usuario iniciarSesion(String email, String contrasena) throws DAOException;
+    
+    /**
+     * Aumenta el saldo de un usuario
+     * @param idUsuario ID del usuario
+     * @param cantidad Cantidad a aumentar
+     * @throws DAOException 
+     */
+    public void aumentarSaldo(Integer idUsuario, Float cantidad) throws DAOException;
 }
 
 
