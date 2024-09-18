@@ -15,11 +15,12 @@ public class frmTusBoletos extends javax.swing.JFrame {
     /**
      * Creates new form frmTusBoletos
      */
-   private Usuario usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
+    private Usuario usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
 
     public frmTusBoletos(Usuario usuario) {
         initComponents();
         this.usuarioActual = usuario;  // Se asigna el usuario que ha iniciado sesión.
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -47,6 +48,7 @@ public class frmTusBoletos extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TicketWizzard - Inicio");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -231,7 +233,7 @@ public class frmTusBoletos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       // Creamos el nuevo frame
+        // Creamos el nuevo frame
         frmVenderBoleto reg = new frmVenderBoleto(usuarioActual);
 
         // Mostramos el nuevo frame
@@ -242,7 +244,7 @@ public class frmTusBoletos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-           // Creamos el nuevo frame
+        // Creamos el nuevo frame
         frmBoletosEnVenta reg = new frmBoletosEnVenta(usuarioActual);
 
         // Mostramos el nuevo frame
@@ -253,7 +255,7 @@ public class frmTusBoletos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAgregarSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSaldoActionPerformed
-       // Creamos el nuevo frame pasando el usuario actual
+        // Creamos el nuevo frame pasando el usuario actual
         frmAgregarSaldo reg = new frmAgregarSaldo(usuarioActual);
 
         // Mostramos el nuevo frame
@@ -266,7 +268,6 @@ public class frmTusBoletos extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarSaldo;

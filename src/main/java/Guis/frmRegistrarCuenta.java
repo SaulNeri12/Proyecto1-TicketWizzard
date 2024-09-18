@@ -18,6 +18,7 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
     
     public frmRegistrarCuenta( ) {
         initComponents();
+        this.setLocationRelativeTo(null);
         
     }
 
@@ -53,11 +54,12 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TicketWizzard - Registrarse");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel1.setText("Registrar mi Cuenta");
+        jLabel1.setText("Registrar Cuenta");
 
         jLabel2.setText("Nombre Completo:");
 

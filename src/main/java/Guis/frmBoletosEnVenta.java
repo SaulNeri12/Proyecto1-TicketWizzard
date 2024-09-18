@@ -17,19 +17,14 @@ public class frmBoletosEnVenta extends javax.swing.JFrame {
      */
     private Usuario usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
 
-    
-        
-        
-   
     public frmBoletosEnVenta(Usuario usuario) {
         initComponents();
         this.usuarioActual = usuario;  // Se asigna el usuario que ha iniciado sesión.
         configurarPaneles();
-        
-        
+        this.setLocationRelativeTo(null);
     }
-    
-     // Método para configurar los paneles clickeables
+
+    // Método para configurar los paneles clickeables
     private void configurarPaneles() {
         // Supongamos que los paneles jPanel1, jPanel2, jPanel3 han sido creados en el GUI Builder
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -56,19 +51,15 @@ public class frmBoletosEnVenta extends javax.swing.JFrame {
 
     // Método para abrir el formulario frmInfoBoleto
     private void abrirInfoBoleto() {
-       // Crear la instancia de la nueva ventana
-    frmInfoBoleto infoBoleto = new frmInfoBoleto(usuarioActual);
+        // Crear la instancia de la nueva ventana
+        frmInfoBoleto infoBoleto = new frmInfoBoleto(usuarioActual);
 
-    // Hacer visible la nueva ventana
-    infoBoleto.setVisible(true);
+        // Hacer visible la nueva ventana
+        infoBoleto.setVisible(true);
 
-    // Cerrar la ventana actual (frmBoletosEnVenta)
-    this.dispose(); // 'this' hace referencia a la ventana actual
+        // Cerrar la ventana actual (frmBoletosEnVenta)
+        this.dispose(); // 'this' hace referencia a la ventana actual
     }
-
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -87,6 +78,7 @@ public class frmBoletosEnVenta extends javax.swing.JFrame {
         btnVolverTusBoletos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TicketWizzard - Boletos en Venta");
 
         pnlFondo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -185,21 +177,19 @@ public class frmBoletosEnVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverTusBoletosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverTusBoletosActionPerformed
-       // Crear la instancia de la nueva ventana
-    frmTusBoletos infoBoleto = new frmTusBoletos(usuarioActual);
+        // Crear la instancia de la nueva ventana
+        frmTusBoletos infoBoleto = new frmTusBoletos(usuarioActual);
 
-    // Hacer visible la nueva ventana
-    infoBoleto.setVisible(true);
+        // Hacer visible la nueva ventana
+        infoBoleto.setVisible(true);
 
-    // Cerrar la ventana actual (frmBoletosEnVenta)
-    this.dispose(); // 'this' hace referencia a la ventana actual
+        // Cerrar la ventana actual (frmBoletosEnVenta)
+        this.dispose(); // 'this' hace referencia a la ventana actual
     }//GEN-LAST:event_btnVolverTusBoletosActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVolverTusBoletos;

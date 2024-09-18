@@ -17,20 +17,15 @@ import javax.swing.JOptionPane;
 
 public class frmInicioSesion extends javax.swing.JFrame {
     private UsuariosDAO usuariosDAO;
-   
-
-
-    
-    
+ 
     public frmInicioSesion() {
         
         initComponents();
         Conexion conexion = new Conexion(); // Crear instancia de la conexión
         usuariosDAO = new UsuariosDAO(conexion); // Inicializar el DAO con la conexión
+        this.setLocationRelativeTo(null);
     }
     
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,6 +47,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TicketWizzard - Iniciar Sesion");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -107,9 +103,9 @@ public class frmInicioSesion extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3)
-                                .addComponent(passwordFieldCOntra, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(passwordFieldCOntra, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(161, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -163,30 +159,25 @@ public class frmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegActionPerformed
 
     private void btnInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioSesionActionPerformed
-String email = txtCorreo.getText();
-    String contrasena = new String(passwordFieldCOntra.getPassword());
+        String email = txtCorreo.getText();
+        String contrasena = new String(passwordFieldCOntra.getPassword());
 
-    try {
-        Usuario usuario = usuariosDAO.iniciarSesion(email, contrasena);
-        if (usuario != null) {
-            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. Bienvenido, " + usuario.getNombreCompleto());
-            
-            // Creamos el frame frmTusBoletos pasándole el usuario
-            frmTusBoletos tusBoletosFrame = new frmTusBoletos(usuario);
-            tusBoletosFrame.setVisible(true);
+        try {
+            Usuario usuario = usuariosDAO.iniciarSesion(email, contrasena);
+            if (usuario != null) {
+                JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. Bienvenido, " + usuario.getNombreCompleto());
 
-            // Ocultamos la ventana actual
-            this.setVisible(false);
+                // Creamos el frame frmTusBoletos pasándole el usuario
+                frmTusBoletos tusBoletosFrame = new frmTusBoletos(usuario);
+                tusBoletosFrame.setVisible(true);
+
+                // Ocultamos la ventana actual
+                this.setVisible(false);
+            }
+        } catch (DAOException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (DAOException ex) {
-        JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-        this.setVisible(false);    }//GEN-LAST:event_btnInicioSesionActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-   
+    }//GEN-LAST:event_btnInicioSesionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicioSesion;

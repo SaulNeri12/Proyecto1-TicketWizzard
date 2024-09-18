@@ -29,112 +29,109 @@ public class frmTicket extends javax.swing.JFrame {
     /**
      * Creates new form frmTicket
      */
-        private final Usuario usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
+    private final Usuario usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
 
     public frmTicket(Usuario usuario) {
-         this.usuarioActual = usuario;
+        this.usuarioActual = usuario;
         initComponents();
+        this.setLocationRelativeTo(null);
     }
-    
-    
-private void generarPDF() {
-    String vendedor = txtVendedor.getText();
-    String comprador = txtComprador.getText();
-    String evento = txtEvento.getText();
-    String cantidad = txtCantidad.getText();
-    String total = txtTotal.getText();
 
-    // Archivo PDF a generar
-    Document document = new Document();
-    String fileName = "TicketVenta.pdf";
+    private void generarPDF() {
+        String vendedor = txtVendedor.getText();
+        String comprador = txtComprador.getText();
+        String evento = txtEvento.getText();
+        String cantidad = txtCantidad.getText();
+        String total = txtTotal.getText();
 
-    try {
-        // Configuración para generar el PDF
-        PdfWriter.getInstance(document, new FileOutputStream(fileName));
-        document.open();
+        // Archivo PDF a generar
+        Document document = new Document();
+        String fileName = "TicketVenta.pdf";
 
-        // Título del ticket
-        Font titleFont = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD);
-        Paragraph title = new Paragraph("TICKET", titleFont);
-        title.setAlignment(Element.ALIGN_CENTER);
-        document.add(title);
+        try {
+            // Configuración para generar el PDF
+            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            document.open();
 
-        // Separación con línea
-        document.add(new Paragraph("\n"));
-        document.add(new LineSeparator());
+            // Título del ticket
+            Font titleFont = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD);
+            Paragraph title = new Paragraph("TICKET", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
 
-        // Información del vendedor y comprador
-        Font boldFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
-        document.add(new Paragraph("Vendedor: " + vendedor, boldFont));
-        document.add(new Paragraph("Comprador: " + comprador, boldFont));
-        
-        document.add(new Paragraph("\n"));  // Espaciado
+            // Separación con línea
+            document.add(new Paragraph("\n"));
+            document.add(new LineSeparator());
 
-        // Línea de separación
-        document.add(new LineSeparator());
+            // Información del vendedor y comprador
+            Font boldFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+            document.add(new Paragraph("Vendedor: " + vendedor, boldFont));
+            document.add(new Paragraph("Comprador: " + comprador, boldFont));
 
-        // Información del evento
-        document.add(new Paragraph("Evento: " + evento, boldFont));
-        document.add(new Paragraph("Cantidad: " + cantidad, boldFont));
-        document.add(new Paragraph("Total a Pagar: $" + total, boldFont));
+            document.add(new Paragraph("\n"));  // Espaciado
 
-        document.add(new Paragraph("\n"));  // Espaciado
+            // Línea de separación
+            document.add(new LineSeparator());
 
-        // Línea de separación
-        document.add(new LineSeparator());
+            // Información del evento
+            document.add(new Paragraph("Evento: " + evento, boldFont));
+            document.add(new Paragraph("Cantidad: " + cantidad, boldFont));
+            document.add(new Paragraph("Total a Pagar: $" + total, boldFont));
 
-        // Mensaje de agradecimiento
-        Font footerFont = new Font(Font.FontFamily.HELVETICA, 10, Font.ITALIC);
-        Paragraph footer = new Paragraph("Gracias por su compra", footerFont);
-        footer.setAlignment(Element.ALIGN_CENTER);
-        document.add(footer);
+            document.add(new Paragraph("\n"));  // Espaciado
 
-        // Agregar la fecha de emisión del ticket
-        Paragraph fecha = new Paragraph("Fecha: " + LocalDate.now().toString(), footerFont);
-        fecha.setAlignment(Element.ALIGN_CENTER);
-        document.add(fecha);
+            // Línea de separación
+            document.add(new LineSeparator());
 
-        // Cierre del documento
-        document.close();
+            // Mensaje de agradecimiento
+            Font footerFont = new Font(Font.FontFamily.HELVETICA, 10, Font.ITALIC);
+            Paragraph footer = new Paragraph("Gracias por su compra", footerFont);
+            footer.setAlignment(Element.ALIGN_CENTER);
+            document.add(footer);
 
-        JOptionPane.showMessageDialog(this, "PDF generado con éxito. Ubicación: " + new File(fileName).getAbsolutePath(), "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        abrirPDF(fileName);
-    } catch (DocumentException de) {
-        JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + de.getMessage(), "Error de Documento", JOptionPane.ERROR_MESSAGE);
-    } catch (FileNotFoundException fnfe) {
-        JOptionPane.showMessageDialog(this, "No se pudo encontrar el archivo para guardar el PDF: " + fnfe.getMessage(), "Error de Archivo", JOptionPane.ERROR_MESSAGE);
-    }
-}
+            // Agregar la fecha de emisión del ticket
+            Paragraph fecha = new Paragraph("Fecha: " + LocalDate.now().toString(), footerFont);
+            fecha.setAlignment(Element.ALIGN_CENTER);
+            document.add(fecha);
 
-    
-    private void abrirPDF(String fileName) {
-    try {
-        File pdfFile = new File(fileName);
-        if (pdfFile.exists()) {
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().open(pdfFile);
-            } else {
-                JOptionPane.showMessageDialog(this, 
-                    "La apertura automática no está soportada en este sistema.\n" +
-                    "Por favor, abra el archivo manualmente: " + pdfFile.getAbsolutePath(),
-                    "No se puede abrir automáticamente", 
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, 
-                "El archivo PDF generado no existe en la ubicación esperada.",
-                "Archivo No Encontrado", 
-                JOptionPane.ERROR_MESSAGE);
+            // Cierre del documento
+            document.close();
+
+            JOptionPane.showMessageDialog(this, "PDF generado con éxito. Ubicación: " + new File(fileName).getAbsolutePath(), "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            abrirPDF(fileName);
+        } catch (DocumentException de) {
+            JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + de.getMessage(), "Error de Documento", JOptionPane.ERROR_MESSAGE);
+        } catch (FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog(this, "No se pudo encontrar el archivo para guardar el PDF: " + fnfe.getMessage(), "Error de Archivo", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (IOException ex) {
-        JOptionPane.showMessageDialog(this, 
-            "Error al abrir el archivo PDF: " + ex.getMessage(),
-            "Error de IO", 
-            JOptionPane.ERROR_MESSAGE);
     }
-}
 
-
+    private void abrirPDF(String fileName) {
+        try {
+            File pdfFile = new File(fileName);
+            if (pdfFile.exists()) {
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(pdfFile);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "La apertura automática no está soportada en este sistema.\n"
+                            + "Por favor, abra el archivo manualmente: " + pdfFile.getAbsolutePath(),
+                            "No se puede abrir automáticamente",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "El archivo PDF generado no existe en la ubicación esperada.",
+                        "Archivo No Encontrado",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al abrir el archivo PDF: " + ex.getMessage(),
+                    "Error de IO",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -161,6 +158,7 @@ private void generarPDF() {
         btnVolverTusBoletos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TicketWizzard - Ticket");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -306,14 +304,14 @@ private void generarPDF() {
     }//GEN-LAST:event_txtEventoActionPerformed
 
     private void btnVolverTusBoletosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverTusBoletosActionPerformed
-      // Creamos el nuevo frame
+        // Creamos el nuevo frame
         frmTusBoletos reg = new frmTusBoletos(usuarioActual);
 
         // Mostramos el nuevo frame
         reg.setVisible(true);
 
         // Ocultamos la ventana actual en lugar de cerrarla
-        this.setVisible(false); 
+        this.setVisible(false);
     }//GEN-LAST:event_btnVolverTusBoletosActionPerformed
 
     private void btnImComActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImComActionPerformed
@@ -323,7 +321,6 @@ private void generarPDF() {
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnImCom;
