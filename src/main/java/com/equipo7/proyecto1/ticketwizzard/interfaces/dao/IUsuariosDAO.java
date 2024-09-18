@@ -1,6 +1,7 @@
 
 package com.equipo7.proyecto1.ticketwizzard.interfaces.dao;
 
+import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
 import java.util.List;
@@ -40,7 +41,7 @@ public interface IUsuariosDAO {
      * @param usuario Usuario a registrar en el sistema
      * @throws DAOException 
      */
-    public void agregarUsuario(Usuario usuario) throws DAOException;
+    public void agregarUsuario(UsuarioDTO usuario) throws DAOException;
     
     /**
      * Actualiza la informacion de un usuario en el sistema

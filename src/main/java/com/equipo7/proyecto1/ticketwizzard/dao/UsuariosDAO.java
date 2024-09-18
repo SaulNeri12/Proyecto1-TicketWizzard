@@ -5,6 +5,7 @@
 package com.equipo7.proyecto1.ticketwizzard.dao;
 
 import com.equipo7.proyecto1.ticketwizzard.conexion.Conexion;
+import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.dao.IUsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
@@ -129,7 +130,7 @@ public Usuario obtenerUsuario(Integer id) throws DAOException {
 }
 
     @Override
-    public void agregarUsuario(Usuario usuario) throws DAOException {
+    public void agregarUsuario(UsuarioDTO usuario) throws DAOException {
         try (Connection c = conexion.obtenerConexion();
                 PreparedStatement insert = c.prepareStatement(
                    "INSERT INTO usuario(email, nombre_completo, domicilio, fecha_nacimiento, edad, saldo, contrasena) VALUES (?,?,?,?,?,?,?);", 

@@ -4,6 +4,16 @@
  */
 package Guis;
 
+import com.equipo7.proyecto1.ticketwizzard.conexion.Conexion;
+import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
+import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
+import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+
 
 
 /**
@@ -35,18 +45,18 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtFechaNac = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtDomicilio = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        PasswordFieldConfirmarContra = new javax.swing.JPasswordField();
+        PasswordFieldContra = new javax.swing.JPasswordField();
+        chbxTerminosYCondiciones = new javax.swing.JCheckBox();
         btnRegistrarUsu = new javax.swing.JButton();
         btnVolverInicioSesion = new javax.swing.JButton();
 
@@ -63,32 +73,32 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
 
         jLabel2.setText("Nombre Completo:");
 
-        jTextField1.setBackground(new java.awt.Color(204, 204, 204));
+        txtNombre.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTextField2.setBackground(new java.awt.Color(204, 204, 204));
+        txtCorreo.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel5.setText("Correo Electronico:");
 
         jLabel3.setText("Fecha de nacimiento:");
 
-        jTextField3.setBackground(new java.awt.Color(204, 204, 204));
+        txtFechaNac.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel6.setText("Domicilio:");
 
-        jTextField4.setBackground(new java.awt.Color(204, 204, 204));
+        txtDomicilio.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel7.setText("Contraseña:");
 
         jLabel8.setText("Confirmar Contraseña:");
 
-        jPasswordField1.setBackground(new java.awt.Color(204, 204, 204));
+        PasswordFieldConfirmarContra.setBackground(new java.awt.Color(204, 204, 204));
 
-        jPasswordField2.setBackground(new java.awt.Color(204, 204, 204));
+        PasswordFieldContra.setBackground(new java.awt.Color(204, 204, 204));
 
-        jCheckBox1.setText("Acepto los terminos y condiciones");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        chbxTerminosYCondiciones.setText("Acepto los terminos y condiciones");
+        chbxTerminosYCondiciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                chbxTerminosYCondicionesActionPerformed(evt);
             }
         });
 
@@ -120,26 +130,26 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel1)
                                         .addComponent(jLabel8)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jPasswordField2)
-                                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(PasswordFieldContra)
+                                            .addComponent(PasswordFieldConfirmarContra, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGap(11, 11, 11)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
-                                .addComponent(jCheckBox1)))))
+                                .addComponent(chbxTerminosYCondiciones)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(btnRegistrarUsu)
                 .addGap(25, 25, 25))
@@ -152,29 +162,29 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PasswordFieldContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PasswordFieldConfirmarContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(chbxTerminosYCondiciones)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrarUsu)
@@ -196,19 +206,72 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void chbxTerminosYCondicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbxTerminosYCondicionesActionPerformed
+        btnRegistrarUsu.setEnabled(chbxTerminosYCondiciones.isSelected());
+    }//GEN-LAST:event_chbxTerminosYCondicionesActionPerformed
 
     private void btnRegistrarUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarUsuActionPerformed
-     // Creamos el nuevo frame
-        frmInicioSesion reg = new frmInicioSesion();
+     // Verificar que todos los campos estén llenos
+    if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty() || 
+        txtDomicilio.getText().isEmpty() || txtFechaNac.getText().isEmpty() || 
+        PasswordFieldContra.getPassword().length == 0 || 
+        PasswordFieldConfirmarContra.getPassword().length == 0) {
+        
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Mostramos el nuevo frame
-        reg.setVisible(true);
+    // Verificar que las contraseñas coincidan
+    if (!Arrays.equals(PasswordFieldContra.getPassword(), PasswordFieldConfirmarContra.getPassword())) {
+        JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Ocultamos la ventana actual en lugar de cerrarla
-        this.setVisible(false);
+    // Verificar que se hayan aceptado los términos y condiciones
+    if (!chbxTerminosYCondiciones.isSelected()) {
+        JOptionPane.showMessageDialog(this, "Debe aceptar los términos y condiciones", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    try {
+        // Crear un nuevo UsuarioDTO con los datos del formulario
+        UsuarioDTO nuevoUsuario = new UsuarioDTO();
+        nuevoUsuario.setNombreCompleto(txtNombre.getText());
+        nuevoUsuario.setEmail(txtCorreo.getText());
+        nuevoUsuario.setDomicilio(txtDomicilio.getText());
+        nuevoUsuario.setFechaNacimiento(Date.valueOf(txtFechaNac.getText())); // Asumiendo que el formato es correcto (YYYY-MM-DD)
+        nuevoUsuario.setContrasena(new String(PasswordFieldContra.getPassword()));
+        
+        // Calcular la edad basada en la fecha de nacimiento
+        LocalDate fechaNac = nuevoUsuario.getFechaNacimiento().toLocalDate();
+        LocalDate ahora = LocalDate.now();
+        int edad = Period.between(fechaNac, ahora).getYears();
+        nuevoUsuario.setEdad(edad);
+
+        // Establecer un saldo inicial (por ejemplo, 0)
+        nuevoUsuario.setSaldo(0.0f);
+
+        // Crear una instancia de UsuariosDAO
+        Conexion conexion = new Conexion(); // Asumiendo que tienes un constructor sin parámetros
+        UsuariosDAO usuariosDAO = new UsuariosDAO(conexion);
+
+        // Agregar el usuario a la base de datos
+        usuariosDAO.agregarUsuario(nuevoUsuario);
+
+        JOptionPane.showMessageDialog(this, "Usuario registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+        // Crear y mostrar el frame de inicio de sesión
+        frmInicioSesion inicioSesion = new frmInicioSesion();
+        inicioSesion.setVisible(true);
+        
+        // Cerrar el frame actual
+        this.dispose();
+
+    } catch (DAOException e) {
+        JOptionPane.showMessageDialog(this, "Error al registrar el usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use YYYY-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnRegistrarUsuActionPerformed
 
     private void btnVolverInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverInicioSesionActionPerformed
@@ -228,10 +291,12 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField PasswordFieldConfirmarContra;
+    private javax.swing.JPasswordField PasswordFieldContra;
     private javax.swing.JButton btnRegistrarUsu;
     private javax.swing.JButton btnVolverInicioSesion;
+    private javax.swing.JCheckBox chbxTerminosYCondiciones;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -240,11 +305,9 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDomicilio;
+    private javax.swing.JTextField txtFechaNac;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
