@@ -20,6 +20,7 @@ public class frmInfoBoleto extends javax.swing.JFrame {
     public frmInfoBoleto(Usuario usuario ) {
         initComponents();
         this.usuarioActual = usuario;
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -51,6 +52,7 @@ public class frmInfoBoleto extends javax.swing.JFrame {
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TicketWizzard - Informacion del boleto");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

@@ -16,7 +16,7 @@ public class Conexion implements IConexion {
 
     String cadenaConexion = "jdbc:mysql://localhost:3306/ticketwizzard";
     String user = "root";
-    String pwd = "root";
+    String pwd = "19040042";
 
     public Conexion() {
         

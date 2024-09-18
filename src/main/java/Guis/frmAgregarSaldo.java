@@ -16,7 +16,6 @@ import com.equipo7.proyecto1.ticketwizzard.interfaces.dao.IUsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
 import javax.swing.JOptionPane;
 
-
 public class frmAgregarSaldo extends javax.swing.JFrame {
 
     /**
@@ -26,19 +25,32 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
     private Usuario usuarioActual;
 
     public frmAgregarSaldo(Usuario usuario) {
-       initComponents();
-    Conexion conexion = new Conexion();
-    this.usuariosDAO = new UsuariosDAO(conexion);
-    this.usuarioActual = usuario;
-    this.lblNombreUsu.setText(usuario.getNombreCompleto()); // Aquí se asigna el nombre al label
-
-    }
-     public frmAgregarSaldo() {
         initComponents();
         Conexion conexion = new Conexion();
         this.usuariosDAO = new UsuariosDAO(conexion);
-        
+        this.usuarioActual = usuario;
+        this.lblNombreUsu.setText(usuario.getNombreCompleto()); // Aquí se asigna el nombre al label
+        this.setLocationRelativeTo(null);
     }
+
+    public frmAgregarSaldo() {
+        initComponents();
+        Conexion conexion = new Conexion();
+        this.usuariosDAO = new UsuariosDAO(conexion);
+
+    }
+
+    private void volver() {
+        // Crear la instancia de la nueva ventana
+        frmTusBoletos infoBoleto = new frmTusBoletos(usuarioActual);
+
+        // Hacer visible la nueva ventana
+        infoBoleto.setVisible(true);
+
+        // Cerrar la ventana actual (frmBoletosEnVenta)
+        this.dispose(); // 'this' hace referencia a la ventana actual
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,6 +71,7 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TicketWizzard - Agregar Saldo");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -71,7 +84,7 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel4.setText("¿Cuanto desea agregar?");
 
-        jLabel5.setText("Nota: Este sistema solo acePta agregar con multiPlos de 50$");
+        jLabel5.setText("Nota: Solo se aceptan cantidades que sean multiplos de 50");
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +182,8 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
             usuariosDAO.aumentarSaldo(usuarioActual.getId(), cantidad);
             usuarioActual = usuariosDAO.obtenerUsuario(usuarioActual.getId());
             JOptionPane.showMessageDialog(this, "Saldo aumentado exitosamente. Nuevo saldo: $" + usuarioActual.getSaldo(), "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose(); // Cierra la ventana después de aumentar el saldo
+            
+            volver(); // Cierra la ventana después de aumentar el saldo
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese una cantidad válida", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (DAOException e) {
@@ -178,13 +192,12 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        volver();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

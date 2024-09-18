@@ -16,11 +16,12 @@ public class frmVenderBoleto extends javax.swing.JFrame {
     /**
      * Creates new form frmVenderBoleto
      */
-        private final Usuario usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
+    private final Usuario usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
 
     public frmVenderBoleto(Usuario usuario) {
-         this.usuarioActual = usuario;
+        this.usuarioActual = usuario;
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -49,6 +50,7 @@ public class frmVenderBoleto extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TicketWizzard - Publicar boleto");
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -183,45 +185,21 @@ public class frmVenderBoleto extends javax.swing.JFrame {
         reg.setVisible(true);
 
         // Ocultamos la ventana actual en lugar de cerrarla
-        this.setVisible(false); 
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-JOptionPane.showMessageDialog(null, "Boleto puesto en venta con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        JOptionPane.showMessageDialog(null, "Boleto puesto en venta con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnImCom;
-    private javax.swing.JButton btnImCom1;
-    private javax.swing.JButton btnInicioSesion;
-    private javax.swing.JButton btnInicioSesion1;
-    private javax.swing.JButton btnReg;
-    private javax.swing.JButton btnReg1;
-    private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnSalir1;
-    private javax.swing.JButton btnVolverTusBoletos;
-    private javax.swing.JButton btnVolverTusBoletos1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -230,35 +208,10 @@ JOptionPane.showMessageDialog(null, "Boleto puesto en venta con éxito", "Éxito
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
