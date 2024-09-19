@@ -8,14 +8,10 @@ package gui;
  *
  * @author caarl
  */
-import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
-import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorUsuarios;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class frmAgregarSaldo extends javax.swing.JFrame {

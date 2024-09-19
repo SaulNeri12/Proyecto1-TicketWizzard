@@ -5,7 +5,6 @@
 package gui;
 
 import com.equipo7.proyecto1.ticketwizzard.criptografia.Encriptador;
-import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;

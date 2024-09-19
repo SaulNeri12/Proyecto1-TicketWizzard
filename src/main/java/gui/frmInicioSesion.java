@@ -8,17 +8,11 @@ package gui;
  *
  * @author caarl
  */
-import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
-import com.equipo7.proyecto1.ticketwizzard.conexion.Conexion;
 import com.equipo7.proyecto1.ticketwizzard.criptografia.Encriptador;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
-import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorUsuarios;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
-import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 

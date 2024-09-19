@@ -5,7 +5,6 @@
 package gui;
 
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
-import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
 import javax.swing.JOptionPane;
 
 /**

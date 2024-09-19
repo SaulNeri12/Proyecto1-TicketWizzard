@@ -5,7 +5,6 @@
 package com.equipo7.proyecto1.ticketwizzard.dao;
 
 import com.equipo7.proyecto1.ticketwizzard.conexion.Conexion;
-import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.dao.IUsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
@@ -16,7 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
