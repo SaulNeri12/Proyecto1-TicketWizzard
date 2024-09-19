@@ -9,10 +9,13 @@ package gui;
  * @author caarl
  */
 import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
-import com.equipo7.proyecto1.ticketwizzard.conexion.Conexion;
+import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
-import com.equipo7.proyecto1.ticketwizzard.interfaces.dao.IUsuariosDAO;
-import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
+import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorUsuarios;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class frmAgregarSaldo extends javax.swing.JFrame {
@@ -20,43 +23,33 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
     /**
      * Creates new form frmAgregarSaldo
      */
-    private IUsuariosDAO usuariosDAO;
-    private Usuario usuarioActual;
+    private IGestorUsuarios gestorUsuarios;
+    private UsuarioDTO usuarioActual;
 
-    public frmAgregarSaldo(Usuario usuario) {
+    public frmAgregarSaldo(UsuarioDTO usuario) {
         initComponents();
         
-        this.usuariosDAO = UsuariosDAO.getInstance();
+        this.gestorUsuarios = GestorUsuarios.getInstance();
         this.usuarioActual = usuario;
         
-        this.lblNombreUsu.setText(usuario.getNombreCompleto()); // Aquí se asigna el nombre al label
-        this.setLocationRelativeTo(null);
-        
         try {
+            this.lblNombreUsu.setText(usuario.getNombreCompleto()); // Aquí se asigna el nombre al label
+            this.setLocationRelativeTo(null);
+            
             // Obtener el usuario actualizado de la base de datos
-            Usuario usuarioActualizado = this.usuariosDAO.obtenerUsuario(usuario.getId());
-
+            UsuarioDTO usuarioActualizado = this.gestorUsuarios.obtenerUsuario(usuario.getId());
             // Asignar el saldo actual del usuario al label
             this.lblSaldoActual.setText(String.format("$%.2f", usuarioActualizado.getSaldo()));
-
             // Actualizar el usuario actual con la información más reciente
             this.usuarioActual = usuarioActualizado;
-        } catch (DAOException e) {
-            // Manejar la excepción, por ejemplo, mostrando un mensaje de error
-            JOptionPane.showMessageDialog(this, "Error al obtener el saldo actual: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            // Si hay un error, usamos el saldo del objeto usuario original
-            this.lblSaldoActual.setText(String.format("$%.2f", usuario.getSaldo()));
+            
+            this.setLocationRelativeTo(null);
+        } catch (GestorException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-
-        this.setLocationRelativeTo(null);
     }
 
-    public frmAgregarSaldo() {
-        initComponents();
-        
-        this.usuariosDAO = UsuariosDAO.getInstance();
-
-    }
+  
 
     private void volver() {
         // Crear la instancia de la nueva ventana
@@ -224,8 +217,9 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
                 throw new IllegalArgumentException("Porfavor, ingrese una cantidad valida");
             }   
             
-            usuariosDAO.aumentarSaldo(usuarioActual.getId(), cantidad);
-            usuarioActual = usuariosDAO.obtenerUsuario(usuarioActual.getId());
+            this.gestorUsuarios.aumentarSaldo(usuarioActual.getId(), cantidad);
+            
+            usuarioActual = this.gestorUsuarios.obtenerUsuario(usuarioActual.getId());
             
             JOptionPane.showMessageDialog(
                     this, 
@@ -237,9 +231,9 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
             volver(); // Cierra la ventana después de aumentar el saldo
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese una cantidad válida", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (DAOException e) {
-            JOptionPane.showMessageDialog(this, "Error al aumentar el saldo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (GestorException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAgregarActionPerformed

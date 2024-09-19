@@ -11,18 +11,23 @@ package gui;
 import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.conexion.Conexion;
 import com.equipo7.proyecto1.ticketwizzard.criptografia.Encriptador;
+import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
+import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorUsuarios;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
 public class frmInicioSesion extends javax.swing.JFrame {
-    private UsuariosDAO usuariosDAO;
+    private IGestorUsuarios gestorUsuarios;
  
     public frmInicioSesion() {
-        
         initComponents();
-        usuariosDAO = UsuariosDAO.getInstance(); // Inicializar el DAO con la conexión
+        this.gestorUsuarios = GestorUsuarios.getInstance();
         this.setLocationRelativeTo(null);
     }
     
@@ -149,7 +154,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
 
     private void btnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegActionPerformed
       // Creamos el nuevo frame
-        frmRegistrarCuenta reg = new frmRegistrarCuenta();
+        frmRegistrarCuenta reg = new frmRegistrarCuenta(this.gestorUsuarios);
 
         // Mostramos el nuevo frame
         reg.setVisible(true);
@@ -159,26 +164,25 @@ public class frmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegActionPerformed
 
     private void btnInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioSesionActionPerformed
-        String email = txtCorreo.getText();
-        String contrasena = new String(passwordFieldCOntra.getPassword());
-        
-        contrasena = Encriptador.hash(contrasena);
-        
         try {
-            Usuario usuario = usuariosDAO.iniciarSesion(email, contrasena);
+            String email = txtCorreo.getText();
+            String contrasena = new String(passwordFieldCOntra.getPassword());
             
+            contrasena = Encriptador.hash(contrasena);
+            
+            UsuarioDTO usuario = gestorUsuarios.iniciarSesion(email, contrasena);
             if (usuario != null) {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. Bienvenido, " + usuario.getNombreCompleto());
-
+                
                 // Creamos el frame frmTusBoletos pasándole el usuario
                 frmTusBoletos tusBoletosFrame = new frmTusBoletos(usuario);
                 tusBoletosFrame.setVisible(true);
-
+                
                 // Ocultamos la ventana actual
                 this.setVisible(false);
             }
-        } catch (DAOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (GestorException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnInicioSesionActionPerformed
 
