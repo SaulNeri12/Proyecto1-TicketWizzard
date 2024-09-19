@@ -15,12 +15,21 @@ import java.util.List;
  * @author Equipo 7
  */
 public class EventosDAO implements IEventosDAO {
+    private static EventosDAO instance;
+    
     private Conexion conexion;
     
-    public EventosDAO(Conexion conexion) {
-        this.conexion = conexion;
+    private EventosDAO() {
+        this.conexion = Conexion.getInstance();
     }
     
+    public static EventosDAO getInstance() {
+        if (instance == null) {
+            instance = new EventosDAO();
+        }
+        
+        return instance;
+    }
     
     @Override
     public List<Evento> obtenerEventosTodos() throws DAOException {

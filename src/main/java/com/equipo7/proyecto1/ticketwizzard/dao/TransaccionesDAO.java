@@ -12,10 +12,20 @@ import java.util.List;
  * @author Equipo 7
  */
 public class TransaccionesDAO implements ITransaccionesDAO {
+    private static TransaccionesDAO instance;
+    
     private Conexion conexion;
     
-    public TransaccionesDAO(Conexion conexion) {
-        this.conexion = conexion;
+    private TransaccionesDAO() {
+        this.conexion = Conexion.getInstance();
+    }
+    
+    public static TransaccionesDAO getInstance() {
+        if (instance == null) {
+            instance = new TransaccionesDAO(); 
+        }
+        
+        return instance;
     }
     
     @Override

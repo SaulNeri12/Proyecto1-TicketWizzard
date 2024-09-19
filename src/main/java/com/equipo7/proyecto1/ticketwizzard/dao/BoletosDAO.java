@@ -15,11 +15,20 @@ import java.util.List;
  * @author Equipo 7
  */
 public class BoletosDAO implements IBoletosDAO {
-
+    private static BoletosDAO instance;
+    
     private Conexion conexion;
     
-    public BoletosDAO(Conexion conexion) {
-        this.conexion = conexion;
+    public BoletosDAO() {
+        this.conexion = Conexion.getInstance();
+    }
+    
+    public static BoletosDAO getInstance() {
+        if (instance == null) {
+            instance = new BoletosDAO();
+        }
+        
+        return instance;
     }
     
     @Override

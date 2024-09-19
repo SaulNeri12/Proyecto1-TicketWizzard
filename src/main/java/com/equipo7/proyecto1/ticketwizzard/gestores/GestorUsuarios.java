@@ -4,6 +4,7 @@
  */
 package com.equipo7.proyecto1.ticketwizzard.gestores;
 
+import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
@@ -17,10 +18,20 @@ import java.util.List;
  * @author Equipo 7
  */
 public class GestorUsuarios implements IGestorUsuarios {
+    private static GestorUsuarios instance;
+    
     private IUsuariosDAO usuariosDAO;
     
-    public GestorUsuarios() {
+    private GestorUsuarios() {
+        this.usuariosDAO = UsuariosDAO.getInstance();
+    }
+    
+    public static GestorUsuarios getInstance() {
+        if (instance == null) {
+            instance = new GestorUsuarios();
+        }
         
+        return instance;
     }
     
     /**

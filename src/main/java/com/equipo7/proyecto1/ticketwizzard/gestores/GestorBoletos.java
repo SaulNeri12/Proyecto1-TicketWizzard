@@ -1,6 +1,7 @@
 
 package com.equipo7.proyecto1.ticketwizzard.gestores;
 
+import com.equipo7.proyecto1.ticketwizzard.dao.BoletosDAO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.BoletoDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.dao.IBoletosDAO;
@@ -13,12 +14,21 @@ import java.util.List;
  * @author Equipo 7
  */
 public class GestorBoletos implements IGestorBoletos {
+    private static GestorBoletos instance;
+    
     private IBoletosDAO boletosDAO;
     
-    public GestorBoletos() {
-        
+    private GestorBoletos() {
+        this.boletosDAO = BoletosDAO.getInstance();
     }
     
+    public static GestorBoletos getInstance() {
+        if (instance == null) {
+            instance = new GestorBoletos();
+        }
+        
+        return instance;
+    }
     /**
      * Convierte el boleto entidad dado en objeto DTO
      * @param boleto Boleto entidad

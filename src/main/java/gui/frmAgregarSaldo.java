@@ -25,8 +25,8 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
 
     public frmAgregarSaldo(Usuario usuario) {
         initComponents();
-        Conexion conexion = new Conexion();
-        this.usuariosDAO = new UsuariosDAO(conexion);
+        
+        this.usuariosDAO = UsuariosDAO.getInstance();
         this.usuarioActual = usuario;
         
         this.lblNombreUsu.setText(usuario.getNombreCompleto()); // Aquí se asigna el nombre al label
@@ -53,8 +53,8 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
 
     public frmAgregarSaldo() {
         initComponents();
-        Conexion conexion = new Conexion();
-        this.usuariosDAO = new UsuariosDAO(conexion);
+        
+        this.usuariosDAO = UsuariosDAO.getInstance();
 
     }
 

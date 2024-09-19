@@ -10,6 +10,7 @@ package gui;
  */
 import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.conexion.Conexion;
+import com.equipo7.proyecto1.ticketwizzard.criptografia.Encriptador;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
 import javax.swing.JOptionPane;
@@ -21,8 +22,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
     public frmInicioSesion() {
         
         initComponents();
-        Conexion conexion = new Conexion(); // Crear instancia de la conexión
-        usuariosDAO = new UsuariosDAO(conexion); // Inicializar el DAO con la conexión
+        usuariosDAO = UsuariosDAO.getInstance(); // Inicializar el DAO con la conexión
         this.setLocationRelativeTo(null);
     }
     
@@ -161,9 +161,12 @@ public class frmInicioSesion extends javax.swing.JFrame {
     private void btnInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioSesionActionPerformed
         String email = txtCorreo.getText();
         String contrasena = new String(passwordFieldCOntra.getPassword());
-
+        
+        contrasena = Encriptador.hash(contrasena);
+        
         try {
             Usuario usuario = usuariosDAO.iniciarSesion(email, contrasena);
+            
             if (usuario != null) {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. Bienvenido, " + usuario.getNombreCompleto());
 
