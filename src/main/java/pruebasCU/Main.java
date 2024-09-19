@@ -14,8 +14,7 @@ import com.equipo7.proyecto1.ticketwizzard.interfaces.dao.IUsuariosDAO;
  */
 public class Main {
     public static void main(String[] args) {
-        Conexion conexion = new Conexion(); 
-        IUsuariosDAO usuariosDAO = new UsuariosDAO(conexion);
+        IUsuariosDAO usuariosDAO = UsuariosDAO.getInstance();
         CasoDeUsoUsuario casoDeUso = new CasoDeUsoUsuario(usuariosDAO);
 
         casoDeUso.ejecutar();

@@ -4,6 +4,7 @@
  */
 package com.equipo7.proyecto1.ticketwizzard.gestores;
 
+import com.equipo7.proyecto1.ticketwizzard.dao.EventosDAO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.EventoDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.dao.IEventosDAO;
@@ -16,10 +17,20 @@ import java.util.List;
  * @author Equipo 7
  */
 public class GestorEventos implements IGestorEventos {
+    private static GestorEventos instance;
+    
     private IEventosDAO eventosDAO;
     
-    public GestorEventos() {
+    private GestorEventos() {
+        this.eventosDAO = EventosDAO.getInstance();
+    }
+    
+    public static GestorEventos getInstance() {
+        if (instance == null) {
+            instance = new GestorEventos();
+        }
         
+        return instance;
     }
     
     /**

@@ -23,10 +23,20 @@ import org.mindrot.jbcrypt.BCrypt;
  * @author Equipo 7
  */
 public class UsuariosDAO implements IUsuariosDAO {
+    private static UsuariosDAO instance;
+    
     private Conexion conexion;
     
-    public UsuariosDAO(Conexion conexion) {
-        this.conexion = conexion;
+    private UsuariosDAO() {
+        this.conexion = Conexion.getInstance();
+    }
+    
+    public static UsuariosDAO getInstance() {
+        if (instance == null) {
+            instance = new UsuariosDAO();
+        }
+        
+        return instance;
     }
     
     @Override
@@ -65,11 +75,11 @@ public class UsuariosDAO implements IUsuariosDAO {
     public List<Usuario> obtenerUsuariosPorNombre(String nombreCompleto) throws DAOException {
         try (Connection c = conexion.obtenerConexion();
                 PreparedStatement select = c.prepareStatement(
-                "SELECT * FROM usuario WHERE nombre LIKE '%?%';", 
+                "SELECT * FROM usuario WHERE nombre_completo LIKE ?;", 
                 Statement.RETURN_GENERATED_KEYS)) {
             
             // indica el nombre a buscar
-            select.setString(1, nombreCompleto);
+            select.setString(1, "%" + nombreCompleto + "%");
             
             ResultSet resultados = select.executeQuery();
             
@@ -93,6 +103,7 @@ public class UsuariosDAO implements IUsuariosDAO {
             return usuarios;
             
         } catch (SQLException ex) {
+            System.out.println("ERROR: " + ex.getMessage());
             throw new DAOException("Ocurrio un error al traer la lista de usuarios, intente mas tarde...");
         }
     }
@@ -202,14 +213,14 @@ public Usuario iniciarSesion(String email, String contrasena) throws DAOExceptio
             usuario.setId(resultado.getInt("id_usuario"));
             usuario.setEmail(resultado.getString("email"));
             usuario.setNombreCompleto(resultado.getString("nombre_completo"));
-            String contraseñaEncriptada = resultado.getString("contrasena");
+            String contrasenaEncriptada = resultado.getString("contrasena");
             usuario.setFechaNacimiento(resultado.getDate("fecha_nacimiento"));
             usuario.setSaldo(resultado.getFloat("saldo"));
             usuario.setDomicilio(resultado.getString("domicilio"));
             usuario.setEdad(resultado.getInt("edad"));
             
             // Verificar la contraseña
-            if (BCrypt.checkpw(contrasena, contraseñaEncriptada)) {
+            if (contrasena.equals(contrasenaEncriptada)) {
                 return usuario;
             } else {
                 throw new DAOException("El correo electrónico o la contraseña son incorrectos");

@@ -5,6 +5,7 @@
 package gui;
 
 import com.equipo7.proyecto1.ticketwizzard.conexion.Conexion;
+import com.equipo7.proyecto1.ticketwizzard.criptografia.Encriptador;
 import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
@@ -243,7 +244,7 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
 
         // Encriptar la contrasena
         String contrasenaPlana = new String(PasswordFieldContra.getPassword());
-        String contrasenaEncriptada = BCrypt.hashpw(contrasenaPlana, BCrypt.gensalt(12));
+        String contrasenaEncriptada = Encriptador.hash(contrasenaPlana);
         nuevoUsuario.setContrasena(contrasenaEncriptada);
         
         // Calcular la edad
@@ -256,8 +257,7 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
         nuevoUsuario.setSaldo(0.0f);
 
         // Crear una instancia de UsuariosDAO y agregar el usuario
-        Conexion conexion = new Conexion();
-        UsuariosDAO usuariosDAO = new UsuariosDAO(conexion);
+        UsuariosDAO usuariosDAO =  UsuariosDAO.getInstance();
         usuariosDAO.agregarUsuario(nuevoUsuario);
 
         JOptionPane.showMessageDialog(this, "Usuario registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
