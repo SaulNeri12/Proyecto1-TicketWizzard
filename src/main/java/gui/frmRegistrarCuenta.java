@@ -4,18 +4,16 @@
  */
 package gui;
 
-import com.equipo7.proyecto1.ticketwizzard.conexion.Conexion;
 import com.equipo7.proyecto1.ticketwizzard.criptografia.Encriptador;
 import com.equipo7.proyecto1.ticketwizzard.dao.UsuariosDAO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
-import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
+import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
-import org.mindrot.jbcrypt.BCrypt;
-
 
 /**
  *
@@ -23,14 +21,16 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class frmRegistrarCuenta extends javax.swing.JFrame {
 
+    private IGestorUsuarios gestorUsuarios;
+
     /**
      * Creates new form frmRegistrarCuenta
+     * @param gestorUsuarios
      */
-    
-    public frmRegistrarCuenta( ) {
+    public frmRegistrarCuenta(IGestorUsuarios gestorUsuarios) {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+        this.gestorUsuarios = gestorUsuarios;
     }
 
     /**
@@ -212,70 +212,68 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_chbxTerminosYCondicionesActionPerformed
 
     private void btnRegistrarUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarUsuActionPerformed
-     // Verificar que todos los campos estén llenos
-    if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty() || 
-        txtDomicilio.getText().isEmpty() || txtFechaNac.getText().isEmpty() || 
-        PasswordFieldContra.getPassword().length == 0 || 
-        PasswordFieldConfirmarContra.getPassword().length == 0) {
-        
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        // Verificar que todos los campos estén llenos
+        if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty()
+                || txtDomicilio.getText().isEmpty() || txtFechaNac.getText().isEmpty()
+                || PasswordFieldContra.getPassword().length == 0
+                || PasswordFieldConfirmarContra.getPassword().length == 0) {
 
-    // Verificar que las contraseñas coincidan
-    if (!Arrays.equals(PasswordFieldContra.getPassword(), PasswordFieldConfirmarContra.getPassword())) {
-        JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    // Verificar que se hayan aceptado los términos y condiciones
-    if (!chbxTerminosYCondiciones.isSelected()) {
-        JOptionPane.showMessageDialog(this, "Debe aceptar los términos y condiciones", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        // Verificar que las contraseñas coincidan
+        if (!Arrays.equals(PasswordFieldContra.getPassword(), PasswordFieldConfirmarContra.getPassword())) {
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-     try {
-        // Crear un nuevo UsuarioDTO con los datos del formulario
-        UsuarioDTO nuevoUsuario = new UsuarioDTO();
-        nuevoUsuario.setNombreCompleto(txtNombre.getText());
-        nuevoUsuario.setEmail(txtCorreo.getText());
-        nuevoUsuario.setDomicilio(txtDomicilio.getText());
-        nuevoUsuario.setFechaNacimiento(Date.valueOf(txtFechaNac.getText()));
+        // Verificar que se hayan aceptado los términos y condiciones
+        if (!chbxTerminosYCondiciones.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Debe aceptar los términos y condiciones", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        // Encriptar la contrasena
-        String contrasenaPlana = new String(PasswordFieldContra.getPassword());
-        String contrasenaEncriptada = Encriptador.hash(contrasenaPlana);
-        nuevoUsuario.setContrasena(contrasenaEncriptada);
-        
-        // Calcular la edad
-        LocalDate fechaNac = nuevoUsuario.getFechaNacimiento().toLocalDate();
-        LocalDate ahora = LocalDate.now();
-        int edad = Period.between(fechaNac, ahora).getYears();
-        nuevoUsuario.setEdad(edad);
+        try {
+            // Crear un nuevo UsuarioDTO con los datos del formulario
+            UsuarioDTO nuevoUsuario = new UsuarioDTO();
+            nuevoUsuario.setNombreCompleto(txtNombre.getText());
+            nuevoUsuario.setEmail(txtCorreo.getText());
+            nuevoUsuario.setDomicilio(txtDomicilio.getText());
+            nuevoUsuario.setFechaNacimiento(Date.valueOf(txtFechaNac.getText()));
 
-        // Establecer un saldo inicial
-        nuevoUsuario.setSaldo(0.0f);
+            // Encriptar la contrasena
+            String contrasenaPlana = new String(PasswordFieldContra.getPassword());
+            String contrasenaEncriptada = Encriptador.hash(contrasenaPlana);
+            System.out.println("CONTRASENA: " + contrasenaEncriptada.toString());
+            nuevoUsuario.setContrasena(contrasenaEncriptada);
 
-        // Crear una instancia de UsuariosDAO y agregar el usuario
-        UsuariosDAO usuariosDAO =  UsuariosDAO.getInstance();
-        usuariosDAO.agregarUsuario(nuevoUsuario);
+            // Calcular la edad
+            LocalDate fechaNac = nuevoUsuario.getFechaNacimiento().toLocalDate();
+            LocalDate ahora = LocalDate.now();
+            int edad = Period.between(fechaNac, ahora).getYears();
+            nuevoUsuario.setEdad(edad);
 
-        JOptionPane.showMessageDialog(this, "Usuario registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+            // Establecer un saldo inicial
+            nuevoUsuario.setSaldo(0.0f);
 
-        // Abrir la ventana de inicio de sesión y cerrar la actual
-        frmInicioSesion inicioSesion = new frmInicioSesion();
-        inicioSesion.setVisible(true);
-        this.dispose();
+            this.gestorUsuarios.agregarUsuario(nuevoUsuario);
 
-    } catch (DAOException e) {
-        JOptionPane.showMessageDialog(this, "Error al registrar el usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (IllegalArgumentException e) {
-        JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use YYYY-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+            JOptionPane.showMessageDialog(this, "Usuario registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+            // Abrir la ventana de inicio de sesión y cerrar la actual
+            frmInicioSesion inicioSesion = new frmInicioSesion();
+            inicioSesion.setVisible(true);
+            this.dispose();
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use YYYY-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (GestorException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnRegistrarUsuActionPerformed
 
     private void btnVolverInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverInicioSesionActionPerformed
-       // Creamos el nuevo frame
+        // Creamos el nuevo frame
         frmInicioSesion reg = new frmInicioSesion();
 
         // Mostramos el nuevo frame
@@ -288,7 +286,6 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField PasswordFieldConfirmarContra;

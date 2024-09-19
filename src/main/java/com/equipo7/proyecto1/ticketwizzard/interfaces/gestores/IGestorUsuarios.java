@@ -56,4 +56,12 @@ public interface IGestorUsuarios {
      * @throws GestorException 
      */
     public UsuarioDTO iniciarSesion(String email, String contrasena) throws GestorException;
+    
+    /**
+     * Aumenta el saldo de un usuario anadiendo la cantidad dada a su cuenta
+     * @param idUsuario ID del usuario a modificar
+     * @param cantidad Cantidad a depositar
+     * @throws GestorException 
+     */
+    public void aumentarSaldo(Integer idUsuario, Float cantidad) throws GestorException;
 }

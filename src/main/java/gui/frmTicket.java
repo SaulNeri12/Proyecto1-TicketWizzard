@@ -4,7 +4,7 @@
  */
 package gui;
 
-import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
+import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -29,9 +29,9 @@ public class frmTicket extends javax.swing.JFrame {
     /**
      * Creates new form frmTicket
      */
-    private final Usuario usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
+    private final UsuarioDTO usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
 
-    public frmTicket(Usuario usuario) {
+    public frmTicket(UsuarioDTO usuario) {
         this.usuarioActual = usuario;
         initComponents();
         this.setLocationRelativeTo(null);

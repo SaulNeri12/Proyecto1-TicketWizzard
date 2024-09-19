@@ -4,6 +4,7 @@
  */
 package gui;
 
+import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Usuario;
 
 /**
@@ -15,9 +16,9 @@ public class frmInfoBoleto extends javax.swing.JFrame {
     /**
      * Creates new form frmInfoBoleto
      */
-    private final Usuario usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
+    private final UsuarioDTO usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
 
-    public frmInfoBoleto(Usuario usuario ) {
+    public frmInfoBoleto(UsuarioDTO usuario) {
         initComponents();
         this.usuarioActual = usuario;
         this.setLocationRelativeTo(null);

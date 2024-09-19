@@ -119,8 +119,10 @@ public Usuario obtenerUsuario(Integer id) throws DAOException {
         
         ResultSet resultado = select.executeQuery();
         
+        Usuario usuario = null;
+        
         if (resultado.next()) {
-            Usuario usuario = new Usuario();
+            usuario = new Usuario();
             
             usuario.setId(resultado.getInt("id_usuario"));
             usuario.setEmail(resultado.getString("email"));
@@ -132,9 +134,9 @@ public Usuario obtenerUsuario(Integer id) throws DAOException {
             usuario.setEdad(resultado.getInt("edad"));
             
             return usuario;
-        } else {
-            throw new DAOException("No se encontró el usuario con ID: " + id);
         }
+        
+        return usuario;
         
     } catch (SQLException ex) {
         throw new DAOException("Error al consultar el usuario: " + ex.getMessage());
@@ -142,7 +144,7 @@ public Usuario obtenerUsuario(Integer id) throws DAOException {
 }
 
     @Override
-    public void agregarUsuario(UsuarioDTO usuario) throws DAOException {
+    public void agregarUsuario(Usuario usuario) throws DAOException {
         try (Connection c = conexion.obtenerConexion();
                 PreparedStatement insert = c.prepareStatement(
                    "INSERT INTO usuario(email, nombre_completo, domicilio, fecha_nacimiento, edad, saldo, contrasena) VALUES (?,?,?,?,?,?,?);", 
@@ -163,8 +165,8 @@ public Usuario obtenerUsuario(Integer id) throws DAOException {
             }
             
         } catch (SQLException ex) {
-            //throw new DAOException(ex.getMessage());
-            throw new DAOException("Ocurrio un error al intentar registrar el producto, intente mas tarde...");
+            System.out.println(ex.getMessage());
+            throw new DAOException("Ocurrio un error al intentar registrarse, intente mas tarde...");
         }
 
     }
@@ -192,7 +194,7 @@ public Usuario obtenerUsuario(Integer id) throws DAOException {
             
         } catch (SQLException ex) {
             //throw new DAOException(ex.getMessage());
-            throw new DAOException("Ocurrio un error al intentar actualizar la informacion del producto, intente mas tarde...");
+            throw new DAOException("Ocurrio un error al intentar actualizar la informacion, intente mas tarde...");
 
         }
     }
@@ -207,8 +209,10 @@ public Usuario iniciarSesion(String email, String contrasena) throws DAOExceptio
         
         ResultSet resultado = select.executeQuery();
         
+        Usuario usuario = null;
+        
         if (resultado.next()) {
-            Usuario usuario = new Usuario();
+            usuario = new Usuario();
             
             usuario.setId(resultado.getInt("id_usuario"));
             usuario.setEmail(resultado.getString("email"));
@@ -230,11 +234,11 @@ public Usuario iniciarSesion(String email, String contrasena) throws DAOExceptio
         throw new DAOException("El correo electrónico o la contraseña son incorrectos");
         
     } catch (SQLException ex) {
-        throw new DAOException("Error al consultar el usuario: " + ex.getMessage());
+        throw new DAOException("Ocurrio un error al intentar iniciar sesion, porfavor intente mas tarde");
     }
 }
     
-     @Override
+    @Override
     public void aumentarSaldo(Integer idUsuario, Float cantidad) throws DAOException {
         try (Connection c = conexion.obtenerConexion();
              PreparedStatement update = c.prepareStatement(
@@ -250,8 +254,7 @@ public Usuario iniciarSesion(String email, String contrasena) throws DAOExceptio
             }
             
         } catch (SQLException ex) {
-            throw new DAOException("Ocurrió un error al intentar aumentar el saldo, intente más tarde...");
+            throw new DAOException("Ocurrió un error al intentar aumentar el saldo, porfavor intente más tarde...");
         }
     }
-    
 }

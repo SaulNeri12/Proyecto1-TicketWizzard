@@ -84,7 +84,7 @@ public class UsuariosDAOTest {
     @org.junit.jupiter.api.Test
     public void testObtenerUsuariosPorNombre() throws Exception {
         System.out.println("obtenerUsuariosPorNombre");
-        String nombreCompleto = "v";
+        String nombreCompleto = "saul";
         UsuariosDAO instance = this.usuarios;
         List<Usuario> expResult = null;
         List<Usuario> result = instance.obtenerUsuariosPorNombre(nombreCompleto);
@@ -119,7 +119,7 @@ public class UsuariosDAOTest {
     @org.junit.jupiter.api.Test
     public void testAgregarUsuario() throws Exception {
         System.out.println("agregarUsuario");
-        UsuarioDTO usuario = null;
+        Usuario usuario = null;
         UsuariosDAO instance = null;
         instance.agregarUsuario(usuario);
         // TODO review the generated test code and remove the default call to fail.
