@@ -56,7 +56,9 @@ public class EventosDAO implements IEventosDAO {
         evento.setTerminado(resultados.getBoolean("terminado"));
         evento.setVenue(resultados.getString("venue"));
         
+
         Ciudad ciudad = new Ciudad(
+                resultados.getInt("id_ciudad"),
                 resultados.getString("ciudad_nombre"),
                 resultados.getString("ciudad_estado")
         );

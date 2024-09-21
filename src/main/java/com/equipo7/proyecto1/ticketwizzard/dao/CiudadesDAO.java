@@ -43,7 +43,8 @@ public class CiudadesDAO implements ICiudadesDAO {
     }
     
     private Ciudad construirCiudad(ResultSet resultados) throws SQLException {
-        Ciudad ciudad = new Ciudad(resultados.getString("nombre"), resultados.getString("estado"));
+       Ciudad ciudad = new Ciudad(resultados.getInt("id_ciudad"), resultados.getString("nombre"), resultados.getString("estado"));
+
         
         return ciudad;
     }

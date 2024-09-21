@@ -57,6 +57,7 @@ public class GestorEventos implements IGestorEventos {
         evento.setVenue(evento.getVenue());
         
         CiudadDTO ciudad = new CiudadDTO(
+                evento.getCiudad().getId(),
                 evento.getCiudad().getNombre(),
                 evento.getCiudad().getEstado()
         );
@@ -82,6 +83,7 @@ public class GestorEventos implements IGestorEventos {
         eventoEnt.setVenue(evento.getVenue());
         
         Ciudad ciudad = new Ciudad(
+                evento.getCiudad().getId(),
                 evento.getCiudad().getNombre(),
                 evento.getCiudad().getEstado()
         );

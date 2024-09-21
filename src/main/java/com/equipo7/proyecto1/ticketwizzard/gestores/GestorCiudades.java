@@ -42,6 +42,7 @@ public class GestorCiudades implements IGestorCiudades {
      */
     private CiudadDTO convertirEntidad(Ciudad ciudad) {
         CiudadDTO ciudadDTO = new CiudadDTO(
+                ciudad.getId(),
                 ciudad.getNombre(),
                 ciudad.getEstado()
         );
@@ -56,6 +57,7 @@ public class GestorCiudades implements IGestorCiudades {
      */
     private Ciudad convertirEntidad(CiudadDTO ciudadDTO) {
         Ciudad ciudad = new Ciudad(
+                ciudadDTO.getId(),
                 ciudadDTO.getNombre(),
                 ciudadDTO.getEstado()
         );

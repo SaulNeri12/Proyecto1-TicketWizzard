@@ -4,6 +4,15 @@
  */
 package gui.Admin;
 
+import com.equipo7.proyecto1.ticketwizzard.dtos.CiudadDTO;
+import com.equipo7.proyecto1.ticketwizzard.dtos.EventoDTO;
+import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorCiudades;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorEventos;
+import java.sql.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author caarl
@@ -15,6 +24,7 @@ public class frmCrearEventos extends javax.swing.JFrame {
      */
     public frmCrearEventos() {
         initComponents();
+        cargarCiudadesEnComboBox();
     }
 
     /**
@@ -89,8 +99,18 @@ public class frmCrearEventos extends javax.swing.JFrame {
         jLabel10.setText("Precio");
 
         btnAgregarEvento.setText("Agregar Evento");
+        btnAgregarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarEventoActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -218,6 +238,99 @@ public class frmCrearEventos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxCiudadesActionPerformed
 
+    private void btnAgregarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEventoActionPerformed
+        try {
+        // Capturar los datos del formulario
+        String nombre = txtNombreEvento.getText();
+        String descripcion = txtAreaDescripcionEvento.getText();
+        Date fecha = new java.sql.Date(DateChooserFechaHora.getDate().getTime());
+        String venue = txtVenue.getText();
+        boolean terminado = false;  // Valor predeterminado
+        
+        // Validar los campos
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new Exception("El nombre del evento es obligatorio.");
+        }
+        if (descripcion == null || descripcion.trim().isEmpty()) {
+            throw new Exception("La descripción del evento es obligatoria.");
+        }
+        if (venue == null || venue.trim().isEmpty()) {
+            throw new Exception("El venue del evento es obligatorio.");
+        }
+        if (fecha == null) {
+            throw new Exception("Seleccione una fecha válida.");
+        }
+        
+     CiudadDTO ciudad = (CiudadDTO) cbxCiudades.getSelectedItem();
+if (ciudad == null || ciudad.getId() == null) {
+    throw new GestorException("La ciudad seleccionada no tiene un ID válido.");
+} else {
+    System.out.println("Ciudad seleccionada: " + ciudad.getId() + " - " + ciudad.getNombre());
+}
+
+        // Crear el EventoDTO
+        EventoDTO nuevoEvento = new EventoDTO();
+        nuevoEvento.setNombre(nombre);
+        nuevoEvento.setDescripcion(descripcion);
+        nuevoEvento.setVenue(venue);
+        nuevoEvento.setFechaHora(fecha);
+        nuevoEvento.setTerminado(terminado); // Siempre false por ahora
+        nuevoEvento.setCiudad(ciudad);
+
+        System.out.println("Datos del evento: " + nuevoEvento.toString());
+
+        
+        
+        // Llamar al gestor para agregar el evento
+        GestorEventos.getInstance().agregarEvento(nuevoEvento);
+        
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Evento agregado exitosamente.");
+        
+        // Limpiar los campos del formulario
+        limpiarFormulario();
+        
+    } catch (Exception ex) {
+    ex.printStackTrace();  // Imprimir la pila de errores en la consola
+    JOptionPane.showMessageDialog(this, "Error al agregar evento: " + ex.getMessage());
+}
+    }//GEN-LAST:event_btnAgregarEventoActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void limpiarFormulario() {
+    txtNombreEvento.setText("");
+    txtAreaDescripcionEvento.setText("");
+  
+    txtVenue.setText("");
+    cbxCiudades.setSelectedIndex(-1);  // Opcional: dejar el combobox sin selección
+}
+    
+    
+  private void cargarCiudadesEnComboBox() {
+        try {
+            // Limpia el ComboBox antes de agregar los elementos
+            cbxCiudades.removeAllItems();
+
+            // Obtener la lista de ciudades desde el gestor
+            List<CiudadDTO> ciudades = GestorCiudades.getInstance().obtenerCiudadesTodas();
+
+            // Agregar cada ciudad al ComboBox
+            for (CiudadDTO ciudad : ciudades) {
+                cbxCiudades.addItem(ciudad);  // Asegúrate de que ciudad.getId() no sea null
+            }
+
+        }catch (GestorException ex) {
+    JOptionPane.showMessageDialog(this, "Error al cargar ciudades: " + ex.getMessage());
+    ex.printStackTrace();  // Esto imprimirá detalles en la consola
+}
+    }
+
+
+
     /**
      * @param args the command line arguments
      */
@@ -258,7 +371,7 @@ public class frmCrearEventos extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarCiudad;
     private javax.swing.JButton btnAgregarEvento;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbxCiudades;
+    private javax.swing.JComboBox<CiudadDTO> cbxCiudades;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
