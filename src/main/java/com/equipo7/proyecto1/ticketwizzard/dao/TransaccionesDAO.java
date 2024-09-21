@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author Equipo 7
+ * @author neri
  */
 public class TransaccionesDAO implements ITransaccionesDAO {
     private static TransaccionesDAO instance;

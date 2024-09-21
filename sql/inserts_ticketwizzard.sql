@@ -10,68 +10,30 @@ INSERT INTO ciudad(nombre, estado) VALUES ('Puebla', 'Puebla');
 
 SET @id_ciudad = 1;
 
-INSERT INTO evento(nombre, descripcion) VALUES (
+INSERT INTO evento(nombre, descripcion, fecha_hora, venue, terminado, id_ciudad) VALUES (
 	'El Show de Franco Escamilla', 
-	'En este show, Franco Escamilla compartirá anécdotas y reflexiones sobre su vida personal, incluyendo cómo aconseja a sus hijos cuando se meten en problemas, así como temas como género, amistad y romance. También compartirá historias divertidas y	críticas irónicas sobre la vida cotidiana.'
-);
-
--- Franco Escamilla
-SET @id_evento = 1;
-
--- Presentacion de Franco Escamilla 20 de Septiembre del 2024 en el Mentidero, Hermosillo Sonora
-INSERT INTO presentacion(fecha_hora, venue, id_ciudad, id_evento) VALUES(  
-	'2024-09-20 22:30:00', 
+	'En este show, Franco Escamilla compartirá anécdotas y reflexiones sobre su vida personal, incluyendo cómo aconseja a sus hijos cuando se meten en problemas, así como temas como género, amistad y romance. También compartirá historias divertidas y	críticas irónicas sobre la vida cotidiana.',
+	'2024-10-23',
 	'El Mentidero',
-	@id_ciudad,
-	@id_evento
-);
-
-INSERT INTO evento(nombre, descripcion) VALUES (
+	FALSE,
+	@id_ciudad
+), (
 	'Lucha Libre CMLL', 
-	'Un auténtico ritual de intensas emociones se experimentan en las Arenas México, Coliseo, Guadalajara y Puebla, los magnos escenarios donde se presenta la Mejor Lucha Libre del Mundo, la del Consejo Mundial de Lucha Libre (CMLL).'
-);
-
--- [INSERCION DE PRESENTACIONES DE EVENTOS]
-
--- ciudad de mexico
-SET @id_ciudad = 4;
--- Lucha Libre
-SET @id_evento = 2; 
-
--- Presentacion de Lucha Libre 16 de Septiembre del 2024 en Arena Mexico, CDMX
-INSERT INTO presentacion(fecha_hora, venue, id_ciudad, id_evento) VALUES(  
-	'2024-09-16 22:00:00', 
+	'Un auténtico ritual de intensas emociones se experimentan en las Arenas México, Coliseo, Guadalajara y Puebla, los magnos escenarios donde se presenta la Mejor Lucha Libre del Mundo, la del Consejo Mundial de Lucha Libre (CMLL).',
+	'2024-10-23',
 	'Arena Mexico',
-	@id_ciudad,
-	@id_evento
-);
+	FALSE,
+	@id_ciudad
+),
+('Festival de Música de Guadalajara', 'Un festival que reúne a los mejores artistas nacionales e internacionales.', '2024-10-05 18:00:00', 'Auditorio Telmex', 0, 1),
+('Feria Internacional del Libro', 'Una de las ferias de libros más importantes de América Latina.', '2024-10-12 10:00:00', 'Expo Guadalajara', 0, 1),
+('Día de Muertos en Oaxaca', 'Celebración tradicional con altares y ofrendas en honor a los difuntos.', '2024-10-31 18:00:00', 'Zócalo de Oaxaca', 0, 2),
+('Carnaval de Veracruz', 'Un carnaval lleno de desfiles, música y bailes.', '2024-10-21 16:00:00', 'Malecón de Veracruz', 0, 3),
+('Cine en tu colonia', 'Proyección de películas al aire libre en diferentes colonias.', '2024-10-15 20:00:00', 'Parque de los Venados', 0, 4),
+('Concierto de Primavera', 'Concierto de música clásica al aire libre.', '2024-10-14 19:00:00', 'Bosque de Chapultepec', 0, 5),
+('Exposición de Arte Contemporáneo', 'Muestra de obras de artistas emergentes.', '2024-10-20 11:00:00', 'Museo de Arte Moderno', 0, 5);
 
--- Franco escamilla
-SET @id_evento = 1;
--- Ciidad de puebla
-SET @id_ciudad = 5;
-
--- Presentacion de Franco Escamilla 21 de Septiembre del 2024 en Puebla, Puebla
-INSERT INTO presentacion(fecha_hora, venue, id_ciudad, id_evento) VALUES(  
-	'2024-09-21 21:30:00', 
-	'Arena Puebla',
-	@id_ciudad,
-	@id_evento
-);
-
--- Lucha Libre en Arena Mexico, CDMX
-SET @id_presentacion = 2;
-
--- [INSERCION DE BOLETOS]
-INSERT INTO boleto(fila, asiento, precio_original, fecha_limite_venta, en_venta, id_presentacion) VALUES(
-	'Ring Naranja',
-	'RN-34',
-	304,
-	'2024-09-15 23:59:00',
-	TRUE,
-	@id_presentacion
-);
-
+/*
 -- [INSERCION DE USUARIOS]
 INSERT INTO usuario (email, nombre_completo, domicilio, fecha_nacimiento, edad, saldo, contrasena)
 VALUES
@@ -85,7 +47,7 @@ VALUES
 ('jorge.silva@example.com', 'Jorge Silva', 'Avenida de la Luna 505, Ciudad', '1997-03-17', 27, 800.00, 'jorgepass505'),
 ('valeria.ortiz@example.com', 'Valeria Ortiz', 'Calle del Viento 606, Ciudad', '1999-08-25', 25, 600.00, 'valeriapass606'),
 ('andres.fernandez@example.com', 'Andrés Fernández', 'Calle de los Olivos 707, Ciudad', '1987-10-08', 37, 950.00, 'andrespass707');
-
+*/
 
 -- [INSERCION DE TRANSACCIONES]
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author Equipo 7
+ * @author neri
  */
 public class UsuariosDAO implements IUsuariosDAO {
     private static UsuariosDAO instance;

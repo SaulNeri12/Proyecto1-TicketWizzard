@@ -30,6 +30,14 @@ public interface IEventosDAO {
     public List<Evento> obtenerEventosPorCiudad(String nombreCiudad) throws DAOException;
     
     /**
+     * Obtiene los eventos en la ciudad indicada
+     * @param idCiudad ID de la ciudad a buscar
+     * @return
+     * @throws DAOException 
+     */
+    public List<Evento> obtenerEventosPorCiudad(Integer idCiudad) throws DAOException;
+    
+    /**
      * Obtiene el evento con el ID especificado
      * @param id ID del evento a buscar
      * @return
