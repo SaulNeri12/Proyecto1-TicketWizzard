@@ -30,6 +30,14 @@ public interface IGestorEventos {
     public List<EventoDTO> obtenerEventosPorCiudad(String nombreCiudad) throws GestorException;
     
     /**
+     * Obtiene los eventos en la ciudad indicada
+     * @param idCiudad ID de la ciudad a buscar
+     * @return
+     * @throws GestorException 
+     */
+    public List<EventoDTO> obtenerEventosPorCiudad(Integer idCiudad) throws GestorException;
+    
+    /**
      * Obtiene el evento con el ID especificado
      * @param id ID del evento a buscar
      * @return

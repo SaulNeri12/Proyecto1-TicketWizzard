@@ -21,10 +21,14 @@ public class EventoDTO {
     private String venue;
     // columna: terminado
     private Boolean terminado;
+   
+    private CiudadDTO ciudad;
 
     public EventoDTO() {
         
     }
+    
+    
     
     /**
      * @return the nombre
@@ -108,5 +112,19 @@ public class EventoDTO {
      */
     public void setTerminado(Boolean terminado) {
         this.terminado = terminado;
+    }
+
+    /**
+     * @return the ciudad
+     */
+    public CiudadDTO getCiudad() {
+        return ciudad;
+    }
+
+    /**
+     * @param ciudad the ciudad to set
+     */
+    public void setCiudad(CiudadDTO ciudad) {
+        this.ciudad = ciudad;
     }
 }

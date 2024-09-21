@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author Equipo 7
+ * @author neri
  */
 public class BoletosDAO implements IBoletosDAO {
     private static BoletosDAO instance;
