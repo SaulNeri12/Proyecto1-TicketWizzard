@@ -8,6 +8,7 @@ package gui;
  *
  * @author caarl
  */
+import gui.Admin.frmMenuAdmin;
 import com.equipo7.proyecto1.ticketwizzard.criptografia.Encriptador;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
