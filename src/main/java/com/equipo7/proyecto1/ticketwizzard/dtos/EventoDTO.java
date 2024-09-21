@@ -1,7 +1,7 @@
 
 package com.equipo7.proyecto1.ticketwizzard.dtos;
 
-import com.equipo7.proyecto1.ticketwizzard.objetos.*;
+
 import java.sql.Date;
 
 /**
