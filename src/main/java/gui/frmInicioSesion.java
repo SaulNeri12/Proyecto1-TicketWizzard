@@ -120,7 +120,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(passwordFieldCOntra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -138,9 +138,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -158,10 +156,16 @@ public class frmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegActionPerformed
 
     private void btnInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioSesionActionPerformed
+        String email = txtCorreo.getText();
+    String contrasena = new String(passwordFieldCOntra.getPassword());
+    
+    if (email.equals("admin") && contrasena.equals("admin")) {
+        // Si ambos campos son "admin", abrimos el frame del menú de administrador
+        frmMenuAdmin menuAdminFrame = new frmMenuAdmin();
+        menuAdminFrame.setVisible(true);
+        this.setVisible(false);
+    } else {
         try {
-            String email = txtCorreo.getText();
-            String contrasena = new String(passwordFieldCOntra.getPassword());
-            
             contrasena = Encriptador.hash(contrasena);
             
             UsuarioDTO usuario = gestorUsuarios.iniciarSesion(email, contrasena);
@@ -174,10 +178,13 @@ public class frmInicioSesion extends javax.swing.JFrame {
                 
                 // Ocultamos la ventana actual
                 this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
             }
         } catch (GestorException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Advertencia", JOptionPane.WARNING_MESSAGE);
         }
+    }
     }//GEN-LAST:event_btnInicioSesionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
