@@ -155,21 +155,32 @@ public class EventosDAO implements IEventosDAO {
         }
     }
 
-  @Override 
+ @Override 
 public void agregarEvento(Evento evento) throws DAOException {
     try (Connection c = conexion.obtenerConexion();
          PreparedStatement insert = c.prepareStatement(
-             "INSERT INTO evento (nombre, descripcion, fecha_hora) VALUES (?, ?, ?)",
+             "INSERT INTO evento (nombre, descripcion, fecha_hora, venue, terminado, id_ciudad) VALUES (?, ?, ?, ?, ?, ?)",
              Statement.RETURN_GENERATED_KEYS)) {
 
+        // Establecemos los parámetros del evento
         insert.setString(1, evento.getNombre());
         insert.setString(2, evento.getDescripcion());
-        insert.setTimestamp(3, new java.sql.Timestamp(evento.getFechaHora().getTime())); // Asegúrate de que sea un Timestamp
+        insert.setTimestamp(3, new java.sql.Timestamp(evento.getFechaHora().getTime())); // Convertir a Timestamp
+        insert.setString(4, evento.getVenue());
+        insert.setBoolean(5, evento.getTerminado());
+        insert.setInt(6, evento.getCiudad().getId()); // ID de la ciudad
 
         int insertados = insert.executeUpdate();
 
         if (insertados < 1) {
             throw new DAOException("No se pudo registrar el evento");
+        }
+
+        // Recuperamos el ID del evento generado
+        try (ResultSet rs = insert.getGeneratedKeys()) {
+            if (rs.next()) {
+                evento.setId(rs.getInt(1));
+            }
         }
 
     } catch (SQLException ex) {

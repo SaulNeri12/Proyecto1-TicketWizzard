@@ -50,7 +50,6 @@ public class frmCrearEventos extends javax.swing.JFrame {
         txtVenue = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         cbxCiudades = new javax.swing.JComboBox<>();
-        btnAgregarCiudad = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -89,8 +88,6 @@ public class frmCrearEventos extends javax.swing.JFrame {
                 cbxCiudadesActionPerformed(evt);
             }
         });
-
-        btnAgregarCiudad.setText("Agregar Ciudad");
 
         jLabel8.setText("Numero de filas:");
 
@@ -148,7 +145,6 @@ public class frmCrearEventos extends javax.swing.JFrame {
                                                 .addGap(12, 12, 12)))
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnAgregarCiudad)
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                                     .addGap(6, 6, 6)
@@ -195,9 +191,7 @@ public class frmCrearEventos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxCiudades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarCiudad))
+                .addComponent(cbxCiudades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -208,7 +202,7 @@ public class frmCrearEventos extends javax.swing.JFrame {
                     .addComponent(txtNumFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAsientosPorFila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarEvento)
                     .addComponent(btnCancelar))
@@ -311,23 +305,29 @@ if (ciudad == null || ciudad.getId() == null) {
     
     
   private void cargarCiudadesEnComboBox() {
-        try {
-            // Limpia el ComboBox antes de agregar los elementos
-            cbxCiudades.removeAllItems();
+       try {
+        // Limpia el ComboBox antes de agregar los elementos
+        cbxCiudades.removeAllItems();
 
-            // Obtener la lista de ciudades desde el gestor
-            List<CiudadDTO> ciudades = GestorCiudades.getInstance().obtenerCiudadesTodas();
+        // Obtener la lista de ciudades desde el gestor
+        List<CiudadDTO> ciudades = GestorCiudades.getInstance().obtenerCiudadesTodas();
 
-            // Agregar cada ciudad al ComboBox
-            for (CiudadDTO ciudad : ciudades) {
-                cbxCiudades.addItem(ciudad);  // Asegúrate de que ciudad.getId() no sea null
-            }
+        // Verificar si la lista está vacía
+        if (ciudades == null || ciudades.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron ciudades disponibles.");
+            return;
+        }
 
-        }catch (GestorException ex) {
-    JOptionPane.showMessageDialog(this, "Error al cargar ciudades: " + ex.getMessage());
-    ex.printStackTrace();  // Esto imprimirá detalles en la consola
-}
+        // Agregar cada ciudad al ComboBox
+        for (CiudadDTO ciudad : ciudades) {
+            cbxCiudades.addItem(ciudad);
+        }
+
+    } catch (GestorException ex) {
+        JOptionPane.showMessageDialog(this, "Error al cargar ciudades: " + ex.getMessage());
+        ex.printStackTrace();
     }
+}
 
 
 
@@ -368,7 +368,6 @@ if (ciudad == null || ciudad.getId() == null) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateChooserFechaHora;
-    private javax.swing.JButton btnAgregarCiudad;
     private javax.swing.JButton btnAgregarEvento;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<CiudadDTO> cbxCiudades;
