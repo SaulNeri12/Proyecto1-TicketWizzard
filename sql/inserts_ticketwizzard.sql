@@ -1,4 +1,5 @@
 
+
 -- [INSERCION DE CIUDADES]
 INSERT INTO ciudad(nombre, estado) VALUES ('Hermosillo', 'Sonora');
 INSERT INTO ciudad(nombre, estado) VALUES ('Guadalajara', 'Jalisco');
@@ -50,14 +51,6 @@ VALUES
 */
 
 -- [INSERCION DE TRANSACCIONES]
-
-
-
-
-
-
-
-
 
 
 

@@ -1,3 +1,4 @@
+
 DROP DATABASE ticketwizzard;
 
 source create_ticketwizzard.sql;
