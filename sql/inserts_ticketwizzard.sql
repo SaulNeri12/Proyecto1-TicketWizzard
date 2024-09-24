@@ -11,28 +11,32 @@ INSERT INTO ciudad(nombre, estado) VALUES ('Puebla', 'Puebla');
 
 SET @id_ciudad = 1;
 
-INSERT INTO evento(nombre, descripcion, fecha_hora, venue, terminado, id_ciudad) VALUES (
+INSERT INTO evento(nombre, descripcion, fecha_hora, venue, terminado, id_ciudad, precio_base_boleto) VALUES (
 	'El Show de Franco Escamilla', 
 	'En este show, Franco Escamilla compartirá anécdotas y reflexiones sobre su vida personal, incluyendo cómo aconseja a sus hijos cuando se meten en problemas, así como temas como género, amistad y romance. También compartirá historias divertidas y	críticas irónicas sobre la vida cotidiana.',
 	'2024-10-23',
 	'El Mentidero',
 	FALSE,
-	@id_ciudad
+	@id_ciudad,
+	300
 ), (
 	'Lucha Libre CMLL', 
 	'Un auténtico ritual de intensas emociones se experimentan en las Arenas México, Coliseo, Guadalajara y Puebla, los magnos escenarios donde se presenta la Mejor Lucha Libre del Mundo, la del Consejo Mundial de Lucha Libre (CMLL).',
 	'2024-10-23',
 	'Arena Mexico',
 	FALSE,
-	@id_ciudad
-),
-('Festival de Música de Guadalajara', 'Un festival que reúne a los mejores artistas nacionales e internacionales.', '2024-10-05 18:00:00', 'Auditorio Telmex', 0, 1),
-('Feria Internacional del Libro', 'Una de las ferias de libros más importantes de América Latina.', '2024-10-12 10:00:00', 'Expo Guadalajara', 0, 1),
-('Día de Muertos en Oaxaca', 'Celebración tradicional con altares y ofrendas en honor a los difuntos.', '2024-10-31 18:00:00', 'Zócalo de Oaxaca', 0, 2),
-('Carnaval de Veracruz', 'Un carnaval lleno de desfiles, música y bailes.', '2024-10-21 16:00:00', 'Malecón de Veracruz', 0, 3),
-('Cine en tu colonia', 'Proyección de películas al aire libre en diferentes colonias.', '2024-10-15 20:00:00', 'Parque de los Venados', 0, 4),
-('Concierto de Primavera', 'Concierto de música clásica al aire libre.', '2024-10-14 19:00:00', 'Bosque de Chapultepec', 0, 5),
-('Exposición de Arte Contemporáneo', 'Muestra de obras de artistas emergentes.', '2024-10-20 11:00:00', 'Museo de Arte Moderno', 0, 5);
+	@id_ciudad,
+	300
+);
+
+/*
+('Festival de Música de Guadalajara', 'Un festival que reúne a los mejores artistas nacionales e internacionales.', '2024-10-05 18:00:00', 'Auditorio Telmex', 0, 1, 500),
+('Feria Internacional del Libro', 'Una de las ferias de libros más importantes de América Latina.', '2024-10-12 10:00:00', 'Expo Guadalajara', 0, 1, 100),
+('Día de Muertos en Oaxaca', 'Celebración tradicional con altares y ofrendas en honor a los difuntos.', '2024-10-31 18:00:00', 'Zócalo de Oaxaca', 0, 400),
+('Carnaval de Veracruz', 'Un carnaval lleno de desfiles, música y bailes.', '2024-10-21 16:00:00', 'Malecón de Veracruz', 0, 3, 880),
+('Cine en tu colonia', 'Proyección de películas al aire libre en diferentes colonias.', '2024-10-15 20:00:00', 'Parque de los Venados', 0, 4, 700),
+('Concierto de Primavera', 'Concierto de música clásica al aire libre.', '2024-10-14 19:00:00', 'Bosque de Chapultepec', 0, 5, 340),
+('Exposición de Arte Contemporáneo', 'Muestra de obras de artistas emergentes.', '2024-10-20 11:00:00', 'Museo de Arte Moderno', 0, 5, 1045);
 
 /*
 -- [INSERCION DE USUARIOS]
