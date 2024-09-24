@@ -48,13 +48,7 @@ public class GestorEventos implements IGestorEventos {
         eventoDTO.setFechaHora(evento.getFechaHora());
         eventoDTO.setTerminado(evento.getTerminado());
         eventoDTO.setVenue(evento.getVenue());
-        
-        evento.setId(evento.getId());
-        evento.setNombre(evento.getNombre());
-        evento.setDescripcion(evento.getDescripcion());
-        evento.setFechaHora(evento.getFechaHora());
-        evento.setTerminado(evento.getTerminado());
-        evento.setVenue(evento.getVenue());
+        eventoDTO.setPrecioBaseBoleto(evento.getPrecioBaseBoleto());
         
         CiudadDTO ciudad = new CiudadDTO(
                 evento.getCiudad().getId(),
@@ -81,6 +75,7 @@ public class GestorEventos implements IGestorEventos {
         eventoEnt.setFechaHora(evento.getFechaHora());
         eventoEnt.setTerminado(evento.getTerminado());
         eventoEnt.setVenue(evento.getVenue());
+        eventoEnt.setPrecioBaseBoleto(evento.getPrecioBaseBoleto());
         
         Ciudad ciudad = new Ciudad(
                 evento.getCiudad().getId(),

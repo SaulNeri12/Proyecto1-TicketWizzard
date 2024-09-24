@@ -5,6 +5,7 @@
 package com.equipo7.proyecto1.ticketwizzard.dao;
 
 import com.equipo7.proyecto1.ticketwizzard.dao.BoletosDAO;
+import com.equipo7.proyecto1.ticketwizzard.dao.BoletosDAO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Boleto;
 

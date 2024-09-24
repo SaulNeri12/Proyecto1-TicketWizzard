@@ -28,7 +28,7 @@ public class EventosDAO implements IEventosDAO {
     private static final String CONSULTA_POR_CIUDAD_STRING = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE c.nombre LIKE ?;";
     private static final String CONSULTA_POR_CIUDAD_ID = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_ciudad = ?;";
     private static final String CONSULTA_POR_ID = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_evento = ?;";
-    private static final String INSERTAR = "INSERT INTO evento(nombre, descripcion, fecha_hora, venue, terminado, id_ciudad) VALUES (?,?,?,?,?,?);";
+    private static final String INSERTAR = "INSERT INTO evento (nombre, descripcion, fecha_hora, venue, terminado, id_ciudad, precio_base_boleto) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String ACTUALIZAR = "UPDATE evento SET nombre=?, descripcion=?, fecha_hora=?, venue=?, terminado=?, id_ciudad=? WHERE id_evento = ?;";
     private static final String ELIMINAR = "DELETE FROM evento WHERE id_evento = ?;";
     
@@ -159,7 +159,7 @@ public class EventosDAO implements IEventosDAO {
 public void agregarEvento(Evento evento) throws DAOException {
     try (Connection c = conexion.obtenerConexion();
          PreparedStatement insert = c.prepareStatement(
-             "INSERT INTO evento (nombre, descripcion, fecha_hora, venue, terminado, id_ciudad) VALUES (?, ?, ?, ?, ?, ?)",
+             INSERTAR,
              Statement.RETURN_GENERATED_KEYS)) {
 
         // Establecemos los parámetros del evento
@@ -169,6 +169,7 @@ public void agregarEvento(Evento evento) throws DAOException {
         insert.setString(4, evento.getVenue());
         insert.setBoolean(5, evento.getTerminado());
         insert.setInt(6, evento.getCiudad().getId()); // ID de la ciudad
+        insert.setFloat(7, evento.getPrecioBaseBoleto());
 
         int insertados = insert.executeUpdate();
 

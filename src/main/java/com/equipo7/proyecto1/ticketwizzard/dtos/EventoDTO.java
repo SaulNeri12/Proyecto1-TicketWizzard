@@ -21,6 +21,8 @@ public class EventoDTO {
     private String venue;
     // columna: terminado
     private Boolean terminado;
+    // columna: precio_base_boleto
+    private Float precioBaseBoleto;
    
     private CiudadDTO ciudad;
 
@@ -126,5 +128,19 @@ public class EventoDTO {
      */
     public void setCiudad(CiudadDTO ciudad) {
         this.ciudad = ciudad;
+    }
+
+    /**
+     * @return the precioBaseBoleto
+     */
+    public Float getPrecioBaseBoleto() {
+        return precioBaseBoleto;
+    }
+
+    /**
+     * @param precioBaseBoleto the precioBaseBoleto to set
+     */
+    public void setPrecioBaseBoleto(Float precioBaseBoleto) {
+        this.precioBaseBoleto = precioBaseBoleto;
     }
 }
