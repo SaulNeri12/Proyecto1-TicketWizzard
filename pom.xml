@@ -45,6 +45,12 @@
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-form</artifactId>
+            <version>RELEASE90</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <packaging>jar</packaging>
     <properties>

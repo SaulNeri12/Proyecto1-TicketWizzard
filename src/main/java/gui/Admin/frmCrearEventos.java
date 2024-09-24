@@ -7,8 +7,11 @@ package gui.Admin;
 import com.equipo7.proyecto1.ticketwizzard.dtos.CiudadDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.EventoDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorBoletos;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorCiudades;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorEventos;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorBoletos;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorEventos;
 import java.sql.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -19,11 +22,16 @@ import javax.swing.JOptionPane;
  */
 public class frmCrearEventos extends javax.swing.JFrame {
 
+    private IGestorBoletos boletos;
+    private IGestorEventos eventos;
+    
     /**
      * Creates new form frmCrearEventos
      */
     public frmCrearEventos() {
         initComponents();
+        this.boletos = GestorBoletos.getInstance();
+        this.eventos = GestorEventos.getInstance();
         cargarCiudadesEnComboBox();
     }
 
@@ -202,7 +210,7 @@ public class frmCrearEventos extends javax.swing.JFrame {
                     .addComponent(txtNumFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAsientosPorFila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarEvento)
                     .addComponent(btnCancelar))
@@ -222,7 +230,10 @@ public class frmCrearEventos extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -234,102 +245,105 @@ public class frmCrearEventos extends javax.swing.JFrame {
 
     private void btnAgregarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEventoActionPerformed
         try {
-        // Capturar los datos del formulario
-        String nombre = txtNombreEvento.getText();
-        String descripcion = txtAreaDescripcionEvento.getText();
-        Date fecha = new java.sql.Date(DateChooserFechaHora.getDate().getTime());
-        String venue = txtVenue.getText();
-        boolean terminado = false;  // Valor predeterminado
-        
-        // Validar los campos
-        if (nombre == null || nombre.trim().isEmpty()) {
-            throw new Exception("El nombre del evento es obligatorio.");
-        }
-        if (descripcion == null || descripcion.trim().isEmpty()) {
-            throw new Exception("La descripción del evento es obligatoria.");
-        }
-        if (venue == null || venue.trim().isEmpty()) {
-            throw new Exception("El venue del evento es obligatorio.");
-        }
-        if (fecha == null) {
-            throw new Exception("Seleccione una fecha válida.");
-        }
-        
-     CiudadDTO ciudad = (CiudadDTO) cbxCiudades.getSelectedItem();
-if (ciudad == null || ciudad.getId() == null) {
-    throw new GestorException("La ciudad seleccionada no tiene un ID válido.");
-} else {
-    System.out.println("Ciudad seleccionada: " + ciudad.getId() + " - " + ciudad.getNombre());
-}
+            // Capturar los datos del formulario
+            String nombre = txtNombreEvento.getText();
+            String descripcion = txtAreaDescripcionEvento.getText();
+            Date fecha = new java.sql.Date(DateChooserFechaHora.getDate().getTime());
+            String venue = txtVenue.getText();
+            Float precioBoleto = Float.valueOf(txtPrecio.getText());
+            boolean terminado = false;  // Valor predeterminado
 
-        // Crear el EventoDTO
-        EventoDTO nuevoEvento = new EventoDTO();
-        nuevoEvento.setNombre(nombre);
-        nuevoEvento.setDescripcion(descripcion);
-        nuevoEvento.setVenue(venue);
-        nuevoEvento.setFechaHora(fecha);
-        nuevoEvento.setTerminado(terminado); // Siempre false por ahora
-        nuevoEvento.setCiudad(ciudad);
+            // Validar los campos
+            if (nombre == null || nombre.trim().isEmpty()) {
+                throw new Exception("El nombre del evento es obligatorio.");
+            }
+            if (descripcion == null || descripcion.trim().isEmpty()) {
+                throw new Exception("La descripción del evento es obligatoria.");
+            }
+            if (venue == null || venue.trim().isEmpty()) {
+                throw new Exception("El venue del evento es obligatorio.");
+            }
+            if (fecha == null) {
+                throw new Exception("Seleccione una fecha válida.");
+            }
+            if (precioBoleto == null) {
+                throw new Exception("El precio del boleto no es valido");
+            }
 
-        System.out.println("Datos del evento: " + nuevoEvento.toString());
+            CiudadDTO ciudad = (CiudadDTO) cbxCiudades.getSelectedItem();
+            if (ciudad == null || ciudad.getId() == null) {
+                throw new GestorException("La ciudad seleccionada no tiene un ID válido.");
+            } else {
+                System.out.println("Ciudad seleccionada: " + ciudad.getId() + " - " + ciudad.getNombre());
+            }
 
-        
-        
-        // Llamar al gestor para agregar el evento
-        GestorEventos.getInstance().agregarEvento(nuevoEvento);
-        
+            // Crear el EventoDTO
+            EventoDTO nuevoEvento = new EventoDTO();
+            nuevoEvento.setNombre(nombre);
+            nuevoEvento.setDescripcion(descripcion);
+            nuevoEvento.setVenue(venue);
+            nuevoEvento.setFechaHora(fecha);
+            nuevoEvento.setTerminado(terminado); // Siempre false por ahora
+            nuevoEvento.setCiudad(ciudad);
+            nuevoEvento.setPrecioBaseBoleto(precioBoleto);
 
-        // Mostrar mensaje de éxito
-        JOptionPane.showMessageDialog(this, "Evento agregado exitosamente.");
-        
-        // Limpiar los campos del formulario
-        limpiarFormulario();
-        
-    } catch (Exception ex) {
-    ex.printStackTrace();  // Imprimir la pila de errores en la consola
-    JOptionPane.showMessageDialog(this, "Error al agregar evento: " + ex.getMessage());
-}
+            System.out.println("Datos del evento: " + nuevoEvento.toString());
+
+            // Llamar al gestor para agregar el evento
+            this.eventos.agregarEvento(nuevoEvento);
+            
+            // Mostrar mensaje de éxito
+            JOptionPane.showMessageDialog(this, "Evento agregado exitosamente.");
+
+            // Limpiar los campos del formulario
+            limpiarFormulario();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();  // Imprimir la pila de errores en la consola
+            JOptionPane.showMessageDialog(this, "Error al agregar evento: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnAgregarEventoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioActionPerformed
+
     private void limpiarFormulario() {
-    txtNombreEvento.setText("");
-    txtAreaDescripcionEvento.setText("");
-  
-    txtVenue.setText("");
-    cbxCiudades.setSelectedIndex(-1);  // Opcional: dejar el combobox sin selección
-}
-    
-    
-  private void cargarCiudadesEnComboBox() {
-       try {
-        // Limpia el ComboBox antes de agregar los elementos
-        cbxCiudades.removeAllItems();
+        txtNombreEvento.setText("");
+        txtAreaDescripcionEvento.setText("");
 
-        // Obtener la lista de ciudades desde el gestor
-        List<CiudadDTO> ciudades = GestorCiudades.getInstance().obtenerCiudadesTodas();
-
-        // Verificar si la lista está vacía
-        if (ciudades == null || ciudades.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No se encontraron ciudades disponibles.");
-            return;
-        }
-
-        // Agregar cada ciudad al ComboBox
-        for (CiudadDTO ciudad : ciudades) {
-            cbxCiudades.addItem(ciudad);
-        }
-
-    } catch (GestorException ex) {
-        JOptionPane.showMessageDialog(this, "Error al cargar ciudades: " + ex.getMessage());
-        ex.printStackTrace();
+        txtVenue.setText("");
+        cbxCiudades.setSelectedIndex(-1);  // Opcional: dejar el combobox sin selección
     }
-}
 
+    private void cargarCiudadesEnComboBox() {
+        try {
+            // Limpia el ComboBox antes de agregar los elementos
+            cbxCiudades.removeAllItems();
 
+            // Obtener la lista de ciudades desde el gestor
+            List<CiudadDTO> ciudades = GestorCiudades.getInstance().obtenerCiudadesTodas();
+
+            // Verificar si la lista está vacía
+            if (ciudades == null || ciudades.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontraron ciudades disponibles.");
+                return;
+            }
+
+            // Agregar cada ciudad al ComboBox
+            for (CiudadDTO ciudad : ciudades) {
+                cbxCiudades.addItem(ciudad);
+            }
+
+        } catch (GestorException ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar ciudades: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
