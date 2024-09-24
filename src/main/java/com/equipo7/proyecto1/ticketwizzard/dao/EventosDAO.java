@@ -24,11 +24,11 @@ import java.util.List;
 public class EventosDAO implements IEventosDAO {
     private static EventosDAO instance;
     
-    private static final String CONSULTA_TODOS = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad;";
-    private static final String CONSULTA_POR_CIUDAD_STRING = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE c.nombre LIKE ?;";
-    private static final String CONSULTA_POR_CIUDAD_ID = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_ciudad = ?;";
-    private static final String CONSULTA_POR_ID = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_evento = ?;";
-    private static final String INSERTAR = "INSERT INTO evento(nombre, descripcion, fecha_hora, venue, terminado, id_ciudad) VALUES (?,?,?,?,?,?);";
+    private static final String CONSULTA_TODOS = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad;";
+    private static final String CONSULTA_POR_CIUDAD_STRING = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE c.nombre LIKE ?;";
+    private static final String CONSULTA_POR_CIUDAD_ID = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_ciudad = ?;";
+    private static final String CONSULTA_POR_ID = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_evento = ?;";
+    private static final String INSERTAR = "INSERT INTO evento (nombre, descripcion, fecha_hora, venue, terminado, id_ciudad, precio_base_boleto) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String ACTUALIZAR = "UPDATE evento SET nombre=?, descripcion=?, fecha_hora=?, venue=?, terminado=?, id_ciudad=? WHERE id_evento = ?;";
     private static final String ELIMINAR = "DELETE FROM evento WHERE id_evento = ?;";
     
@@ -56,7 +56,9 @@ public class EventosDAO implements IEventosDAO {
         evento.setTerminado(resultados.getBoolean("terminado"));
         evento.setVenue(resultados.getString("venue"));
         
+
         Ciudad ciudad = new Ciudad(
+                resultados.getInt("id_ciudad"),
                 resultados.getString("ciudad_nombre"),
                 resultados.getString("ciudad_estado")
         );
@@ -82,6 +84,7 @@ public class EventosDAO implements IEventosDAO {
             return eventos;
             
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             throw new DAOException("Ocurrio un error al traer la lista de eventos, intente mas tarde...");
         }
     }
@@ -153,34 +156,42 @@ public class EventosDAO implements IEventosDAO {
         }
     }
 
-    @Override
-    public void agregarEvento(Evento evento) throws DAOException {
-        try (Connection c = conexion.obtenerConexion();
-                PreparedStatement insert = c.prepareStatement(
-                   INSERTAR, 
-                   Statement.RETURN_GENERATED_KEYS)) {
-           
-            insert.setString(1, evento.getNombre());
-            insert.setString(2, evento.getDescripcion());
-            insert.setDate(3, evento.getFechaHora());
-            insert.setString(4, evento.getVenue());
-            insert.setBoolean(5, evento.getTerminado());
-            insert.setInt(6, evento.getCiudad().getId());
-            
-            int insertados = insert.executeUpdate();
-            
-            if (insertados < 1) {
-                throw new DAOException("No se pudo registrar el evento");
-            }
-            
-        } catch (SQLException ex) {
-            if (ex.getErrorCode() == 1062) {
-                throw new DAOException("El evento que se intenta registrar ya existe");
-            }
-            
-            throw new DAOException("Ocurrio un error al intentar registrar el evento, intente mas tarde...");
+ @Override 
+public void agregarEvento(Evento evento) throws DAOException {
+    try (Connection c = conexion.obtenerConexion();
+         PreparedStatement insert = c.prepareStatement(
+             INSERTAR,
+             Statement.RETURN_GENERATED_KEYS)) {
+
+        // Establecemos los parámetros del evento
+        insert.setString(1, evento.getNombre());
+        insert.setString(2, evento.getDescripcion());
+        insert.setTimestamp(3, new java.sql.Timestamp(evento.getFechaHora().getTime())); // Convertir a Timestamp
+        insert.setString(4, evento.getVenue());
+        insert.setBoolean(5, evento.getTerminado());
+        insert.setInt(6, evento.getCiudad().getId()); // ID de la ciudad
+        insert.setFloat(7, evento.getPrecioBaseBoleto());
+
+        int insertados = insert.executeUpdate();
+
+        if (insertados < 1) {
+            throw new DAOException("No se pudo registrar el evento");
         }
+
+        // Recuperamos el ID del evento generado
+        try (ResultSet rs = insert.getGeneratedKeys()) {
+            if (rs.next()) {
+                evento.setId(rs.getInt(1));
+            }
+        }
+
+    } catch (SQLException ex) {
+        if (ex.getErrorCode() == 1062) {
+            throw new DAOException("El evento que se intenta registrar ya existe");
+        }
+        throw new DAOException("Ocurrió un error al intentar registrar el evento, intente más tarde...");
     }
+}
 
     @Override
     public void actualizarEvento(Evento evento) throws DAOException {

@@ -22,10 +22,14 @@ public class Evento {
     private Boolean terminado;
     // columna: id_ciudad
     private Ciudad ciudad;
-
+    // columna: precio_base_boleto
+    private Float precioBaseBoleto;
+    
     public Evento() {
         
     }
+    
+    
     
     /**
      * @return the nombre
@@ -123,5 +127,19 @@ public class Evento {
      */
     public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
+    }
+
+    /**
+     * @return the precioBaseBoleto
+     */
+    public Float getPrecioBaseBoleto() {
+        return precioBaseBoleto;
+    }
+
+    /**
+     * @param precioBaseBoleto the precioBaseBoleto to set
+     */
+    public void setPrecioBaseBoleto(Float precioBaseBoleto) {
+        this.precioBaseBoleto = precioBaseBoleto;
     }
 }

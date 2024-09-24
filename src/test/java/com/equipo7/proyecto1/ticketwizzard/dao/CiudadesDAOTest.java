@@ -58,7 +58,7 @@ public class CiudadesDAOTest {
     @Test
     public void testAgregarCiudad() throws Exception {
         System.out.println("agregarCiudad");
-        Ciudad ciudad = new Ciudad("Ciudad Obregon", "Sonora");
+        Ciudad ciudad = new Ciudad(1,"Ciudad Obregon", "Sonora");
         CiudadesDAO instance = this.ciudades;
         instance.agregarCiudad(ciudad);
     }

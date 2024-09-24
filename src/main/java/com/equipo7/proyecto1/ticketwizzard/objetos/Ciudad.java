@@ -19,11 +19,15 @@ public class Ciudad {
     public Ciudad() {
         
     }
-    
-    public Ciudad(String nombre, String estado) {
+
+
+
+    public Ciudad(Integer id, String nombre, String estado) {
+        this.id = id;
         this.nombre = nombre;
         this.estado = estado;
     }
+    
 
     /**
      * @return the nombre
@@ -66,5 +70,12 @@ public class Ciudad {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return nombre ;
+    }
+    
+    
     
 }

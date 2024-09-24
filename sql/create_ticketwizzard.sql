@@ -1,8 +1,7 @@
-
 -- Crear la base de datos
 CREATE DATABASE IF NOT EXISTS ticketwizzard;
 
--- usamos la base de datos de ticketwizzard
+-- Usar la base de datos de ticketwizzard
 USE ticketwizzard;
 
 -- Tabla de Usuarios
@@ -19,9 +18,9 @@ CREATE TABLE usuario (
 
 -- Tabla de Ciudades
 CREATE TABLE ciudad (
-	id_ciudad INT AUTO_INCREMENT PRIMARY KEY,
-	nombre VARCHAR(100) UNIQUE NOT NULL,
-	estado VARCHAR(100) NOT NULL
+    id_ciudad INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) UNIQUE NOT NULL,
+    estado VARCHAR(100) NOT NULL
 );
 
 -- Tabla de Eventos
@@ -32,26 +31,39 @@ CREATE TABLE evento (
     fecha_hora DATETIME NOT NULL,
     venue VARCHAR(100) NOT NULL,
     terminado TINYINT(1) NULL,
+		num_filas INT NULL,
+		asientos_por_fila INT NULL,
+		precio_base_boleto DECIMAL(10,2) DEFAULT 0 NOT NULL,
     id_ciudad INT NOT NULL,
     FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad)
 );
 
--- Tabla de Boletos
+-- Tabla de Asientos (Nueva)
+CREATE TABLE asiento (
+    id_asiento INT AUTO_INCREMENT PRIMARY KEY,
+    fila VARCHAR(10) NOT NULL,
+    numero INT NOT NULL,
+    id_evento INT NOT NULL,
+    FOREIGN KEY (id_evento) REFERENCES evento(id_evento),
+    UNIQUE KEY unique_asiento_evento (id_evento, fila, numero)
+);
+
+-- Tabla de Boletos (Modificada)
 CREATE TABLE boleto (
     id_boleto INT AUTO_INCREMENT PRIMARY KEY,
     numero_serie CHAR(8) UNIQUE NULL,
-    fila VARCHAR(100) NOT NULL,
-    asiento VARCHAR(50) NOT NULL,
     numero_control VARCHAR(50) UNIQUE NULL,
     precio_original DECIMAL(10, 2) NOT NULL,
     precio_reventa DECIMAL(10, 2),
     fecha_limite_venta DATETIME NULL,
-    en_venta BOOLEAN DEFAULT FALSE,
+    en_venta BOOLEAN DEFAULT 1 NOT NULL,
     id_usuario INT NULL,
     id_evento INT NOT NULL,
+    id_asiento INT NOT NULL,
     adquirido_boletera TINYINT(1) NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_evento) REFERENCES evento(id_evento)
+    FOREIGN KEY (id_evento) REFERENCES evento(id_evento),
+    FOREIGN KEY (id_asiento) REFERENCES asiento(id_asiento)
 );
 
 -- Tabla de Transacciones
