@@ -42,7 +42,7 @@ public class frmEventos extends javax.swing.JFrame {
         try {
             for (EventoDTO evento: this.eventos.obtenerEventosTodos()) {
                 System.out.println(evento);
-                this.listaEventos.add(new EventoPanel(evento));
+                this.listaEventos.add(new EventoPanel(evento, this.usuario));
             }
         } catch (GestorException ex) {
             JOptionPane.showMessageDialog(
