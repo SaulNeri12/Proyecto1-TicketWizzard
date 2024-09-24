@@ -33,7 +33,7 @@ CREATE TABLE evento (
     terminado TINYINT(1) NULL,
 		num_filas INT NULL,
 		asientos_por_fila INT NULL,
-		precio_base_boleto DECIMAL(10,2) NOT NULL,
+		precio_base_boleto DECIMAL(10,2) DEFAULT 0 NOT NULL,
     id_ciudad INT NOT NULL,
     FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad)
 );
@@ -56,7 +56,7 @@ CREATE TABLE boleto (
     precio_original DECIMAL(10, 2) NOT NULL,
     precio_reventa DECIMAL(10, 2),
     fecha_limite_venta DATETIME NULL,
-    en_venta BOOLEAN DEFAULT FALSE,
+    en_venta BOOLEAN DEFAULT 1 NOT NULL,
     id_usuario INT NULL,
     id_evento INT NOT NULL,
     id_asiento INT NOT NULL,
