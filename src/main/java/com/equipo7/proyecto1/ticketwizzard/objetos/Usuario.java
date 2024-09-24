@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.equipo7.proyecto1.ticketwizzard.objetos;
 
 import java.sql.Date;
@@ -11,6 +8,8 @@ import java.sql.Date;
  * @author Equipo 7
  */
 public class Usuario {
+    // columna: id_usuario
+    private Integer id;
     // columna: email
     private String email;
     // columna: nombre_completo
@@ -127,6 +126,18 @@ public class Usuario {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-    
-    
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

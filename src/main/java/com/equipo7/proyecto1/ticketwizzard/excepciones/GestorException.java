@@ -8,6 +8,8 @@ package com.equipo7.proyecto1.ticketwizzard.excepciones;
  *
  * @author Equipo 7
  */
-public class ConexionException extends Exception {
-    
+public class GestorException extends Exception {
+    public GestorException(String msg) {
+        super(msg);
+    }
 }

@@ -48,6 +48,23 @@ public interface IUsuariosDAO {
      * @throws DAOException 
      */
     public void actualizarUsuario(Usuario usuario) throws DAOException;
+    
+    /**
+     * Compara las credenciales dadas para devolver al usuario que hace referencia dichas credenciales
+     * @param email Correo electronico del usuario
+     * @param contrasena Contrasena del usuario
+     * @return Usuario si coinciden, null en caso de no encontrarlo
+     * @throws DAOException 
+     */
+    public Usuario iniciarSesion(String email, String contrasena) throws DAOException;
+    
+    /**
+     * Aumenta el saldo de un usuario
+     * @param idUsuario ID del usuario
+     * @param cantidad Cantidad a aumentar
+     * @throws DAOException 
+     */
+    public void aumentarSaldo(Integer idUsuario, Float cantidad) throws DAOException;
 }
 
 

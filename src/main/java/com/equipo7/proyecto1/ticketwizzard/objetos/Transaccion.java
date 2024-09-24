@@ -5,6 +5,7 @@
 package com.equipo7.proyecto1.ticketwizzard.objetos;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  *
@@ -17,19 +18,21 @@ public class Transaccion {
     private Integer idComprador;
     // columna: id_vendedor
     private Integer idVendedor;
-    // columna: id_boleto
-    private Integer idBoleto;
     // columna: monto
     private Float monto;
     // columna: fecha_hora
     private Timestamp fechaHora;
     // columna: tipo
-    private TipoTransaccion tipoTransaccion;
+    private String tipoTransaccion;
+    
+    private List<Boleto> boletos;
     
     public Transaccion() {
         
     }
 
+    
+    
     /**
      * @return the id
      */
@@ -73,20 +76,6 @@ public class Transaccion {
     }
 
     /**
-     * @return the idBoleto
-     */
-    public Integer getIdBoleto() {
-        return idBoleto;
-    }
-
-    /**
-     * @param idBoleto the idBoleto to set
-     */
-    public void setIdBoleto(Integer idBoleto) {
-        this.idBoleto = idBoleto;
-    }
-
-    /**
      * @return the monto
      */
     public Float getMonto() {
@@ -114,17 +103,33 @@ public class Transaccion {
         this.fechaHora = fechaHora;
     }
 
+
+
+    /**
+     * @return the boletos
+     */
+    public List<Boleto> getBoletos() {
+        return boletos;
+    }
+
+    /**
+     * @param boletos the boletos to set
+     */
+    public void setBoletos(List<Boleto> boletos) {
+        this.boletos = boletos;
+    }
+
     /**
      * @return the tipoTransaccion
      */
-    public TipoTransaccion getTipoTransaccion() {
+    public String getTipoTransaccion() {
         return tipoTransaccion;
     }
 
     /**
      * @param tipoTransaccion the tipoTransaccion to set
      */
-    public void setTipoTransaccion(TipoTransaccion tipoTransaccion) {
+    public void setTipoTransaccion(String tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
     }
     

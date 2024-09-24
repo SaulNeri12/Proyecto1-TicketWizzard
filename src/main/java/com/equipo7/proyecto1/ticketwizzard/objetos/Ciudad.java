@@ -9,6 +9,8 @@ package com.equipo7.proyecto1.ticketwizzard.objetos;
  * @author Equipo 7
  */
 public class Ciudad {
+    // columna: id_ciudad
+    private Integer id;
     // columna: nombre
     private String nombre;
     // columna: estado 
@@ -17,11 +19,15 @@ public class Ciudad {
     public Ciudad() {
         
     }
-    
-    public Ciudad(String nombre, String estado) {
+
+
+
+    public Ciudad(Integer id, String nombre, String estado) {
+        this.id = id;
         this.nombre = nombre;
         this.estado = estado;
     }
+    
 
     /**
      * @return the nombre
@@ -50,5 +56,26 @@ public class Ciudad {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return nombre ;
+    }
+    
+    
     
 }

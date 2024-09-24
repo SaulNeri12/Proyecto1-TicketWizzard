@@ -14,10 +14,24 @@ import java.sql.SQLException;
  */
 public class Conexion implements IConexion {
 
-    String cadenaConexion = "jdbc:mysql://localhost:3306/ticketwizzard";
-    String user = "root";
-    String pwd = "19040042";
+    private static Conexion instance;
+    
+    private String cadenaConexion = "jdbc:mysql://localhost:3306/ticketwizzard";
+    private String user = "root";
+    private String pwd = "root";
 
+    private Conexion() {
+        
+    }
+    
+    public static Conexion getInstance() {
+        if (instance == null) {
+            instance = new Conexion();
+        }
+        
+        return instance;
+    }
+    
     @Override
     public Connection obtenerConexion() {
         Connection c = null;
@@ -25,7 +39,7 @@ public class Conexion implements IConexion {
         try {
             c = DriverManager.getConnection(cadenaConexion, user, pwd);
         } catch (SQLException ex) {
-            System.out.println(ex);
+            
         }
 
         return c;

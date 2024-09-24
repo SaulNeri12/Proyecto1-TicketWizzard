@@ -1,8 +1,7 @@
-
 -- Crear la base de datos
 CREATE DATABASE IF NOT EXISTS ticketwizzard;
 
--- usamos la base de datos de ticketwizzard
+-- Usar la base de datos de ticketwizzard
 USE ticketwizzard;
 
 -- Tabla de Usuarios
@@ -19,45 +18,49 @@ CREATE TABLE usuario (
 
 -- Tabla de Ciudades
 CREATE TABLE ciudad (
-	id_ciudad INT AUTO_INCREMENT PRIMARY KEY,
-	nombre VARCHAR(100) UNIQUE NOT NULL,
-	estado VARCHAR(100) NOT NULL
+    id_ciudad INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) UNIQUE NOT NULL,
+    estado VARCHAR(100) NOT NULL
 );
 
 -- Tabla de Eventos
 CREATE TABLE evento (
     id_evento INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT NULL
+    nombre VARCHAR(100) UNIQUE NOT NULL,
+    descripcion TEXT NULL,
+    fecha_hora DATETIME NOT NULL,
+    venue VARCHAR(100) NOT NULL,
+    terminado TINYINT(1) NULL,
+    id_ciudad INT NOT NULL,
+    FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad)
 );
 
--- Tabla de presentacion de eventos
-CREATE TABLE presentacion (
-	id_presentacion INT AUTO_INCREMENT PRIMARY KEY,
-	fecha_hora DATETIME NOT NULL,
-	venue VARCHAR(100) NOT NULL,
-	id_ciudad INT NOT NULL,
-	id_evento INT NOT NULL,
-	FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad),
-	FOREIGN KEY (id_evento) REFERENCES evento(id_evento)
+-- Tabla de Asientos (Nueva)
+CREATE TABLE asiento (
+    id_asiento INT AUTO_INCREMENT PRIMARY KEY,
+    fila VARCHAR(10) NOT NULL,
+    numero INT NOT NULL,
+    id_evento INT NOT NULL,
+    FOREIGN KEY (id_evento) REFERENCES evento(id_evento),
+    UNIQUE KEY unique_asiento_evento (id_evento, fila, numero)
 );
 
--- Tabla de Boletos
+-- Tabla de Boletos (Modificada)
 CREATE TABLE boleto (
     id_boleto INT AUTO_INCREMENT PRIMARY KEY,
     numero_serie CHAR(8) UNIQUE NULL,
-    fila VARCHAR(100) NOT NULL,
-    asiento VARCHAR(50) NOT NULL,
     numero_control VARCHAR(50) UNIQUE NULL,
     precio_original DECIMAL(10, 2) NOT NULL,
     precio_reventa DECIMAL(10, 2),
     fecha_limite_venta DATETIME NULL,
     en_venta BOOLEAN DEFAULT FALSE,
     id_usuario INT NULL,
-    id_presentacion INT NOT NULL,
-		adquirido_boletera TINYINT(1) NULL,
+    id_evento INT NOT NULL,
+    id_asiento INT NOT NULL,
+    adquirido_boletera TINYINT(1) NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_presentacion) REFERENCES presentacion(id_presentacion)
+    FOREIGN KEY (id_evento) REFERENCES evento(id_evento),
+    FOREIGN KEY (id_asiento) REFERENCES asiento(id_asiento)
 );
 
 -- Tabla de Transacciones
@@ -65,13 +68,62 @@ CREATE TABLE transaccion (
     id_transaccion INT AUTO_INCREMENT PRIMARY KEY,
     id_comprador INT NOT NULL,
     id_vendedor INT NULL,
-    id_boleto INT NOT NULL,
     monto DECIMAL(10, 2) NULL,
     fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    estado ENUM('terminada', 'en proceso') NOT NULL,
     tipo ENUM('compra_boletera', 'compra_reventa') NOT NULL,
     FOREIGN KEY (id_comprador) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_vendedor) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_boleto) REFERENCES boleto(id_boleto)
+    FOREIGN KEY (id_vendedor) REFERENCES usuario(id_usuario)
 );
 
+-- Tabla de boletos involucrados en una transaccion
+CREATE TABLE transaccion_boleto (
+    id_transaccion_boleto INT AUTO_INCREMENT PRIMARY KEY,
+    monto DECIMAL(10,2) NOT NULL,
+    id_boleto INT NOT NULL,
+    id_transaccion INT NOT NULL,
+    FOREIGN KEY (id_boleto) REFERENCES boleto(id_boleto),
+    FOREIGN KEY (id_transaccion) REFERENCES transaccion(id_transaccion)
+);
 
+-- Trigger para generar asientos y boletos automáticamente
+DELIMITER //
+
+CREATE TRIGGER after_evento_insert
+AFTER INSERT ON evento
+FOR EACH ROW
+BEGIN
+    DECLARE fila CHAR(1);
+    DECLARE numero INT;
+    DECLARE id_asiento_nuevo INT;
+    
+    SET fila = 'A';
+    SET numero = 1;
+    
+    WHILE fila <= 'J' DO
+        WHILE numero <= 20 DO
+            -- Insertar asiento
+            INSERT INTO asiento (fila, numero, id_evento)
+            VALUES (fila, numero, NEW.id_evento);
+            
+            SET id_asiento_nuevo = LAST_INSERT_ID();
+            
+            -- Insertar boleto correspondiente
+            INSERT INTO boleto (numero_serie, numero_control, precio_original, id_evento, id_asiento)
+            VALUES (
+                CONCAT(LEFT(UUID(), 8)),  -- Genera un número de serie único
+                CONCAT(NEW.id_evento, '-', fila, '-', LPAD(numero, 2, '0')),  -- Genera un número de control
+                100.00,  -- Precio original (puedes ajustar esto según tus necesidades)
+                NEW.id_evento,
+                id_asiento_nuevo
+            );
+            
+            SET numero = numero + 1;
+        END WHILE;
+        
+        SET fila = CHAR(ASCII(fila) + 1);
+        SET numero = 1;
+    END WHILE;
+END//
+
+DELIMITER ;

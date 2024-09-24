@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.equipo7.proyecto1.ticketwizzard.objetos;
 
 import java.sql.Date;
@@ -11,14 +8,18 @@ import java.sql.Date;
  * @author Equipo 7
  */
 public class Evento {
+    // columna: id_evento
+    private Integer id;
     // columna: nombre
     private String nombre;
-    // columna: fecha
-    private Date fecha;
-    // columna: venue
-    private String venue;
+    // columna: fecha_hora
+    private Date fechaHora;
     // columna: descripcion
     private String descripcion;
+    // columna: venue
+    private String venue;
+    // columna: terminado
+    private Boolean terminado;
     // columna: id_ciudad
     private Ciudad ciudad;
 
@@ -41,17 +42,45 @@ public class Evento {
     }
 
     /**
-     * @return the fecha
+     * @return the descripcion
      */
-    public Date getFecha() {
-        return fecha;
+    public String getDescripcion() {
+        return descripcion;
     }
 
     /**
-     * @param fecha the fecha to set
+     * @param descripcion the descripcion to set
      */
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the fechaHora
+     */
+    public Date getFechaHora() {
+        return fechaHora;
+    }
+
+    /**
+     * @param fechaHora the fechaHora to set
+     */
+    public void setFechaHora(Date fechaHora) {
+        this.fechaHora = fechaHora;
     }
 
     /**
@@ -69,17 +98,17 @@ public class Evento {
     }
 
     /**
-     * @return the descripcion
+     * @return the terminado
      */
-    public String getDescripcion() {
-        return descripcion;
+    public Boolean getTerminado() {
+        return terminado;
     }
 
     /**
-     * @param descripcion the descripcion to set
+     * @param terminado the terminado to set
      */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setTerminado(Boolean terminado) {
+        this.terminado = terminado;
     }
 
     /**
