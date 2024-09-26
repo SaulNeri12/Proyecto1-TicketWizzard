@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package gui;
 
 import com.equipo7.proyecto1.ticketwizzard.dtos.BoletoDTO;
@@ -13,7 +10,6 @@ import com.equipo7.proyecto1.ticketwizzard.gestores.GestorEventos;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorBoletos;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorEventos;
 import javax.swing.JOptionPane;
-import org.openide.util.Exceptions;
 
 /**
  *

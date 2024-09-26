@@ -76,10 +76,10 @@ public class frmTusBoletos extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         btnAgregarSaldo = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnVerEventos = new javax.swing.JButton();
+        btnMostrarHistorial = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaBoletosUsuario = new javax.swing.JPanel();
 
@@ -108,13 +108,6 @@ public class frmTusBoletos extends javax.swing.JFrame {
 
         jLabel2.setText("Otras opciones");
 
-        jButton1.setText("Comprar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         btnAgregarSaldo.setText("Agregar Saldo");
         btnAgregarSaldo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +129,13 @@ public class frmTusBoletos extends javax.swing.JFrame {
             }
         });
 
+        btnMostrarHistorial.setText("Mi historial"); // NOI18N
+        btnMostrarHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarHistorialActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -143,25 +143,24 @@ public class frmTusBoletos extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addGap(14, 14, 14))
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(14, 14, 14))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(btnSalir)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(btnAgregarSaldo)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(btnVerEventos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(btnVerEventos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnMostrarHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAgregarSaldo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,10 +169,10 @@ public class frmTusBoletos extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(btnVerEventos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAgregarSaldo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMostrarHistorial)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalir)
                 .addContainerGap())
         );
@@ -217,7 +216,7 @@ public class frmTusBoletos extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -237,17 +236,6 @@ public class frmTusBoletos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Creamos el nuevo frame
-        frmBoletosEnVenta reg = new frmBoletosEnVenta(usuarioActual);
-
-        // Mostramos el nuevo frame
-        reg.setVisible(true);
-
-        // Ocultamos la ventana actual en lugar de cerrarla
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAgregarSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSaldoActionPerformed
         // Creamos el nuevo frame pasando el usuario actual
@@ -282,15 +270,23 @@ public class frmTusBoletos extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnVerEventosActionPerformed
 
+    private void btnMostrarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarHistorialActionPerformed
+        frmMiHistorial frm = new frmMiHistorial(this.usuarioActual);
+        
+        frm.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_btnMostrarHistorialActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarSaldo;
+    private javax.swing.JButton btnMostrarHistorial;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnVerEventos;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
