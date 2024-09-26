@@ -1,9 +1,8 @@
 
 package com.equipo7.proyecto1.ticketwizzard.dtos;
 
-import com.equipo7.proyecto1.ticketwizzard.objetos.*;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  *
@@ -13,24 +12,26 @@ public class TransaccionDTO {
     // columna: id_transaccion
     private Integer id;
     // columna: id_comprador
-    private Integer idComprador;
+    private UsuarioDTO comprador;
     // columna: id_vendedor
-    private Integer idVendedor;
+    private UsuarioDTO vendedor;
     // columna: monto
     private Float monto;
     // columna: fecha_hora
     private Timestamp fechaHora;
+    // columna: fecha_apartado
+    private Date fechaApartado;
+    // columna: estado
+    private String estado;
     // columna: tipo
     private String tipoTransaccion;
     
-    private List<Boleto> boletos;
+    private BoletoDTO boleto;
     
     public TransaccionDTO() {
         
     }
 
-    
-    
     /**
      * @return the id
      */
@@ -46,31 +47,31 @@ public class TransaccionDTO {
     }
 
     /**
-     * @return the idComprador
+     * @return the comprador
      */
-    public Integer getIdComprador() {
-        return idComprador;
+    public UsuarioDTO getComprador() {
+        return comprador;
     }
 
     /**
-     * @param idComprador the idComprador to set
+     * @param comprador the comprador to set
      */
-    public void setIdComprador(Integer idComprador) {
-        this.idComprador = idComprador;
+    public void setComprador(UsuarioDTO comprador) {
+        this.comprador = comprador;
     }
 
     /**
-     * @return the idVendedor
+     * @return the vendedor
      */
-    public Integer getIdVendedor() {
-        return idVendedor;
+    public UsuarioDTO getVendedor() {
+        return vendedor;
     }
 
     /**
-     * @param idVendedor the idVendedor to set
+     * @param vendedor the vendedor to set
      */
-    public void setIdVendedor(Integer idVendedor) {
-        this.idVendedor = idVendedor;
+    public void setVendedor(UsuarioDTO vendedor) {
+        this.vendedor = vendedor;
     }
 
     /**
@@ -101,20 +102,32 @@ public class TransaccionDTO {
         this.fechaHora = fechaHora;
     }
 
-
-
     /**
-     * @return the boletos
+     * @return the fechaApartado
      */
-    public List<Boleto> getBoletos() {
-        return boletos;
+    public Date getFechaApartado() {
+        return fechaApartado;
     }
 
     /**
-     * @param boletos the boletos to set
+     * @param fechaApartado the fechaApartado to set
      */
-    public void setBoletos(List<Boleto> boletos) {
-        this.boletos = boletos;
+    public void setFechaApartado(Date fechaApartado) {
+        this.fechaApartado = fechaApartado;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     /**
@@ -130,5 +143,20 @@ public class TransaccionDTO {
     public void setTipoTransaccion(String tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
     }
+
+    /**
+     * @return the boleto
+     */
+    public BoletoDTO getBoleto() {
+        return boleto;
+    }
+
+    /**
+     * @param boleto the boleto to set
+     */
+    public void setBoleto(BoletoDTO boleto) {
+        this.boleto = boleto;
+    }
+    
     
 }
