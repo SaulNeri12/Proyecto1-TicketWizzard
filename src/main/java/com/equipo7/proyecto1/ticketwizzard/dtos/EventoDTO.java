@@ -1,7 +1,6 @@
 
 package com.equipo7.proyecto1.ticketwizzard.dtos;
 
-
 import java.sql.Date;
 
 /**

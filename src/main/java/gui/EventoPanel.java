@@ -5,6 +5,7 @@
 package gui;
 
 import com.equipo7.proyecto1.ticketwizzard.dtos.EventoDTO;
+import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -16,16 +17,19 @@ import java.time.ZoneId;
 public class EventoPanel extends javax.swing.JPanel {
 
     private EventoDTO evento;
+    private UsuarioDTO usuario;
     
     /**
      * Creates new form EventoPanel
      * @param evento
+     * @param usuario
      */
-    public EventoPanel(EventoDTO evento) {
+    public EventoPanel(EventoDTO evento, UsuarioDTO usuario) {
         initComponents();
         this.evento = evento;
         this.setVisible(true);
         this.inicializar();
+        this.usuario = usuario;
     }
     
     private void inicializar() {
@@ -102,7 +106,9 @@ public class EventoPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        System.out.println("shesh!!!!");
+         frmEvento frm = new frmEvento(this.evento, this.usuario);
+         
+         frm.setVisible(true);
     }//GEN-LAST:event_formMouseClicked
 
 

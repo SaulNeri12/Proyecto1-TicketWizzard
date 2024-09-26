@@ -33,7 +33,7 @@ public class BoletosDAO implements IBoletosDAO {
     @Override
     public List<Boleto> obtenerBoletosEnVentaBoleteraTodos() throws DAOException {
         List<Boleto> boletos = new ArrayList<>();
-        String sql = "SELECT * FROM boletos WHERE en_venta = true AND adquirido_boletera = true";
+        String sql = "SELECT * FROM boleto WHERE en_venta = true AND adquirido_boletera = true";
 
         try (Connection conn = conexion.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -52,7 +52,7 @@ public class BoletosDAO implements IBoletosDAO {
     @Override
     public List<Boleto> obtenerBoletosEnVentaEvento(Integer idEvento) throws DAOException {
         List<Boleto> boletos = new ArrayList<>();
-        String sql = "SELECT * FROM boletos WHERE id_evento = ? AND en_venta = true";
+        String sql = "SELECT * FROM boleto WHERE id_evento = ? AND en_venta = true";
 
         try (Connection conn = conexion.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -64,6 +64,7 @@ public class BoletosDAO implements IBoletosDAO {
                 }
             }
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             throw new DAOException("Error al obtener boletos en venta para el evento con ID: " + idEvento);
         }
 
@@ -73,7 +74,7 @@ public class BoletosDAO implements IBoletosDAO {
     @Override
     public List<Boleto> obtenerBoletosUsuario(Integer idUsuario) throws DAOException {
         List<Boleto> boletos = new ArrayList<>();
-        String sql = "SELECT * FROM boletos WHERE id_usuario = ?";
+        String sql = "SELECT * FROM boleto WHERE id_usuario = ?";
 
         try (Connection conn = conexion.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -94,7 +95,7 @@ public class BoletosDAO implements IBoletosDAO {
     @Override
     public List<Boleto> obtenerBoletosEnReventa() throws DAOException {
         List<Boleto> boletos = new ArrayList<>();
-        String sql = "SELECT * FROM boletos WHERE en_venta = true AND adquirido_boletera = false";
+        String sql = "SELECT * FROM boleto WHERE en_venta = true AND adquirido_boletera = false";
 
         try (Connection conn = conexion.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -113,7 +114,7 @@ public class BoletosDAO implements IBoletosDAO {
     @Override
     public Boleto obtenerBoleto(Integer id) throws DAOException {
         Boleto boleto = null;
-        String sql = "SELECT * FROM boletos WHERE id_boleto = ?";
+        String sql = "SELECT * FROM boleto WHERE id_boleto = ?";
 
         try (Connection conn = conexion.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -134,7 +135,7 @@ public class BoletosDAO implements IBoletosDAO {
     @Override
     public List<Boleto> obtenerBoletosVentaEvento(String nombreEvento) throws DAOException {
         List<Boleto> boletos = new ArrayList<>();
-        String sql = "SELECT * FROM boletos WHERE id_evento IN (SELECT id FROM eventos WHERE nombre = ?) AND en_venta = true";
+        String sql = "SELECT * FROM boleto WHERE id_evento IN (SELECT id FROM eventos WHERE nombre = ?) AND en_venta = true";
 
         try (Connection conn = conexion.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -168,7 +169,7 @@ public class BoletosDAO implements IBoletosDAO {
 
     @Override
     public void agregarBoleto(Boleto boleto) throws DAOException {
-        String sql = "INSERT INTO boletos (numero_serie, numero_control, precio_original, " +
+        String sql = "INSERT INTO boleto (numero_serie, numero_control, precio_original, " +
                 "precio_reventa, fecha_limite_venta, en_venta, adquirido_boletera, id_usuario, id_evento, id_asiento) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -194,7 +195,7 @@ public class BoletosDAO implements IBoletosDAO {
 
     @Override
     public void actualizarBoleto(Boleto boleto) throws DAOException {
-        String sql = "UPDATE boletos SET numero_serie = ?, numero_control = ?, precio_original = ?, " +
+        String sql = "UPDATE boleto SET numero_serie = ?, numero_control = ?, precio_original = ?, " +
                 "precio_reventa = ?, fecha_limite_venta = ?, en_venta = ?, adquirido_boletera = ?, " +
                 "id_usuario = ?, id_evento = ?, id_asiento = ? WHERE id_boleto = ?";
 
@@ -221,7 +222,7 @@ public class BoletosDAO implements IBoletosDAO {
 
     @Override
     public void eliminarBoleto(Integer id) throws DAOException {
-        String sql = "DELETE FROM boletos WHERE id_boleto = ?";
+        String sql = "DELETE FROM boleto WHERE id_boleto = ?";
 
         try (Connection conn = conexion.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

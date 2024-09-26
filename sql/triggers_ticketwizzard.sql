@@ -22,13 +22,14 @@ BEGIN
             SET id_asiento_nuevo = LAST_INSERT_ID();
             
             -- Insertar boleto correspondiente
-            INSERT INTO boleto (numero_serie, numero_control, precio_original, id_evento, id_asiento)
+            INSERT INTO boleto (numero_serie, numero_control, precio_original, id_evento, id_asiento, fecha_limite_venta)
             VALUES (
                 CONCAT(LEFT(UUID(), 8)),  -- Genera un número de serie único
                 CONCAT(NEW.id_evento, '-', fila, '-', LPAD(numero, 2, '0')),  -- Genera un número de control
                 NEW.precio_base_boleto,  -- Precio original (puedes ajustar esto según tus necesidades)
                 NEW.id_evento,
-                id_asiento_nuevo
+                id_asiento_nuevo,
+								NEW.fecha_hora
             );
             
             SET numero = numero + 1;

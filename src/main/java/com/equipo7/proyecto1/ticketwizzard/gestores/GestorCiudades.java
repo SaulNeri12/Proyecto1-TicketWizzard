@@ -47,6 +47,8 @@ public class GestorCiudades implements IGestorCiudades {
                 ciudad.getEstado()
         );
         
+        ciudadDTO.setId(ciudad.getId());
+        
         return ciudadDTO;
     }
     
@@ -61,6 +63,8 @@ public class GestorCiudades implements IGestorCiudades {
                 ciudadDTO.getNombre(),
                 ciudadDTO.getEstado()
         );
+        
+        ciudad.setId(ciudadDTO.getId());
         
         return ciudad;
     }
