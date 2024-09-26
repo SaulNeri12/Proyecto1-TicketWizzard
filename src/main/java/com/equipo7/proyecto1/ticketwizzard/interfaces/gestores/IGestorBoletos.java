@@ -12,14 +12,6 @@ import java.util.List;
 public interface IGestorBoletos {
     
     /**
-     * Obtiene los boletos en venta de los eventos que coincidan con el nombre dado
-     * @param nombreEvento Nombre del evento a buscar
-     * @return lista de boletos, null si no hay boletos en el sistema
-     * @throws GestorException
-     */
-    public List<BoletoDTO> obtenerBoletosVentaEvento(String nombreEvento) throws GestorException;
-    
-    /**
      * Obtiene todos los boletos que esten en venta para el evento especificado
      * @param idEvento ID del evento
      * @return

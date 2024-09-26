@@ -4,7 +4,7 @@ package com.equipo7.proyecto1.ticketwizzard.objetos;
 import java.sql.Date;
 
 /**
- *
+ * Clase que representa un evento en el sistema
  * @author Equipo 7
  */
 public class Evento {
@@ -25,10 +25,12 @@ public class Evento {
     // columna: precio_base_boleto
     private Float precioBaseBoleto;
     
+    /**
+     * Crea una instancia de evento con valores nulos
+     */
     public Evento() {
         
     }
-    
     
     
     /**
