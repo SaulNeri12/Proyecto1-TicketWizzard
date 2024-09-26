@@ -180,7 +180,12 @@ public class BoletoDTO {
         this.asiento = asiento;
     }
 
-    
+    @Override
+    public String toString() {
+        return String.format(
+                "Boleto(id=%d, num_serie=%s, precio_original=%.2f,en_venta=%d,id_usuario=%d, id_asiento=%d, fila=%s, numAsiento=%d)", 
+                this.id,this.numeroSerie,this.precioOriginal,this.enVenta ? 1 : 0,this.idUsuario, this.getAsiento().getId(),this.getAsiento().getFila(),this.getAsiento().getNumeroAsiento());
+    }
     
 
 }
