@@ -54,7 +54,7 @@ VALUES
 SELECT 'transacciones...';
 -- [INSERCION DE TRANSACCIONES]
 SET @id_boleto = (SELECT id_boleto FROM boleto WHERE id_evento = 1 LIMIT 1);
-SET @id_comprador = (SELECT id_usuario FROM usuario WHERE nombre_completo LIKE '%ana%' LIMIT 1);
+SET @id_comprador = (SELECT id_usuario FROM usuario WHERE nombre_completo LIKE '%juan%' LIMIT 1);
 
 INSERT INTO transaccion(id_comprador, id_boleto) VALUES 
 (
