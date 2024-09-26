@@ -46,6 +46,15 @@ public class frmEvento extends javax.swing.JFrame {
         this.cargarBoletos();
     }
     
+    private void volver() {
+        // Crear la instancia de la nueva ventana
+        frmEventos infoBoleto = new frmEventos(usuario);
+        // Hacer visible la nueva ventana
+        infoBoleto.setVisible(true);
+        // Cerrar la ventana actual (frmBoletosEnVenta)
+        this.dispose(); // 'this' hace referencia a la ventana actual
+    }
+    
     private void cargarBoletos() {
     
         this.listaBoletos.removeAll();
@@ -91,6 +100,12 @@ public class frmEvento extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        listaBoletos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaBoletosMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout listaBoletosLayout = new javax.swing.GroupLayout(listaBoletos);
         listaBoletos.setLayout(listaBoletosLayout);
         listaBoletosLayout.setHorizontalGroup(
@@ -114,6 +129,11 @@ public class frmEvento extends javax.swing.JFrame {
         org.openide.awt.Mnemonics.setLocalizedText(campoBoletosEncontrados, "100"); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(btnVolver, "Volver"); // NOI18N
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         campoDescripcion.setColumns(20);
         campoDescripcion.setRows(5);
@@ -172,6 +192,14 @@ public class frmEvento extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void listaBoletosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaBoletosMouseClicked
+        this.cargarBoletos();
+    }//GEN-LAST:event_listaBoletosMouseClicked
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        this.volver();
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVolver;

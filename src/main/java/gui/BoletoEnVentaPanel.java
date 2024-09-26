@@ -6,6 +6,9 @@ package gui;
 
 import com.equipo7.proyecto1.ticketwizzard.dtos.BoletoDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
+import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorBoletos;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorBoletos;
 
 /**
  *
@@ -108,7 +111,31 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnComprarBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarBoletoActionPerformed
-        System.out.println("SHESH");
+       try {
+        // Obtener el gestor de boletos a través de la interfaz
+        IGestorBoletos gestorBoletos = GestorBoletos.getInstance();
+
+        // Verificar si el boleto está en venta
+        if (!boleto.getEnVenta()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El boleto ya ha sido vendido.");
+            return;
+        }
+
+        // Actualizar los datos del boleto
+        boleto.setEnVenta(false);  // Marcar el boleto como vendido
+        boleto.setIdUsuario(usuario.getId());  // Asignar el boleto al usuario actual
+
+        // Llamar al gestor para actualizar el boleto
+        gestorBoletos.actualizarBoleto(boleto);
+
+        // Notificar al usuario que la compra fue exitosa
+        javax.swing.JOptionPane.showMessageDialog(this, "Boleto comprado exitosamente!");
+
+    } catch (GestorException e) {
+        // Manejo de errores en caso de que algo salga mal con la compra
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al procesar la compra del boleto: " + e.getMessage());
+    }
+
     }//GEN-LAST:event_btnComprarBoletoActionPerformed
 
 

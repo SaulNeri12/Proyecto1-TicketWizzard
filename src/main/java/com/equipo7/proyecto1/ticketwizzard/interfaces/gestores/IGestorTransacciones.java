@@ -27,7 +27,7 @@ public interface IGestorTransacciones {
      * @return
      * @throws GestorException
      */
-    public List<TransaccionDTO> obtenerTransaccion(Integer id) throws GestorException;
+    public TransaccionDTO obtenerTransaccion(Integer id) throws GestorException;
     
     /**
      * Agrega una transaccion al sistema

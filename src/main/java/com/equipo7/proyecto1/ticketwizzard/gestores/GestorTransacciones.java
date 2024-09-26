@@ -6,11 +6,14 @@ package com.equipo7.proyecto1.ticketwizzard.gestores;
 
 import com.equipo7.proyecto1.ticketwizzard.dao.TransaccionesDAO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.TransaccionDTO;
+import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.dao.ITransaccionesDAO;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorTransacciones;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Transaccion;
+import java.util.ArrayList;
 import java.util.List;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -53,26 +56,76 @@ public class GestorTransacciones implements IGestorTransacciones {
 
     @Override
     public List<TransaccionDTO> obtenerTransaccionesUsuario(Integer idUsuario) throws GestorException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            List<Transaccion> lista = this.transaccionesDAO.obtenerTransaccionesUsuario(idUsuario);
+            
+            if (lista.isEmpty()) {
+                throw new DAOException("No se encontraron transacciones");
+            }
+            
+            List<TransaccionDTO> transacciones = new ArrayList<>();
+            
+            for (Transaccion t: lista) {
+                transacciones.add(this.convertirEntidad(t));
+            }
+            
+            return transacciones;
+        } catch (DAOException ex) {
+            throw new GestorException(ex.getMessage());
+        }
     }
 
     @Override
-    public List<TransaccionDTO> obtenerTransaccion(Integer id) throws GestorException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public TransaccionDTO obtenerTransaccion(Integer id) throws GestorException {
+        try {
+            Transaccion transaccion = this.transaccionesDAO.obtenerTransaccion(id);
+            
+            if (transaccion == null) {
+                throw new DAOException("No se encontro la transaccion");
+            }
+            
+            return this.convertirEntidad(transaccion);
+        } catch (DAOException ex) {
+            throw new GestorException(ex.getMessage());
+        }
     }
 
     @Override
     public void agregarTransaccion(TransaccionDTO transaccion) throws GestorException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            if (transaccion == null) {
+                throw new DAOException("No se pudo agregar transaccion debido a datos erroneos");
+            }
+            
+            this.transaccionesDAO.agregarTransaccion(this.convertirDTO(transaccion));
+        } catch (DAOException ex) {
+            throw new GestorException(ex.getMessage());
+        }
     }
 
     @Override
     public void actualizarTransaccion(TransaccionDTO transaccion) throws GestorException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            if (transaccion == null) {
+                throw new DAOException("No se pudo actualizar la informacion de la transaccion debido a la presencia de datos erroneos");
+            }
+            
+            this.transaccionesDAO.actualizarTransaccion(this.convertirDTO(transaccion));
+        } catch (DAOException ex) {
+            throw new GestorException(ex.getMessage());
+        }
     }
 
     @Override
     public void eliminarTransaccion(Integer id) throws GestorException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            if (id == null) {
+                throw new DAOException("No se encontro la transaccion que se desea eliminar");
+            }
+            
+            this.transaccionesDAO.eliminarTransaccion(id);
+        } catch (DAOException ex) {
+            throw new GestorException(ex.getMessage());
+        }
     }
 }

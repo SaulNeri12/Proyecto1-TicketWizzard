@@ -140,4 +140,9 @@ public class Usuario {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    @Override
+    public String toString() {
+        return String.format("Usuario(id=%d, nombre=%s,email=%s,saldo=%.2f)", this.id,this.nombreCompleto,this.email,this.saldo);
+    }
 }
