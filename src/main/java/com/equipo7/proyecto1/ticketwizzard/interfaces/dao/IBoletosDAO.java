@@ -12,13 +12,6 @@ import java.util.List;
 public interface IBoletosDAO {
     
     /**
-     * Obtiene todos los boletos disponibles para la venta en boletera.
-     * @return lista de boletos en venta por la boletera, null si no hay boletos disponibles.
-     * @throws DAOException
-     */
-    public List<Boleto> obtenerBoletosEnVentaBoleteraTodos() throws DAOException;
-    
-    /**
      * Obtiene los boletos para un evento especificado que están en venta.
      * @param idEvento ID del evento a buscar boletos.
      * @return lista de boletos en venta para el evento, null si no hay boletos disponibles.
@@ -33,13 +26,6 @@ public interface IBoletosDAO {
      * @throws DAOException
      */
     public List<Boleto> obtenerBoletosUsuario(Integer idUsuario) throws DAOException;
-    
-    /**
-     * Obtiene los boletos que están en reventa por los usuarios.
-     * @return lista de boletos en reventa, null si no hay boletos en reventa.
-     * @throws DAOException
-     */
-    public List<Boleto> obtenerBoletosEnReventa() throws DAOException;
     
     /**
      * Busca el boleto con el ID especificado.
@@ -69,7 +55,4 @@ public interface IBoletosDAO {
      * @throws DAOException
      */
     public void eliminarBoleto(Integer id) throws DAOException;
-    
-    List<Boleto> obtenerBoletosVentaEvento(String nombreEvento) throws DAOException;
-    
 }

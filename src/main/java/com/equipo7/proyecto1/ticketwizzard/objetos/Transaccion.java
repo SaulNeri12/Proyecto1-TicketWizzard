@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
- *
+ * Representa una transaccion de boletos en el sistema
  * @author Equipo 7
  */
 public class Transaccion {
@@ -29,14 +29,15 @@ public class Transaccion {
     private String estado;
     // columna: tipo
     private String tipoTransaccion;
-    
+    // columna: id_boleto
     private Boleto boleto;
     
+    /**
+     * Crea una nueva instancia de transaccion con valores nulos
+     */
     public Transaccion() {
         
     }
-
-    
     
     /**
      * @return the id

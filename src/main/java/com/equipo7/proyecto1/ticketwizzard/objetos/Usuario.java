@@ -4,7 +4,7 @@ package com.equipo7.proyecto1.ticketwizzard.objetos;
 import java.sql.Date;
 
 /**
- *
+ * Representa un usuario en el sistema
  * @author Equipo 7
  */
 public class Usuario {
@@ -25,6 +25,9 @@ public class Usuario {
     // columna: contrasena
     private String contrasena;
 
+    /**
+     * Crea una nueva instancia de usuario con valores nulos
+     */
     public Usuario() {
         
     }

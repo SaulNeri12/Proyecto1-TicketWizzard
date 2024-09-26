@@ -5,7 +5,7 @@
 package com.equipo7.proyecto1.ticketwizzard.objetos;
 
 /**
- *
+ * Representa una ciudad en el sistema
  * @author Equipo 7
  */
 public class Ciudad {
@@ -20,8 +20,12 @@ public class Ciudad {
         
     }
 
-
-
+    /**
+     * Crea una nueva ciudad inicializada con los valores dados
+     * @param id ID de la ciudad
+     * @param nombre Nombre de la ciudad
+     * @param estado Estado en donde se encuentra
+     */
     public Ciudad(Integer id, String nombre, String estado) {
         this.id = id;
         this.nombre = nombre;
