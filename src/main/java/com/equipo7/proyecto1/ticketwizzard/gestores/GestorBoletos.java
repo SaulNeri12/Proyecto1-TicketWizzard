@@ -51,9 +51,9 @@ public class GestorBoletos implements IGestorBoletos {
         boletoDTO.setIdUsuario(boleto.getIdUsuario());
         boletoDTO.setIdEvento(boleto.getIdEvento());
         boletoDTO.setAsiento(new AsientoDTO(
-                boletoDTO.getAsiento().getId(),
-                boletoDTO.getAsiento().getFila(),
-                boletoDTO.getAsiento().getNumeroAsiento()
+                boleto.getAsiento().getId(),
+                boleto.getAsiento().getFila(),
+                boleto.getAsiento().getNumeroAsiento()
         ));
         boletoDTO.setAdquiridoBoletera(boleto.getAdquiridoBoletera());
         return boletoDTO;

@@ -6,16 +6,14 @@ package gui;
 
 import com.equipo7.proyecto1.ticketwizzard.dtos.BoletoDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
-import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
-import com.equipo7.proyecto1.ticketwizzard.gestores.GestorBoletos;
-import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorBoletos;
 import java.sql.Date;
+import javax.swing.BoxLayout;
 
 /**
  *
  * @author neri
  */
-public class BoletoEnVentaPanel extends javax.swing.JPanel {
+public class BoletoUsuarioPanel extends javax.swing.JPanel {
 
     private BoletoDTO boleto;
     private UsuarioDTO usuario;
@@ -25,14 +23,14 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
      * @param boleto
      * @param usuario
      */
-    public BoletoEnVentaPanel(BoletoDTO boleto, UsuarioDTO usuario) {
+    public BoletoUsuarioPanel(BoletoDTO boleto, UsuarioDTO usuario) {
         initComponents();
         this.boleto = boleto;
         this.usuario = usuario;
         this.setVisible(true);
         this.inicializar();
     }
-
+    
     private void inicializar() {
         this.campoInfoAsiento.setText(this.boleto.getNumeroControl());
         this.campoFila.setText(this.boleto.getAsiento().getFila());
@@ -44,8 +42,9 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
         } else {
             this.campoFechaLimite.setText("");
         }
+        
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,27 +54,28 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        campoNumeroAsiento1 = new javax.swing.JLabel();
         campoInfoAsiento = new javax.swing.JLabel();
-        campoPrecio = new javax.swing.JLabel();
-        btnComprarBoleto = new javax.swing.JButton();
+        label = new javax.swing.JLabel();
+        lbl = new javax.swing.JLabel();
         campoFechaLimite = new javax.swing.JLabel();
         campoNumeroAsiento = new javax.swing.JLabel();
         campoFila = new javax.swing.JLabel();
-        label = new javax.swing.JLabel();
-        lbl = new javax.swing.JLabel();
+
+        org.openide.awt.Mnemonics.setLocalizedText(campoNumeroAsiento1, "Numero de asiento: X"); // NOI18N
+
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         campoInfoAsiento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(campoInfoAsiento, "Numero Control"); // NOI18N
 
-        campoPrecio.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        org.openide.awt.Mnemonics.setLocalizedText(campoPrecio, "Precio: $XXXX"); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(label, "Numero de asiento: "); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(btnComprarBoleto, "Comprar"); // NOI18N
-        btnComprarBoleto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnComprarBoletoActionPerformed(evt);
-            }
-        });
+        org.openide.awt.Mnemonics.setLocalizedText(lbl, "Fila:"); // NOI18N
 
         campoFechaLimite.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         org.openide.awt.Mnemonics.setLocalizedText(campoFechaLimite, "Fecha Limite: Fecha"); // NOI18N
@@ -84,36 +84,26 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(campoFila, "FILA"); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(label, "Numero de asiento: "); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(lbl, "Fila:"); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(campoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnComprarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(campoInfoAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
-                        .addComponent(campoFechaLimite, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(campoFechaLimite, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(campoFila, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoFila, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(campoNumeroAsiento)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -125,7 +115,7 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campoFechaLimite)
                     .addComponent(campoInfoAsiento))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label)
                     .addComponent(campoNumeroAsiento))
@@ -133,50 +123,23 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl)
                     .addComponent(campoFila))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoPrecio)
-                    .addComponent(btnComprarBoleto))
-                .addContainerGap())
+                .addContainerGap(19, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnComprarBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarBoletoActionPerformed
-       try {
-        // Obtener el gestor de boletos a través de la interfaz
-        IGestorBoletos gestorBoletos = GestorBoletos.getInstance();
-
-        // Verificar si el boleto está en venta
-        if (!boleto.getEnVenta()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "El boleto ya ha sido vendido.");
-            return;
-        }
-
-        // Actualizar los datos del boleto
-        boleto.setEnVenta(false);  // Marcar el boleto como vendido
-        boleto.setIdUsuario(usuario.getId());  // Asignar el boleto al usuario actual
-
-        // Llamar al gestor para actualizar el boleto
-        gestorBoletos.actualizarBoleto(boleto);
-
-        // Notificar al usuario que la compra fue exitosa
-        javax.swing.JOptionPane.showMessageDialog(this, "Boleto comprado exitosamente!");
-
-    } catch (GestorException e) {
-        // Manejo de errores en caso de que algo salga mal con la compra
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al procesar la compra del boleto: " + e.getMessage());
-    }
-
-    }//GEN-LAST:event_btnComprarBoletoActionPerformed
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        frmVenderBoleto frm = new frmVenderBoleto(this.boleto, this.usuario);
+        
+        frm.setVisible(true);
+    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnComprarBoleto;
     private javax.swing.JLabel campoFechaLimite;
     private javax.swing.JLabel campoFila;
     private javax.swing.JLabel campoInfoAsiento;
     private javax.swing.JLabel campoNumeroAsiento;
-    private javax.swing.JLabel campoPrecio;
+    private javax.swing.JLabel campoNumeroAsiento1;
     private javax.swing.JLabel label;
     private javax.swing.JLabel lbl;
     // End of variables declaration//GEN-END:variables

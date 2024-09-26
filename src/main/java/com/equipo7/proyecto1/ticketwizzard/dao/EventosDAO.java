@@ -24,10 +24,10 @@ import java.util.List;
 public class EventosDAO implements IEventosDAO {
     private static EventosDAO instance;
     
-    private static final String CONSULTA_TODOS = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad;";
-    private static final String CONSULTA_POR_CIUDAD_STRING = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE c.nombre LIKE ?;";
-    private static final String CONSULTA_POR_CIUDAD_ID = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_ciudad = ?;";
-    private static final String CONSULTA_POR_ID = "SELECT e.id_evento, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_evento = ?;";
+    private static final String CONSULTA_TODOS = "SELECT e.id_evento, e.precio_base_boleto, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad;";
+    private static final String CONSULTA_POR_CIUDAD_STRING = "SELECT e.id_evento, e.precio_base_boleto,.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE c.nombre LIKE ?;";
+    private static final String CONSULTA_POR_CIUDAD_ID = "SELECT e.id_evento, e.precio_base_boleto, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_ciudad = ?;";
+    private static final String CONSULTA_POR_ID = "SELECT e.id_evento, e.precio_base_boleto, e.descripcion, e.nombre, e.fecha_hora, e.venue, e.terminado, e.id_ciudad, c.nombre AS ciudad_nombre, c.estado AS ciudad_estado FROM evento e INNER JOIN ciudad c ON e.id_ciudad = c.id_ciudad WHERE e.id_evento = ?;";
     private static final String INSERTAR = "INSERT INTO evento (nombre, descripcion, fecha_hora, venue, terminado, id_ciudad, precio_base_boleto) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String ACTUALIZAR = "UPDATE evento SET nombre=?, descripcion=?, fecha_hora=?, venue=?, terminado=?, id_ciudad=? WHERE id_evento = ?;";
     private static final String ELIMINAR = "DELETE FROM evento WHERE id_evento = ?;";
@@ -55,7 +55,7 @@ public class EventosDAO implements IEventosDAO {
         evento.setFechaHora(resultados.getDate("fecha_hora"));
         evento.setTerminado(resultados.getBoolean("terminado"));
         evento.setVenue(resultados.getString("venue"));
-        
+        evento.setPrecioBaseBoleto(resultados.getFloat("precio_base_boleto"));
 
         Ciudad ciudad = new Ciudad(
                 resultados.getInt("id_ciudad"),
