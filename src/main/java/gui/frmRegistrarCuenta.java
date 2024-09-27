@@ -8,9 +8,10 @@ import com.equipo7.proyecto1.ticketwizzard.criptografia.Encriptador;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 
@@ -31,6 +32,29 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.gestorUsuarios = gestorUsuarios;
     }
+    
+    
+    
+    // Método para validar el correo electrónico
+private boolean validarCorreo(String email) {
+    // Verificar que contenga exactamente un "@" y al menos un "."
+    int countAt = email.length() - email.replace("@", "").length();
+    return countAt == 1 && email.contains(".") && email.indexOf("@") < email.lastIndexOf(".");
+}
+
+// Método para validar la contraseña
+private boolean validarContrasena(String contrasena) {
+    // Verificar que tenga al menos 8 caracteres y una mayúscula
+    return contrasena.length() >= 8 && !contrasena.equals(contrasena.toLowerCase());
+}
+
+// Método para validar la edad
+private boolean validarEdad(Date fechaNacimiento) {
+    LocalDate fechaNac = fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate ahora = LocalDate.now();
+    int edad = Period.between(fechaNac, ahora).getYears();
+    return edad >= 18;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,7 +73,6 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtFechaNac = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtDomicilio = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -59,6 +82,7 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
         chbxTerminosYCondiciones = new javax.swing.JCheckBox();
         btnRegistrarUsu = new javax.swing.JButton();
         btnVolverInicioSesion = new javax.swing.JButton();
+        dateChooserFecha = new com.toedter.calendar.JDateChooser();
 
         jButton1.setBackground(new java.awt.Color(255, 255, 102));
         jButton1.setText("jButton1");
@@ -80,8 +104,6 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
         jLabel5.setText("Correo Electronico:");
 
         jLabel3.setText("Fecha de nacimiento:");
-
-        txtFechaNac.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel6.setText("Domicilio:");
 
@@ -129,16 +151,16 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
                         .addGap(154, 154, 154)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNombre)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCorreo)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDomicilio)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dateChooserFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel1)
@@ -150,7 +172,7 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
                                 .addComponent(chbxTerminosYCondiciones)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(btnRegistrarUsu)
                 .addGap(25, 25, 25))
         );
@@ -170,7 +192,7 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dateChooserFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -211,64 +233,85 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_chbxTerminosYCondicionesActionPerformed
 
     private void btnRegistrarUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarUsuActionPerformed
-        // Verificar que todos los campos estén llenos
-        if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty()
-                || txtDomicilio.getText().isEmpty() || txtFechaNac.getText().isEmpty()
-                || PasswordFieldContra.getPassword().length == 0
-                || PasswordFieldConfirmarContra.getPassword().length == 0) {
+         // Verificar que todos los campos estén llenos
+    if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty()
+            || txtDomicilio.getText().isEmpty() || dateChooserFecha.getDate() == null
+            || PasswordFieldContra.getPassword().length == 0
+            || PasswordFieldConfirmarContra.getPassword().length == 0) {
 
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Verificar que las contraseñas coincidan
-        if (!Arrays.equals(PasswordFieldContra.getPassword(), PasswordFieldConfirmarContra.getPassword())) {
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // Validar el correo electrónico
+    String email = txtCorreo.getText();
+    if (!validarCorreo(email)) {
+        JOptionPane.showMessageDialog(this, "El correo electrónico no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Verificar que se hayan aceptado los términos y condiciones
-        if (!chbxTerminosYCondiciones.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Debe aceptar los términos y condiciones", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // Validar la contraseña
+    String contrasena = new String(PasswordFieldContra.getPassword());
+    if (!validarContrasena(contrasena)) {
+        JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 8 caracteres y una mayúscula", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        try {
-            // Crear un nuevo UsuarioDTO con los datos del formulario
-            UsuarioDTO nuevoUsuario = new UsuarioDTO();
-            nuevoUsuario.setNombreCompleto(txtNombre.getText());
-            nuevoUsuario.setEmail(txtCorreo.getText());
-            nuevoUsuario.setDomicilio(txtDomicilio.getText());
-            nuevoUsuario.setFechaNacimiento(Date.valueOf(txtFechaNac.getText()));
+    // Verificar que las contraseñas coincidan
+    if (!Arrays.equals(PasswordFieldContra.getPassword(), PasswordFieldConfirmarContra.getPassword())) {
+        JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-            // Encriptar la contrasena
-            String contrasenaPlana = new String(PasswordFieldContra.getPassword());
-            String contrasenaEncriptada = Encriptador.hash(contrasenaPlana);
-            System.out.println("CONTRASENA: " + contrasenaEncriptada.toString());
-            nuevoUsuario.setContrasena(contrasenaEncriptada);
+    // Validar la edad
+    if (!validarEdad(dateChooserFecha.getDate())) {
+        JOptionPane.showMessageDialog(this, "El usuario debe ser mayor de 18 años", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-            // Calcular la edad
-            LocalDate fechaNac = nuevoUsuario.getFechaNacimiento().toLocalDate();
-            LocalDate ahora = LocalDate.now();
-            int edad = Period.between(fechaNac, ahora).getYears();
-            nuevoUsuario.setEdad(edad);
+    // Verificar que se hayan aceptado los términos y condiciones
+    if (!chbxTerminosYCondiciones.isSelected()) {
+        JOptionPane.showMessageDialog(this, "Debe aceptar los términos y condiciones", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-            // Establecer un saldo inicial
-            nuevoUsuario.setSaldo(0.0f);
+    try {
+        // Crear un nuevo UsuarioDTO con los datos del formulario
+        UsuarioDTO nuevoUsuario = new UsuarioDTO();
+        nuevoUsuario.setNombreCompleto(txtNombre.getText());
+        nuevoUsuario.setEmail(email);
+        nuevoUsuario.setDomicilio(txtDomicilio.getText());
+        
+        // Convertir java.util.Date a java.sql.Date
+        java.util.Date utilDate = dateChooserFecha.getDate();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        nuevoUsuario.setFechaNacimiento(sqlDate);
 
-            this.gestorUsuarios.agregarUsuario(nuevoUsuario);
+        // Encriptar la contrasena
+        String contrasenaEncriptada = Encriptador.hash(contrasena);
+        System.out.println("CONTRASENA: " + contrasenaEncriptada);
+        nuevoUsuario.setContrasena(contrasenaEncriptada);
 
-            JOptionPane.showMessageDialog(this, "Usuario registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+        // Calcular la edad
+        LocalDate fechaNac = nuevoUsuario.getFechaNacimiento().toLocalDate();
+        LocalDate ahora = LocalDate.now();
+        int edad = Period.between(fechaNac, ahora).getYears();
+        nuevoUsuario.setEdad(edad);
 
-            // Abrir la ventana de inicio de sesión y cerrar la actual
-            frmInicioSesion inicioSesion = new frmInicioSesion();
-            inicioSesion.setVisible(true);
-            this.dispose();
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use YYYY-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (GestorException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
+        // Establecer un saldo inicial
+        nuevoUsuario.setSaldo(0.0f);
+
+        this.gestorUsuarios.agregarUsuario(nuevoUsuario);
+
+        JOptionPane.showMessageDialog(this, "Usuario registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+        // Abrir la ventana de inicio de sesión y cerrar la actual
+        frmInicioSesion inicioSesion = new frmInicioSesion();
+        inicioSesion.setVisible(true);
+        this.dispose();
+    } catch (GestorException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_btnRegistrarUsuActionPerformed
 
     private void btnVolverInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverInicioSesionActionPerformed
@@ -292,6 +335,7 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrarUsu;
     private javax.swing.JButton btnVolverInicioSesion;
     private javax.swing.JCheckBox chbxTerminosYCondiciones;
+    private com.toedter.calendar.JDateChooser dateChooserFecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -303,7 +347,6 @@ public class frmRegistrarCuenta extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDomicilio;
-    private javax.swing.JTextField txtFechaNac;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

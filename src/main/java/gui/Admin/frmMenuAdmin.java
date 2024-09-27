@@ -30,7 +30,6 @@ public class frmMenuAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnCrearEventos = new javax.swing.JButton();
-        btnAsignarBoletos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,8 +42,11 @@ public class frmMenuAdmin extends javax.swing.JFrame {
         jLabel2.setText("Bienvenido Administador");
 
         btnCrearEventos.setText("Crear eventos");
-
-        btnAsignarBoletos.setText("Asignar boletos a los usuarios");
+        btnCrearEventos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearEventosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout FondoLayout = new javax.swing.GroupLayout(Fondo);
         Fondo.setLayout(FondoLayout);
@@ -63,10 +65,6 @@ public class frmMenuAdmin extends javax.swing.JFrame {
                         .addGap(196, 196, 196)
                         .addComponent(btnCrearEventos, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAsignarBoletos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         FondoLayout.setVerticalGroup(
             FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -77,9 +75,7 @@ public class frmMenuAdmin extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(45, 45, 45)
                 .addComponent(btnCrearEventos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(btnAsignarBoletos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -95,6 +91,10 @@ public class frmMenuAdmin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCrearEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearEventosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCrearEventosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,7 +133,6 @@ public class frmMenuAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
-    private javax.swing.JButton btnAsignarBoletos;
     private javax.swing.JButton btnCrearEventos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

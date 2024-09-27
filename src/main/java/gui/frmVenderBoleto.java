@@ -10,25 +10,21 @@ import com.equipo7.proyecto1.ticketwizzard.gestores.GestorEventos;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorBoletos;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorEventos;
 import javax.swing.JOptionPane;
-
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.text.DecimalFormat;
 /**
  *
  * @author caarl
  */
 public class frmVenderBoleto extends javax.swing.JFrame {
-
-    private IGestorEventos eventos;
+ private IGestorEventos eventos;
     private IGestorBoletos boletos;
     
-    private final UsuarioDTO usuarioActual;  // Esta variable debe almacenar el usuario que inició sesión.
+    private final UsuarioDTO usuarioActual;
     private final BoletoDTO boleto;
     private Float precioReventa;
-
-    /**
-     * Creates new form frmVenderBoleto
-     * @param boleto
-     * @param usuario
-     */
+    
     public frmVenderBoleto(BoletoDTO boleto, UsuarioDTO usuario) {
         this.usuarioActual = usuario;
         this.boleto = boleto;
@@ -37,12 +33,14 @@ public class frmVenderBoleto extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.inicializar();
+        this.configurarCampos();
     }
     
     private void inicializar() {
         EventoDTO evento = null;
         
         this.campoPrecioOriginal.setEnabled(false);
+        this.campoMontoTotal.setEditable(false);
         
         try {
             evento = this.eventos.obtenerEvento(this.boleto.getIdEvento());
@@ -52,9 +50,56 @@ public class frmVenderBoleto extends javax.swing.JFrame {
             this.campoPrecioVenta.setText(evento.getPrecioBaseBoleto().toString());
             
             this.precioReventa = evento.getPrecioBaseBoleto() - (evento.getPrecioBaseBoleto()*0.03f);
+            actualizarMontoTotal();
         } catch (GestorException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Vender Boleto", JOptionPane.WARNING_MESSAGE);
         }
+    }
+
+    private void configurarCampos() {
+        campoPrecioVenta.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                actualizarMontoTotal();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                actualizarMontoTotal();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                actualizarMontoTotal();
+            }
+        });
+    }
+
+    private void actualizarMontoTotal() {
+       try {
+        float precioOriginal = Float.parseFloat(campoPrecioOriginal.getText());
+        float precioVenta = Float.parseFloat(campoPrecioVenta.getText());
+
+        // Validación para asegurarse de que el precio de venta no sea mayor al precio original
+        if (precioVenta > precioOriginal) {
+            JOptionPane.showMessageDialog(this, "El precio de venta no puede ser mayor que el precio original", "Error", JOptionPane.ERROR_MESSAGE);
+            campoPrecioVenta.setText(String.valueOf(precioOriginal));
+            precioVenta = precioOriginal; // Restablecer el valor del precio de venta al precio original
+        }
+
+        if (precioVenta < 0) {
+            JOptionPane.showMessageDialog(this, "El precio de venta no puede ser negativo", "Error", JOptionPane.ERROR_MESSAGE);
+            campoPrecioVenta.setText("0");
+            precioVenta = 0;
+        }
+
+        // Calcular el monto total con la deducción del 3%
+        float montoTotal = precioVenta - (precioVenta * 0.03f);
+        DecimalFormat df = new DecimalFormat("#.##");
+        campoMontoTotal.setText(df.format(montoTotal));
+    } catch (NumberFormatException ex) {
+        campoMontoTotal.setText("");
+    }
     }
 
     /**
@@ -202,13 +247,20 @@ public class frmVenderBoleto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnPublicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublicarActionPerformed
-
-        try {
+  try {
+            float precioVenta = Float.parseFloat(campoPrecioVenta.getText());
+            if (precioVenta <= 0) {
+                JOptionPane.showMessageDialog(this, "El precio de venta debe ser mayor que cero", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             this.boleto.setEnVenta(true);
-            this.boleto.setPrecioReventa(this.precioReventa);
+            this.boleto.setPrecioReventa(precioVenta);
             this.boletos.actualizarBoleto(boleto);
+            JOptionPane.showMessageDialog(this, "Boleto puesto en venta con éxito", "TicketWizzard - Publicar Boleto", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un precio de venta válido", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (GestorException ex) {
-            JOptionPane.showMessageDialog(null, "Boleto puesto en venta con éxito", "TicketWizzard - Publicar Boleto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al publicar boleto", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnPublicarActionPerformed
 

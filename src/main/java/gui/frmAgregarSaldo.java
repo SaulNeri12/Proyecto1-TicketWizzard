@@ -13,6 +13,8 @@ import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorUsuarios;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
 import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 public class frmAgregarSaldo extends javax.swing.JFrame {
 
@@ -29,35 +31,41 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
         this.usuarioActual = usuario;
         
         try {
-            this.lblNombreUsu.setText(usuario.getNombreCompleto()); // Aquí se asigna el nombre al label
+            this.lblNombreUsu.setText(usuario.getNombreCompleto());
             this.setLocationRelativeTo(null);
             
             // Obtener el usuario actualizado de la base de datos
             UsuarioDTO usuarioActualizado = this.gestorUsuarios.obtenerUsuario(usuario.getId());
-            // Asignar el saldo actual del usuario al label
             this.lblSaldoActual.setText(String.format("$%.2f", usuarioActualizado.getSaldo()));
-            // Actualizar el usuario actual con la información más reciente
             this.usuarioActual = usuarioActualizado;
-            
+
             this.setLocationRelativeTo(null);
         } catch (GestorException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "TicketWizzard - Advertencia", JOptionPane.WARNING_MESSAGE);
         }
+        
+        // Solo permitir entrada numérica en el campo de texto
+        txtCant.setDocument(new NumericDocument());
     }
+    
+    // Clase para restringir la entrada a números y un punto decimal
+    private static class NumericDocument extends PlainDocument {
+        @Override
+        public void insertString(int offs, String str, javax.swing.text.AttributeSet a) throws BadLocationException {
+            if (str == null) return;
 
-  
+            // Aceptar solo dígitos y un punto decimal
+            if (str.matches("[0-9]*\\.?[0-9]*")) {
+                super.insertString(offs, str, a);
+            }
+        }
+    }
 
     private void volver() {
-        // Crear la instancia de la nueva ventana
         frmTusBoletos infoBoleto = new frmTusBoletos(usuarioActual);
-
-        // Hacer visible la nueva ventana
         infoBoleto.setVisible(true);
-
-        // Cerrar la ventana actual (frmBoletosEnVenta)
-        this.dispose(); // 'this' hace referencia a la ventana actual
+        this.dispose();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -202,26 +210,27 @@ public class frmAgregarSaldo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        try {
+         try {
             float cantidad = Float.parseFloat(txtCant.getText());
+            
+            // Validación de cantidad
+            if (cantidad <= 0) {
+                throw new IllegalArgumentException("Por favor, ingrese una cantidad válida.");
+            }
+
             if (cantidad % 50 != 0) {
                 JOptionPane.showMessageDialog(this, "La cantidad debe ser un múltiplo de $50", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            if (cantidad <= 0) {
-                throw new IllegalArgumentException("Porfavor, ingrese una cantidad valida");
-            }   
-            
             this.gestorUsuarios.aumentarSaldo(usuarioActual.getId(), cantidad);
-            
             usuarioActual = this.gestorUsuarios.obtenerUsuario(usuarioActual.getId());
             
             JOptionPane.showMessageDialog(
-                    this, 
-                    "Saldo aumentado exitosamente. Nuevo saldo: $" + usuarioActual.getSaldo(), 
-                    "Éxito", 
-                    JOptionPane.INFORMATION_MESSAGE
+                this, 
+                "Saldo aumentado exitosamente. Nuevo saldo: $" + usuarioActual.getSaldo(), 
+                "Éxito", 
+                JOptionPane.INFORMATION_MESSAGE
             );
 
             volver(); // Cierra la ventana después de aumentar el saldo

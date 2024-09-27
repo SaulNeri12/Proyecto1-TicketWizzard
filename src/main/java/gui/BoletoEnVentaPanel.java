@@ -37,6 +37,7 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
         this.campoInfoAsiento.setText(this.boleto.getNumeroControl());
         this.campoFila.setText(this.boleto.getAsiento().getFila());
         this.campoNumeroAsiento.setText(this.boleto.getAsiento().getNumeroAsiento().toString());
+
         
         Date fechaLimite = this.boleto.getFechaLimiteVenta();
         if (fechaLimite != null) {
@@ -44,6 +45,15 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
         } else {
             this.campoFechaLimite.setText("");
         }
+        
+        
+        
+        // Mostrar el precio de reventa o el precio original
+    if (this.boleto.getPrecioReventa() != null && this.boleto.getPrecioReventa() > 0) {
+        this.campoPrecio.setText("Precio: " + this.boleto.getPrecioReventa().toString());
+    } else {
+        this.campoPrecio.setText("Precio: " + this.boleto.getPrecioOriginal().toString());
+    }
     }
     
     /**

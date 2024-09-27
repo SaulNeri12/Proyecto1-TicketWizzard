@@ -246,6 +246,8 @@ public class frmTusBoletos extends javax.swing.JFrame {
 
         // Ocultamos la ventana actual en lugar de cerrarla
         this.setVisible(false);
+        
+         this.dispose();
     }//GEN-LAST:event_btnAgregarSaldoActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -268,6 +270,8 @@ public class frmTusBoletos extends javax.swing.JFrame {
         reg.setVisible(true);
         // Ocultamos la ventana actual en lugar de cerrarla
         this.setVisible(false);
+        
+         this.dispose();
     }//GEN-LAST:event_btnVerEventosActionPerformed
 
     private void btnMostrarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarHistorialActionPerformed
