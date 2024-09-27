@@ -5,18 +5,27 @@
 package gui;
 
 import com.equipo7.proyecto1.ticketwizzard.dtos.BoletoDTO;
+import com.equipo7.proyecto1.ticketwizzard.dtos.TransaccionDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorBoletos;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorTransacciones;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorUsuarios;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorBoletos;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorTransacciones;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
 import java.sql.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author neri
  */
 public class BoletoEnVentaPanel extends javax.swing.JPanel {
-
+    private IGestorUsuarios usuarios;
+    private IGestorBoletos boletos;
+    private IGestorTransacciones transacciones;
+    
     private BoletoDTO boleto;
     private UsuarioDTO usuario;
     
@@ -30,6 +39,9 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
         this.boleto = boleto;
         this.usuario = usuario;
         this.setVisible(true);
+        this.usuarios = GestorUsuarios.getInstance();
+        this.boletos = GestorBoletos.getInstance();
+        this.transacciones = GestorTransacciones.getInstance();
         this.inicializar();
     }
 
@@ -153,28 +165,30 @@ public class BoletoEnVentaPanel extends javax.swing.JPanel {
 
     private void btnComprarBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarBoletoActionPerformed
        try {
-        // Obtener el gestor de boletos a través de la interfaz
-        IGestorBoletos gestorBoletos = GestorBoletos.getInstance();
-
+              
         // Verificar si el boleto está en venta
         if (!boleto.getEnVenta()) {
             javax.swing.JOptionPane.showMessageDialog(this, "El boleto ya ha sido vendido.");
             return;
         }
-
-        // Actualizar los datos del boleto
-        boleto.setEnVenta(false);  // Marcar el boleto como vendido
-        boleto.setIdUsuario(usuario.getId());  // Asignar el boleto al usuario actual
-
-        // Llamar al gestor para actualizar el boleto
-        gestorBoletos.actualizarBoleto(boleto);
-
+        
+        TransaccionDTO compra = new TransaccionDTO();
+        
+        compra.setComprador(this.usuario);
+        compra.setBoleto(this.boleto);
+        
+        if (boleto.getIdUsuario() > 0) {
+            UsuarioDTO vendedor = this.usuarios.obtenerUsuario(boleto.getIdUsuario());
+            compra.setVendedor(vendedor);
+        }
+        
+        this.transacciones.agregarTransaccion(compra);
+        
         // Notificar al usuario que la compra fue exitosa
-        javax.swing.JOptionPane.showMessageDialog(this, "Boleto comprado exitosamente!");
-
+        JOptionPane.showMessageDialog(this, "Boleto comprado exitosamente!");
     } catch (GestorException e) {
         // Manejo de errores en caso de que algo salga mal con la compra
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al procesar la compra del boleto: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, e.getMessage(), "TicketWizzard - Comprar boleto", JOptionPane.WARNING_MESSAGE);
     }
 
     }//GEN-LAST:event_btnComprarBoletoActionPerformed
