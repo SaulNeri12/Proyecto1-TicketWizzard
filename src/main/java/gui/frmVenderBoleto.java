@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.text.DecimalFormat;
+
 /**
  *
  * @author caarl

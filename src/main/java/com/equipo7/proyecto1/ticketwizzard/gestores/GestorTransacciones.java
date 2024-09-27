@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.equipo7.proyecto1.ticketwizzard.gestores;
 
 import com.equipo7.proyecto1.ticketwizzard.dao.TransaccionesDAO;
@@ -81,17 +78,20 @@ public class GestorTransacciones implements IGestorTransacciones {
         compradorDTO.setFechaNacimiento(comprador.getFechaNacimiento());
         compradorDTO.setSaldo(comprador.getSaldo());
         
-        UsuarioDTO vendedorDTO = new UsuarioDTO();
-        vendedorDTO.setId(vendedor.getId());
-        vendedorDTO.setNombreCompleto(vendedor.getNombreCompleto());
-        vendedorDTO.setEdad(vendedor.getEdad());
-        vendedorDTO.setEmail(vendedor.getEmail());
-        vendedorDTO.setDomicilio(vendedor.getDomicilio());
-        vendedorDTO.setFechaNacimiento(vendedor.getFechaNacimiento());
-        vendedorDTO.setSaldo(vendedor.getSaldo());
+        if (vendedor != null) {
+            UsuarioDTO vendedorDTO = new UsuarioDTO();
+            vendedorDTO.setId(vendedor.getId());
+            vendedorDTO.setNombreCompleto(vendedor.getNombreCompleto());
+            vendedorDTO.setEdad(vendedor.getEdad());
+            vendedorDTO.setEmail(vendedor.getEmail());
+            vendedorDTO.setDomicilio(vendedor.getDomicilio());
+            vendedorDTO.setFechaNacimiento(vendedor.getFechaNacimiento());
+            vendedorDTO.setSaldo(vendedor.getSaldo());
+            t.setVendedor(vendedorDTO);
+        }
         
         t.setComprador(compradorDTO);
-        t.setVendedor(vendedorDTO);
+        
         
         t.setFechaApartado(transaccion.getFechaApartado());
         t.setFechaHora(transaccion.getFechaHora());
@@ -149,20 +149,23 @@ public class GestorTransacciones implements IGestorTransacciones {
         comprador.setFechaNacimiento(compradorDTO.getFechaNacimiento());
         comprador.setSaldo(compradorDTO.getSaldo());
 
-        // Hacer lo mismo para el vendedor
-        UsuarioDTO vendedorDTO = t.getVendedor();
-        Usuario vendedor = new Usuario();
-        vendedor.setId(vendedorDTO.getId());
-        vendedor.setNombreCompleto(vendedorDTO.getNombreCompleto());
-        vendedor.setEdad(vendedorDTO.getEdad());
-        vendedor.setEmail(vendedorDTO.getEmail());
-        vendedor.setDomicilio(vendedorDTO.getDomicilio());
-        vendedor.setFechaNacimiento(vendedorDTO.getFechaNacimiento());
-        vendedor.setSaldo(vendedorDTO.getSaldo());
+        if (t.getVendedor() != null) {
+            // Hacer lo mismo para el vendedor
+            UsuarioDTO vendedorDTO = t.getVendedor();
+            Usuario vendedor = new Usuario();
+            vendedor.setId(vendedorDTO.getId());
+            vendedor.setNombreCompleto(vendedorDTO.getNombreCompleto());
+            vendedor.setEdad(vendedorDTO.getEdad());
+            vendedor.setEmail(vendedorDTO.getEmail());
+            vendedor.setDomicilio(vendedorDTO.getDomicilio());
+            vendedor.setFechaNacimiento(vendedorDTO.getFechaNacimiento());
+            vendedor.setSaldo(vendedorDTO.getSaldo());
+            transaccion.setVendedor(vendedor);
+        }
 
         // Asignar comprador y vendedor a la transacción
         transaccion.setComprador(comprador);
-        transaccion.setVendedor(vendedor);
+        
 
         // Asignar otros atributos de la transacción
         transaccion.setFechaApartado(t.getFechaApartado());

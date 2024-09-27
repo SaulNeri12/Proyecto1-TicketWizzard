@@ -7,7 +7,6 @@ package gui;
 import com.equipo7.proyecto1.ticketwizzard.dtos.BoletoDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import java.sql.Date;
-import javax.swing.BoxLayout;
 
 /**
  *
@@ -128,9 +127,11 @@ public class BoletoUsuarioPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        frmVenderBoleto frm = new frmVenderBoleto(this.boleto, this.usuario);
         
-        frm.setVisible(true);
+        if (boleto.getEnVenta() == false) {
+            frmVenderBoleto frm = new frmVenderBoleto(this.boleto, this.usuario);
+            frm.setVisible(true);
+        }
     }//GEN-LAST:event_formMouseClicked
 
 

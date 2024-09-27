@@ -4,14 +4,17 @@
  */
 package gui;
 
+import com.equipo7.proyecto1.ticketwizzard.dtos.BoletoDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.EventoDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.TransaccionDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorEventos;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorTransacciones;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorUsuarios;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorEventos;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorTransacciones;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -23,67 +26,71 @@ import javax.swing.table.DefaultTableModel;
  * @author neri
  */
 public class frmMiHistorial extends javax.swing.JFrame {
-  
-private IGestorTransacciones transacciones;
-    private IGestorEventos gestorEventos; // Gestor de eventos para obtener información de eventos.
-    private UsuarioDTO usuario; // Usuario actual.
 
-    // Constructor: Recibe un objeto usuario para inicializar el historial.
+    private IGestorEventos gestorEventos;
+    private IGestorTransacciones transacciones;
+    private IGestorUsuarios usuarios;
+    private UsuarioDTO usuario;
+
     public frmMiHistorial(UsuarioDTO usuario) {
-        
         this.usuario = usuario;
-        this.transacciones = GestorTransacciones.getInstance(); // Inicializa el gestor de transacciones.
-        this.gestorEventos = GestorEventos.getInstance(); // Inicializa el gestor de eventos.
-        
+        this.transacciones = GestorTransacciones.getInstance();
+        this.gestorEventos = GestorEventos.getInstance();
+        this.usuarios = GestorUsuarios.getInstance();
         initComponents();
-        this.setLocationRelativeTo(null); // Centra el frame en pantalla.
-        
-        inicializarComponentes(); // Inicializa componentes adicionales.
-        cargarTransacciones(); // Carga las transacciones del usuario.
+        this.setLocationRelativeTo(null);
+
+        inicializarComponentes();
+        cargarTransacciones();
     }
 
-    // Método para inicializar componentes personalizados.
     private void inicializarComponentes() {
-        // Muestra el nombre completo del usuario en la etiqueta correspondiente.
         lblUsuarioName.setText(usuario.getNombreCompleto());
 
-        // Configura las columnas de la tabla con los nombres correspondientes.
-        String[] columnNames = {"Fecha", "Vendedor", "Comprador", "Boleto", "Evento", "Monto", "Estado", "Tipo"};
+        String[] columnNames = {"ID", "Fecha", "Vendedor", "Comprador", "Boleto", "Evento", "Monto", "Estado", "Tipo"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        tblTransacciones.setModel(model); // Aplica el modelo a la tabla.
+        tblTransacciones.setModel(model);
+
+        btnPagar.setEnabled(false);
+
+        tblTransacciones.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tblTransacciones.getSelectedRow();
+                if (selectedRow != -1) {
+                    String estado = tblTransacciones.getValueAt(selectedRow, 7).toString();
+                    if ("en espera".equalsIgnoreCase(estado)) {
+                        btnPagar.setEnabled(true);
+                    } else {
+                        btnPagar.setEnabled(false);
+                    }
+                }
+            }
+        });
+
+        btnPagar.addActionListener(evt -> realizarCompra());
     }
 
-    // Método para cargar las transacciones desde la base de datos.
     private void cargarTransacciones() {
         try {
-            // Obtiene las transacciones del usuario actual.
             List<TransaccionDTO> listaTransacciones = transacciones.obtenerTransaccionesUsuario(usuario.getId());
             DefaultTableModel model = (DefaultTableModel) tblTransacciones.getModel();
-            model.setRowCount(0); // Limpia la tabla antes de cargar nuevos datos.
+            model.setRowCount(0);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Formato de fecha.
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-            
-            
-            
-            
-            // Itera sobre la lista de transacciones obtenidas y las añade a la tabla.
             for (TransaccionDTO transaccion : listaTransacciones) {
-                String nombreEvento = "N/a";
+                String nombreEvento = "N/A";
                 String idBoleto = "N/A";
-                
-                
-                if (transaccion.getBoleto() != null) {
-                    idBoleto = transaccion.getBoleto().getId().toString(); // Obtiene el ID del boleto.
 
-                    // Obtiene el evento asociado al boleto.
+                if (transaccion.getBoleto() != null) {
+                    idBoleto = transaccion.getBoleto().getId().toString();
+
                     Integer idEvento = transaccion.getBoleto().getIdEvento();
                     if (idEvento != null) {
                         try {
-                            // Usa el gestor de eventos para obtener los detalles del evento.
                             EventoDTO evento = gestorEventos.obtenerEvento(idEvento);
                             if (evento != null) {
-                                nombreEvento = evento.getNombre(); // Muestra el nombre del evento.
+                                nombreEvento = evento.getNombre();
                             }
                         } catch (GestorException ex) {
                             System.err.println("Error al obtener el evento: " + ex.getMessage());
@@ -91,23 +98,46 @@ private IGestorTransacciones transacciones;
                     }
                 }
 
-                // Añade una nueva fila a la tabla con los datos de la transacción.
                 model.addRow(new Object[]{
-                    dateFormat.format(transaccion.getFechaHora()), // Fecha y hora de la transacción.
-                    transaccion.getVendedor() != null ? transaccion.getVendedor().getNombreCompleto() : "N/A", // Nombre del vendedor.
-                    transaccion.getComprador() != null ? transaccion.getComprador().getNombreCompleto() : "N/A", // Nombre del comprador.
-                    idBoleto, // ID del boleto.
-                    nombreEvento, // Nombre del evento.
-                    transaccion.getMonto(), // Monto de la transacción.
-                    transaccion.getEstado(), // Estado de la transacción.
-                    transaccion.getTipoTransaccion() // Tipo de transacción.
+                    transaccion.getId().toString(),
+                    dateFormat.format(transaccion.getFechaHora()),
+                    transaccion.getVendedor() != null ? transaccion.getVendedor().getNombreCompleto() : "N/A",
+                    transaccion.getComprador() != null ? transaccion.getComprador().getNombreCompleto() : "N/A",
+                    idBoleto,
+                    nombreEvento,
+                    transaccion.getMonto(),
+                    transaccion.getEstado(),
+                    transaccion.getTipoTransaccion()
                 });
             }
         } catch (GestorException ex) {
-            // Muestra un mensaje de error en caso de que ocurra algún problema.
             JOptionPane.showMessageDialog(this, "Error al cargar las transacciones: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    private void realizarCompra() {
+        
+        try {
+            int selectedRow = tblTransacciones.getSelectedRow();
+            if (selectedRow != -1) {
+
+                Integer idTransaccion = Integer.valueOf(tblTransacciones.getValueAt(selectedRow, 0).toString());
+                
+                if (idTransaccion == null) {
+                    throw new GestorException("Selecciona una fila correcta");
+                }
+                
+                TransaccionDTO pago = this.transacciones.obtenerTransaccion(idTransaccion);
+                
+                this.transacciones.actualizarTransaccion(pago);
+            }
+        } catch (GestorException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+
 
     
     
@@ -127,6 +157,7 @@ private IGestorTransacciones transacciones;
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTransacciones = new javax.swing.JTable();
         btnAtras = new javax.swing.JButton();
+        btnPagar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,19 +199,29 @@ private IGestorTransacciones transacciones;
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(btnPagar, "Pagar"); // NOI18N
+        btnPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblUsuarioName)
-                .addGap(256, 256, 256))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(btnAtras)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnPagar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblUsuarioName)
+                        .addGap(256, 256, 256))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAtras)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap(160, Short.MAX_VALUE)
@@ -193,7 +234,9 @@ private IGestorTransacciones transacciones;
                 .addGap(23, 23, 23)
                 .addComponent(btnAtras)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblUsuarioName)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblUsuarioName)
+                    .addComponent(btnPagar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -231,9 +274,14 @@ private IGestorTransacciones transacciones;
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
+    private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPagarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnPagar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
