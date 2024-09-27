@@ -80,3 +80,14 @@ INSERT INTO transaccion(id_comprador, id_boleto) VALUES
 	@id_boleto
 );
 
+
+-- TRANSACCION REVENTA
+UPDATE boleto SET en_venta = true, precio_reventa = 100 WHERE id_boleto = 21;
+
+INSERT INTO transaccion(id_comprador, id_vendedor, id_boleto) VALUES 
+(
+	1,
+	2,
+	21
+);
+
