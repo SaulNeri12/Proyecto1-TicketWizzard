@@ -2,11 +2,13 @@
 package com.equipo7.proyecto1.ticketwizzard.gestores;
 
 import com.equipo7.proyecto1.ticketwizzard.dao.BoletosDAO;
+import com.equipo7.proyecto1.ticketwizzard.dtos.AsientoDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.BoletoDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.dao.IBoletosDAO;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorBoletos;
+import com.equipo7.proyecto1.ticketwizzard.objetos.Asiento;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Boleto;
 
 import java.util.ArrayList;
@@ -48,7 +50,11 @@ public class GestorBoletos implements IGestorBoletos {
         boletoDTO.setEnVenta(boleto.getEnVenta());
         boletoDTO.setIdUsuario(boleto.getIdUsuario());
         boletoDTO.setIdEvento(boleto.getIdEvento());
-        boletoDTO.setIdAsiento(boleto.getIdAsiento());
+        boletoDTO.setAsiento(new AsientoDTO(
+                boleto.getAsiento().getId(),
+                boleto.getAsiento().getFila(),
+                boleto.getAsiento().getNumeroAsiento()
+        ));
         boletoDTO.setAdquiridoBoletera(boleto.getAdquiridoBoletera());
         return boletoDTO;
     }
@@ -70,26 +76,13 @@ public class GestorBoletos implements IGestorBoletos {
         boleto.setEnVenta(boletoDTO.getEnVenta());
         boleto.setIdUsuario(boletoDTO.getIdUsuario());
         boleto.setIdEvento(boletoDTO.getIdEvento());
-        boleto.setIdAsiento(boletoDTO.getIdAsiento());
+        boleto.setAsiento(new Asiento(
+                boletoDTO.getAsiento().getId(),
+                boletoDTO.getAsiento().getFila(),
+                boletoDTO.getAsiento().getNumeroAsiento()
+        ));
         boleto.setAdquiridoBoletera(boletoDTO.getAdquiridoBoletera());
         return boleto;
-    }
-
-    @Override
-    public List<BoletoDTO> obtenerBoletosVentaEvento(String nombreEvento) throws GestorException {
-        try {
-            List<Boleto> listaBoletos = this.boletosDAO.obtenerBoletosVentaEvento(nombreEvento);
-            if (listaBoletos == null || listaBoletos.isEmpty()) {
-                throw new DAOException("No se encontraron boletos para el evento: " + nombreEvento);
-            }
-            List<BoletoDTO> boletos = new ArrayList<>();
-            for (Boleto boleto : listaBoletos) {
-                boletos.add(this.convertirEntidad(boleto));
-            }
-            return boletos;
-        } catch (DAOException ex) {
-            throw new GestorException(ex.getMessage());
-        }
     }
 
     @Override

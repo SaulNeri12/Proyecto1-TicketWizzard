@@ -57,7 +57,7 @@ public class frmEventos extends javax.swing.JFrame {
         this.listaEventos.repaint();
     }
     
-     private void volver() {
+    private void volver() {
         // Crear la instancia de la nueva ventana
         frmTusBoletos infoBoleto = new frmTusBoletos(usuario);
 

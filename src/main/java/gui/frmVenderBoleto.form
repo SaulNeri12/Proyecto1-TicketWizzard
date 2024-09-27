@@ -24,20 +24,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel5" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel5" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -54,40 +46,44 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="btnVolver" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="85" pref="352" max="32767" attributes="0"/>
+                  <Component id="btnPublicar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel24" min="-2" pref="67" max="-2" attributes="0"/>
-                              <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel25" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
+                              <Component id="campoMontoTotal" min="-2" pref="77" max="-2" attributes="0"/>
+                              <Component id="jLabel27" min="-2" pref="67" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jTextField13" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel23" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel21" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel25" min="-2" pref="174" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel28" min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jTextField15" alignment="0" pref="122" max="32767" attributes="0"/>
-                                  <Component id="jTextField14" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="campoNombreEvento" min="-2" pref="404" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel24" alignment="0" min="-2" pref="167" max="-2" attributes="0"/>
+                                      <Component id="campoPrecioVenta" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="campoPrecioOriginal" min="-2" pref="132" max="-2" attributes="0"/>
+                                      <Component id="jLabel23" min="-2" pref="167" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <Component id="jLabel28" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel27" min="-2" pref="67" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField17" min="-2" pref="77" max="-2" attributes="0"/>
-                          <EmptySpace pref="105" max="32767" attributes="0"/>
-                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -95,69 +91,51 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel21" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="jLabel22" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="campoNombreEvento" min="-2" pref="26" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField13" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                  <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField14" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                  <Component id="jTextField15" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                  <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel23" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jLabel24" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField17" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="campoPrecioVenta" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="campoPrecioOriginal" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="campoMontoTotal" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnVolver" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnPublicar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel21">
+        <Component class="javax.swing.JLabel" name="campoNombreEvento">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="24" style="3"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Boleto para"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel22">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="24" style="3"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Evento 1"/>
+            <Property name="text" type="java.lang.String" value="Nombre Evento"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel23">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="3"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Precio de venta"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel24">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="3"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Fecha"/>
+            <Property name="text" type="java.lang.String" value="Precio original"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel25">
@@ -168,14 +146,6 @@
             <Property name="text" type="java.lang.String" value="Comision aplicada"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel26">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="3"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Vendedor"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel27">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -184,34 +154,40 @@
             <Property name="text" type="java.lang.String" value="Total"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField13">
+        <Component class="javax.swing.JTextField" name="campoPrecioVenta">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField14">
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextField15">
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextField17">
+        <Component class="javax.swing.JTextField" name="campoMontoTotal">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel28">
           <Properties>
             <Property name="text" type="java.lang.String" value="3 %"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnVolver">
           <Properties>
             <Property name="text" type="java.lang.String" value="Atras"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVolverActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="btnPublicar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Publicar Boleto"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPublicarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel24">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Precio de reventa"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="campoPrecioOriginal">
         </Component>
       </SubComponents>
     </Container>

@@ -29,11 +29,9 @@ CREATE TABLE evento (
     nombre VARCHAR(100) UNIQUE NOT NULL,
     descripcion TEXT NULL,
     fecha_hora DATETIME NOT NULL,
+		precio_base_boleto DECIMAL(10,2) NOT NULL,
     venue VARCHAR(100) NOT NULL,
     terminado TINYINT(1) NULL,
-		num_filas INT NULL,
-		asientos_por_fila INT NULL,
-		precio_base_boleto DECIMAL(10,2) DEFAULT 0 NOT NULL,
     id_ciudad INT NOT NULL,
     FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad)
 );
@@ -56,7 +54,7 @@ CREATE TABLE boleto (
     precio_original DECIMAL(10, 2) NOT NULL,
     precio_reventa DECIMAL(10, 2),
     fecha_limite_venta DATETIME NULL,
-    en_venta BOOLEAN DEFAULT 1 NOT NULL,
+    en_venta BOOLEAN DEFAULT TRUE NOT NULL,
     id_usuario INT NULL,
     id_evento INT NOT NULL,
     id_asiento INT NOT NULL,
@@ -71,22 +69,14 @@ CREATE TABLE transaccion (
     id_transaccion INT AUTO_INCREMENT PRIMARY KEY,
     id_comprador INT NOT NULL,
     id_vendedor INT NULL,
+		id_boleto INT NOT NULL,
     monto DECIMAL(10, 2) NULL,
-    fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    estado ENUM('terminada', 'en proceso') NOT NULL,
-    tipo ENUM('compra_boletera', 'compra_reventa') NOT NULL,
+		fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    fecha_apartado DATETIME NULL,
+    estado ENUM('terminada', 'en espera') NOT NULL,
+    tipo ENUM('boletera', 'reventa') NOT NULL,
     FOREIGN KEY (id_comprador) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_vendedor) REFERENCES usuario(id_usuario)
+    FOREIGN KEY (id_vendedor) REFERENCES usuario(id_usuario),
+		FOREIGN KEY (id_boleto) REFERENCES boleto(id_boleto)
 );
-
--- Tabla de boletos involucrados en una transaccion
-CREATE TABLE transaccion_boleto (
-    id_transaccion_boleto INT AUTO_INCREMENT PRIMARY KEY,
-    monto DECIMAL(10,2) NOT NULL,
-    id_boleto INT NOT NULL,
-    id_transaccion INT NOT NULL,
-    FOREIGN KEY (id_boleto) REFERENCES boleto(id_boleto),
-    FOREIGN KEY (id_transaccion) REFERENCES transaccion(id_transaccion)
-);
-
 

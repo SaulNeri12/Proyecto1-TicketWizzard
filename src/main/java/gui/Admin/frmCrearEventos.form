@@ -61,49 +61,23 @@
                               <Component id="jLabel6" min="-2" pref="37" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                                      <Component id="txtNombreEvento" max="32767" attributes="0"/>
-                                      <Component id="txtVenue" max="32767" attributes="0"/>
-                                      <Component id="DateChooserFechaHora" alignment="0" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel10" min="-2" pref="43" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                                          <Component id="txtNombreEvento" max="32767" attributes="0"/>
+                                          <Component id="txtVenue" max="32767" attributes="0"/>
+                                          <Component id="DateChooserFechaHora" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Component id="cbxCiudades" min="-2" pref="117" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jLabel8" min="-2" pref="89" max="-2" attributes="0"/>
-                                                      <Group type="102" attributes="0">
-                                                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                                          <Component id="txtNumFilas" min="-2" pref="71" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                              </Group>
+                                              <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
+                                              <Component id="btnAgregarEvento" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                                      <Component id="txtAsientosPorFila" min="-2" pref="71" max="-2" attributes="0"/>
-                                                      <EmptySpace max="32767" attributes="0"/>
-                                                      <Component id="txtPrecio" min="-2" pref="43" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                      <Component id="jLabel10" min="-2" pref="43" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
-                                                  <Component id="btnAgregarEvento" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="btnCancelar" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="btnCancelar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtPrecio" alignment="0" min="-2" pref="43" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -146,19 +120,11 @@
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="cbxCiudades" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtNumFilas" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtAsientosPorFila" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="45" max="32767" attributes="0"/>
+                  <Component id="txtPrecio" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="51" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnAgregarEvento" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -254,24 +220,10 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;CiudadDTO&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel8">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Numero de filas:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel9">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Asientos por fila:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
             <Property name="text" type="java.lang.String" value="Precio"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtNumFilas">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtAsientosPorFila">
         </Component>
         <Component class="javax.swing.JTextField" name="txtPrecio">
         </Component>

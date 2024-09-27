@@ -1,6 +1,171 @@
 
--- Trigger para generar asientos y boletos automáticamente
 DELIMITER //
+
+CREATE TRIGGER before_insert_transaccion
+BEFORE INSERT ON transaccion
+FOR EACH ROW
+BEGIN
+    DECLARE saldo_comprador_actual DECIMAL(10, 2);
+    DECLARE precio_boleto DECIMAL(10, 2);
+    DECLARE comision DECIMAL(10, 2);
+    DECLARE nuevo_saldo_vendedor DECIMAL(10, 2);
+
+    -- 0. Verificar si el boleto está en venta
+    IF (SELECT en_venta FROM boleto WHERE id_boleto = NEW.id_boleto) = 0 THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'El boleto que se intenta comprar no esta a la venta';
+    END IF;
+
+    -- 1. Determinar el tipo de transacción
+    IF NEW.id_vendedor IS NOT NULL THEN
+        SET NEW.tipo = 'reventa';
+    ELSE
+        SET NEW.tipo = 'boletera';
+    END IF;
+
+    -- 2. Obtener el saldo del comprador y el precio del boleto
+    SELECT saldo INTO saldo_comprador_actual FROM usuario WHERE id_usuario = NEW.id_comprador;
+    SELECT precio_original INTO precio_boleto FROM boleto WHERE id_boleto = NEW.id_boleto;
+
+		-- en una reventa se pone el precio reventa, no el original
+		IF NEW.id_vendedor IS NOT NULL THEN
+    	SELECT precio_reventa INTO precio_boleto FROM boleto WHERE id_boleto = NEW.id_boleto;
+		END IF;
+
+    -- 3. Si el saldo es insuficiente, apartar el boleto por 10 minutos
+    IF (saldo_comprador_actual - precio_boleto) < 0 THEN
+        SET NEW.fecha_apartado = NOW() + INTERVAL 10 MINUTE;
+        SET NEW.monto = 0;
+        SET NEW.estado = 'en espera';
+    ELSE
+        -- 4. Si el saldo es suficiente, proceder con la compra
+        -- Actualizar el saldo del comprador
+
+        -- 5. Si es una reventa, actualizar el saldo del vendedor
+        IF NEW.id_vendedor IS NOT NULL THEN
+            -- Calcular la comisión del 3%
+            SET comision = precio_boleto * 0.03;
+            SET nuevo_saldo_vendedor = (SELECT saldo FROM usuario WHERE id_usuario = NEW.id_vendedor) + (precio_boleto - comision);
+
+            -- Actualizar saldo del vendedor
+            UPDATE usuario 
+            SET saldo = nuevo_saldo_vendedor 
+            WHERE id_usuario = NEW.id_vendedor;
+				END IF;
+
+
+	      UPDATE usuario 
+  	    SET saldo = saldo_comprador_actual - precio_boleto
+        WHERE id_usuario = NEW.id_comprador;
+
+				SET NEW.monto = precio_boleto;
+
+        -- 6. Actualizar el estado de la transacción a 'terminada'
+        SET NEW.estado = 'terminada';
+
+        -- 7. Actualizar el estado del boleto
+        UPDATE boleto 
+        SET en_venta = FALSE, 
+            precio_reventa = NULL, 
+            fecha_limite_venta = NULL, 
+            id_usuario = NEW.id_comprador 
+        WHERE id_boleto = NEW.id_boleto;
+
+        -- 8. Marcar si el boleto fue adquirido de la boletera o en reventa
+        IF NEW.id_vendedor IS NOT NULL THEN
+            UPDATE boleto 
+            SET adquirido_boletera = FALSE 
+            WHERE id_boleto = NEW.id_boleto;
+        ELSE
+            UPDATE boleto 
+            SET adquirido_boletera = TRUE 
+            WHERE id_boleto = NEW.id_boleto;
+        END IF;
+
+        -- 9. Generar un nuevo número de serie para el boleto
+        UPDATE boleto 
+        SET numero_serie = LEFT(UUID(), 8) 
+        WHERE id_boleto = NEW.id_boleto;
+    END IF;
+END//
+
+CREATE TRIGGER before_update_transaccion
+BEFORE UPDATE ON transaccion
+FOR EACH ROW
+BEGIN
+    DECLARE saldo_comprador DECIMAL(10, 2);
+    DECLARE precio_boleto DECIMAL(10, 2);
+    DECLARE comision DECIMAL(10, 2);
+    DECLARE nuevo_saldo_vendedor DECIMAL(10, 2);
+
+    -- Verificar si la transacción ya está terminada
+    IF OLD.estado = 'terminada' THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'No se puede modificar una transacción terminada';
+    END IF;
+
+    -- Verificar si la fecha de apartado ha expirado
+    IF OLD.estado = 'en espera' AND NOW() > OLD.fecha_apartado THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'El tiempo de apartado ha expirado';
+    END IF;
+
+    -- Si se está intentando cambiar el estado a 'terminada'
+    IF NEW.estado = 'terminada' AND OLD.estado = 'en espera' THEN
+        -- Obtener el saldo del comprador
+        SELECT saldo INTO saldo_comprador 
+        FROM usuario 
+        WHERE id_usuario = NEW.id_comprador;
+
+        -- Obtener el precio del boleto
+        SELECT COALESCE(precio_reventa, precio_original) INTO precio_boleto 
+        FROM boleto 
+        WHERE id_boleto = NEW.id_boleto;
+
+        -- Verificar si el comprador tiene suficiente saldo
+        IF saldo_comprador < precio_boleto THEN
+            SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Saldo insuficiente para completar la transacción';
+        END IF;
+
+        -- Actualizar el saldo del comprador
+        UPDATE usuario 
+        SET saldo = saldo - precio_boleto 
+        WHERE id_usuario = NEW.id_comprador;
+
+        -- Si es una reventa, actualizar el saldo del vendedor
+        IF NEW.id_vendedor IS NOT NULL THEN
+            -- Calcular la comisión del 3%
+            SET comision = precio_boleto * 0.03;
+            SET nuevo_saldo_vendedor = (SELECT saldo FROM usuario WHERE id_usuario = NEW.id_vendedor) + (precio_boleto - comision);
+
+            -- Actualizar saldo del vendedor
+            UPDATE usuario 
+            SET saldo = nuevo_saldo_vendedor 
+            WHERE id_usuario = NEW.id_vendedor;
+        END IF;
+
+        -- Actualizar el estado del boleto
+        UPDATE boleto 
+        SET en_venta = FALSE, 
+            precio_reventa = NULL, 
+            fecha_limite_venta = NULL, 
+            id_usuario = NEW.id_comprador,
+            adquirido_boletera = (NEW.id_vendedor IS NULL)
+        WHERE id_boleto = NEW.id_boleto;
+
+        -- Generar un nuevo número de serie para el boleto
+        UPDATE boleto 
+        SET numero_serie = LEFT(UUID(), 8) 
+        WHERE id_boleto = NEW.id_boleto;
+
+        -- Actualizar el monto de la transacción
+        SET NEW.monto = precio_boleto;
+    END IF;
+END//
+
+
+-- Trigger para generar asientos y boletos automáticamente
 
 CREATE TRIGGER after_evento_insert
 AFTER INSERT ON evento

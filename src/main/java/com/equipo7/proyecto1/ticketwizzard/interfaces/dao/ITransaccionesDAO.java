@@ -30,7 +30,7 @@ public interface ITransaccionesDAO {
      * @return
      * @throws DAOException 
      */
-    public List<Transaccion> obtenerTransaccion(Integer id) throws DAOException;
+    public Transaccion obtenerTransaccion(Integer id) throws DAOException;
     
     /**
      * Agrega una transaccion al sistema

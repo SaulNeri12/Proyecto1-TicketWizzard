@@ -4,34 +4,40 @@
  */
 package com.equipo7.proyecto1.ticketwizzard.objetos;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
 /**
- *
+ * Representa una transaccion de boletos en el sistema
  * @author Equipo 7
  */
 public class Transaccion {
     // columna: id_transaccion
     private Integer id;
     // columna: id_comprador
-    private Integer idComprador;
+    private Usuario comprador;
     // columna: id_vendedor
-    private Integer idVendedor;
+    private Usuario vendedor;
     // columna: monto
     private Float monto;
     // columna: fecha_hora
     private Timestamp fechaHora;
+    // columna: fecha_apartado
+    private Date fechaApartado;
+    // columna: estado
+    private String estado;
     // columna: tipo
     private String tipoTransaccion;
+    // columna: id_boleto
+    private Boleto boleto;
     
-    private List<Boleto> boletos;
-    
+    /**
+     * Crea una nueva instancia de transaccion con valores nulos
+     */
     public Transaccion() {
         
     }
-
-    
     
     /**
      * @return the id
@@ -47,33 +53,6 @@ public class Transaccion {
         this.id = id;
     }
 
-    /**
-     * @return the idComprador
-     */
-    public Integer getIdComprador() {
-        return idComprador;
-    }
-
-    /**
-     * @param idComprador the idComprador to set
-     */
-    public void setIdComprador(Integer idComprador) {
-        this.idComprador = idComprador;
-    }
-
-    /**
-     * @return the idVendedor
-     */
-    public Integer getIdVendedor() {
-        return idVendedor;
-    }
-
-    /**
-     * @param idVendedor the idVendedor to set
-     */
-    public void setIdVendedor(Integer idVendedor) {
-        this.idVendedor = idVendedor;
-    }
 
     /**
      * @return the monto
@@ -103,22 +82,6 @@ public class Transaccion {
         this.fechaHora = fechaHora;
     }
 
-
-
-    /**
-     * @return the boletos
-     */
-    public List<Boleto> getBoletos() {
-        return boletos;
-    }
-
-    /**
-     * @param boletos the boletos to set
-     */
-    public void setBoletos(List<Boleto> boletos) {
-        this.boletos = boletos;
-    }
-
     /**
      * @return the tipoTransaccion
      */
@@ -131,6 +94,82 @@ public class Transaccion {
      */
     public void setTipoTransaccion(String tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
+    }
+
+    /**
+     * @return the comprador
+     */
+    public Usuario getComprador() {
+        return comprador;
+    }
+
+    /**
+     * @param comprador the comprador to set
+     */
+    public void setComprador(Usuario comprador) {
+        this.comprador = comprador;
+    }
+
+    /**
+     * @return the vendedor
+     */
+    public Usuario getVendedor() {
+        return vendedor;
+    }
+
+    /**
+     * @param vendedor the vendedor to set
+     */
+    public void setVendedor(Usuario vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    /**
+     * @return the fechaApartado
+     */
+    public Date getFechaApartado() {
+        return fechaApartado;
+    }
+
+    /**
+     * @param fechaApartado the fechaApartado to set
+     */
+    public void setFechaApartado(Date fechaApartado) {
+        this.fechaApartado = fechaApartado;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    /**
+     * @return the boleto
+     */
+    public Boleto getBoleto() {
+        return boleto;
+    }
+
+    /**
+     * @param boleto the boleto to set
+     */
+    public void setBoleto(Boleto boleto) {
+        this.boleto = boleto;
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("Transaccion(id=%d\n, comprador=%s\n, vendedor=%s\n,boleto=%s\n,monto=%.2f\n, estado=%s\n, tipo=%s)", 
+                this.id,this.comprador,this.vendedor, this.boleto,this.monto,this.estado,this.tipoTransaccion);
     }
     
 }

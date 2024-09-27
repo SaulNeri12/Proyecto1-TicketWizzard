@@ -7,6 +7,7 @@ package com.equipo7.proyecto1.ticketwizzard.dao;
 import com.equipo7.proyecto1.ticketwizzard.dao.BoletosDAO;
 import com.equipo7.proyecto1.ticketwizzard.dao.BoletosDAO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.DAOException;
+import com.equipo7.proyecto1.ticketwizzard.objetos.Asiento;
 import com.equipo7.proyecto1.ticketwizzard.objetos.Boleto;
 
 import java.sql.Date;
@@ -17,6 +18,7 @@ public class MainBoletosDAO {
         BoletosDAO boletosDAO = BoletosDAO.getInstance();
 
         try {
+            /*
             // 1. Prueba agregar un boleto
             Boleto nuevoBoleto = new Boleto();
             nuevoBoleto.setNumeroSerie("ABC123");
@@ -27,10 +29,11 @@ public class MainBoletosDAO {
             nuevoBoleto.setEnVenta(true);
             nuevoBoleto.setIdUsuario(1);
             nuevoBoleto.setIdEvento(1);
-            nuevoBoleto.setIdAsiento(1);
+            nuevoBoleto.setAsiento(new Asiento(100,null,null));
             nuevoBoleto.setAdquiridoBoletera(false);
-            
             boletosDAO.agregarBoleto(nuevoBoleto);
+            */
+            
             System.out.println("Boleto agregado con éxito.");
 
             // 2. Prueba obtener boletos por ID de evento
@@ -47,6 +50,7 @@ public class MainBoletosDAO {
             System.out.println("Boletos del usuario con ID " + idUsuario + ":");
             for (Boleto boleto : boletosUsuario) {
                 System.out.println("ID: " + boleto.getId() + " - Serie: " + boleto.getNumeroSerie() + " - Precio: " + boleto.getPrecioOriginal());
+                System.out.println(boleto);
             }
 
             // 4. Prueba obtener un boleto por su ID

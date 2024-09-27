@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.JLabel" name="campoNumeroAsiento1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Numero de asiento: X" noResource="true"/>
+      </Properties>
+    </Component>
+  </NonVisualComponents>
+  <Events>
+    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formMouseClicked"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -17,30 +27,23 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="campoPrecio" min="-2" pref="191" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnComprarBoleto" min="-2" pref="99" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="campoInfoAsiento" min="-2" pref="181" max="-2" attributes="0"/>
-                      <EmptySpace pref="213" max="32767" attributes="0"/>
-                      <Component id="campoFechaLimite" min="-2" pref="200" max="-2" attributes="0"/>
+                      <EmptySpace pref="26" max="32767" attributes="0"/>
+                      <Component id="campoFechaLimite" min="-2" pref="282" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lbl" min="-2" pref="35" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="campoFila" min="-2" pref="98" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lbl" min="-2" pref="41" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="campoFila" min="-2" pref="60" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="label" min="-2" pref="153" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="label" min="-2" pref="121" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="campoNumeroAsiento" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -59,7 +62,7 @@
                   <Component id="campoFechaLimite" min="-2" max="-2" attributes="0"/>
                   <Component id="campoInfoAsiento" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="label" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="campoNumeroAsiento" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -69,12 +72,7 @@
                   <Component id="lbl" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="campoFila" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="campoPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnComprarBoleto" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -88,19 +86,15 @@
         <Property name="text" type="java.lang.String" value="Numero Control" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="campoPrecio">
+    <Component class="javax.swing.JLabel" name="label">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Precio: $XXXX" noResource="true"/>
+        <Property name="text" type="java.lang.String" value="Numero de asiento: " noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnComprarBoleto">
+    <Component class="javax.swing.JLabel" name="lbl">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Comprar" noResource="true"/>
+        <Property name="text" type="java.lang.String" value="Fila:" noResource="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprarBoletoActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="campoFechaLimite">
       <Properties>
@@ -116,16 +110,6 @@
     <Component class="javax.swing.JLabel" name="campoFila">
       <Properties>
         <Property name="text" type="java.lang.String" value="FILA" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="label">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Numero de asiento: " noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbl">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Fila:" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>
