@@ -9,11 +9,12 @@ import com.equipo7.proyecto1.ticketwizzard.dtos.EventoDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.TransaccionDTO;
 import com.equipo7.proyecto1.ticketwizzard.dtos.UsuarioDTO;
 import com.equipo7.proyecto1.ticketwizzard.excepciones.GestorException;
-import com.equipo7.proyecto1.ticketwizzard.gestores.GestorBoletos;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorEventos;
 import com.equipo7.proyecto1.ticketwizzard.gestores.GestorTransacciones;
+import com.equipo7.proyecto1.ticketwizzard.gestores.GestorUsuarios;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorEventos;
 import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorTransacciones;
+import com.equipo7.proyecto1.ticketwizzard.interfaces.gestores.IGestorUsuarios;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -25,16 +26,17 @@ import javax.swing.table.DefaultTableModel;
  * @author neri
  */
 public class frmMiHistorial extends javax.swing.JFrame {
-  
-private IGestorTransacciones transacciones;
+
     private IGestorEventos gestorEventos;
+    private IGestorTransacciones transacciones;
+    private IGestorUsuarios usuarios;
     private UsuarioDTO usuario;
 
     public frmMiHistorial(UsuarioDTO usuario) {
         this.usuario = usuario;
         this.transacciones = GestorTransacciones.getInstance();
         this.gestorEventos = GestorEventos.getInstance();
-
+        this.usuarios = GestorUsuarios.getInstance();
         initComponents();
         this.setLocationRelativeTo(null);
 
@@ -45,7 +47,7 @@ private IGestorTransacciones transacciones;
     private void inicializarComponentes() {
         lblUsuarioName.setText(usuario.getNombreCompleto());
 
-        String[] columnNames = {"Fecha", "Vendedor", "Comprador", "Boleto", "Evento", "Monto", "Estado", "Tipo"};
+        String[] columnNames = {"ID", "Fecha", "Vendedor", "Comprador", "Boleto", "Evento", "Monto", "Estado", "Tipo"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         tblTransacciones.setModel(model);
 
@@ -55,7 +57,7 @@ private IGestorTransacciones transacciones;
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = tblTransacciones.getSelectedRow();
                 if (selectedRow != -1) {
-                    String estado = tblTransacciones.getValueAt(selectedRow, 6).toString();
+                    String estado = tblTransacciones.getValueAt(selectedRow, 7).toString();
                     if ("en espera".equalsIgnoreCase(estado)) {
                         btnPagar.setEnabled(true);
                     } else {
@@ -97,6 +99,7 @@ private IGestorTransacciones transacciones;
                 }
 
                 model.addRow(new Object[]{
+                    transaccion.getId().toString(),
                     dateFormat.format(transaccion.getFechaHora()),
                     transaccion.getVendedor() != null ? transaccion.getVendedor().getNombreCompleto() : "N/A",
                     transaccion.getComprador() != null ? transaccion.getComprador().getNombreCompleto() : "N/A",
@@ -112,29 +115,26 @@ private IGestorTransacciones transacciones;
         }
     }
 
-   private void realizarCompra() {
-    int selectedRow = tblTransacciones.getSelectedRow();
-    if (selectedRow != -1) {
-        // Convertir el valor de la columna 6 a float
-        float monto = Float.parseFloat(tblTransacciones.getValueAt(selectedRow, 5).toString());
+    private void realizarCompra() {
+        
+        try {
+            int selectedRow = tblTransacciones.getSelectedRow();
+            if (selectedRow != -1) {
 
-        // Verificar si el usuario tiene suficiente saldo
-        if (usuario.getSaldo() >= monto) {
-            // Restar el monto del saldo del usuario
-            usuario.setSaldo(usuario.getSaldo() - monto);
-
-            // Actualizar el estado de la columna 7 a "terminado"
-            tblTransacciones.setValueAt("terminado", selectedRow, 6);
-
-            // Mostrar mensaje de éxito
-            JOptionPane.showMessageDialog(this, "Operación realizada con éxito. Saldo actualizado.");
-        } else {
-            JOptionPane.showMessageDialog(this, "No tienes suficiente saldo para realizar la operación.");
+                Integer idTransaccion = Integer.valueOf(tblTransacciones.getValueAt(selectedRow, 0).toString());
+                
+                if (idTransaccion == null) {
+                    throw new GestorException("Selecciona una fila correcta");
+                }
+                
+                TransaccionDTO pago = this.transacciones.obtenerTransaccion(idTransaccion);
+                
+                this.transacciones.actualizarTransaccion(pago);
+            }
+        } catch (GestorException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila para continuar.");
     }
-}
 
 
 
